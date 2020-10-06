@@ -7,5 +7,20 @@ waiting for docker...
 ## Frontend
 ### start
 To start React (Frontend) use following commands:
-    - enter frontend directory      `cd frontend`
-    - start react server            `npm start`
+1. enter frontend directory     
+
+
+```sh
+cd frontend
+```
+
+
+2. start react server            
+
+
+
+```sh
+npm start
+```
+
+The frontend server should be running on [localhost:3000](https://localhost:3000)
