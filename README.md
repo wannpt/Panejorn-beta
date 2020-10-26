@@ -35,10 +35,10 @@ This project is handle structure like this
 
 ### Frontend
 > public
-    > icons
+    |-- icons
 > src
-    > components : all visualization components
-    > containers : all containers components
-    > hooks : all hooks 
-    > pages : all pages
-    > utils : all utils included
+    |-- components : all visualization components
+    |-- containers : all containers components
+    |-- hooks : all hooks 
+    |-- pages : all pages
+    |-- utils : all utils included
