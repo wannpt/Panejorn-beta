@@ -34,11 +34,11 @@ Panejornv0.02 [Wireframe&Design](https://www.figma.com/file/V1ouHFM6acG9L1xGNmbx
 This project is handle structure like this
 
 ### Frontend
-> public
-    |-- icons
-> src
-    |-- components : all visualization components
-    |-- containers : all containers components
-    |-- hooks : all hooks 
-    |-- pages : all pages
-    |-- utils : all utils included
+public
+- icons
+src
+- *components* : all visualization components
+- *containers* : all containers components
+- *hooks* : all hooks 
+- *pages* : all pages
+- *utils* : all utils included
