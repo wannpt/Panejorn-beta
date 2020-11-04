@@ -19,6 +19,5 @@ RUN npm install --silence
 RUN npm install react-scripts -g --silence
 
 EXPOSE 8080
-
 #Build the app
 CMD ["npm", "start"]
