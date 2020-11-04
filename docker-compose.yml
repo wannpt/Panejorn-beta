@@ -1,0 +1,14 @@
+version: "3.8"
+
+services: 
+  fe-container:
+    tty: true
+    container_name: fe-container
+    build:
+      context: .
+      dockerfile: react.Dockerfile
+    volumes: 
+      - './frontend:/opt/app'
+    ports: 
+      - '8080:8080'
+    command: sh -c 'npm run start'

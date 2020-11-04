@@ -4,12 +4,12 @@ all:
 
 #Build docker images 
 build:
-	docker build -t frontend .
+	docker build -t frontend react.Dockerfile
 
-#Run [Docker] Frontend container
-start-fe:
-	docker run -it -v ${PWD}/frontend:/opt/app -p 8080:8080 --rm --name fe-container frontend
-
-#Stop Frontend Docker containers
+#Run project
+run:
+	docker-compose up -d
+	
+#Stop project
 stop:
-	docker stop fe-container
+	docker-compose down
