@@ -5,8 +5,12 @@ on:
         branches:
             - main
 
+defaults:
+    run:
+        working-directory: frontend
+
 jobs:
-    build:
+    build: 
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
@@ -14,6 +18,7 @@ jobs:
               uses: actions/setup-node@v1
               with:
                 node-version: '10.x'
+            
             - run: yarn
             - run: yarn test
             - run: yarn build
