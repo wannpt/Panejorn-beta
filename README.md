@@ -1,6 +1,30 @@
 # Panejorn-beta v0.02
 
-## Tech stacked
+
+## Get started
+Clone this project to your local and run following commands:
+
+**Run Project**
+1. start running containers (*frontend* and *backend*)
+```sh
+make run
+```
+2. open new terminal to start backend server
+```sh
+make attach-be
+```
+
+**Stop Project**
+to stop project, run this command
+```sh
+make stop
+```
+
+The frontend server should be running on [localhost:8080](https://localhost:8080)
+The backend server should be running on [localhost:8000](https://localhost:8000)
+
+## DEV NOTES
+### Tech stacked
 - **Frontend**: 
   - React/ typescript
   - Ant Design
@@ -9,45 +33,26 @@
 - **Database**: 
   - *WIP*
 
-## Get started
-Clone this project to your local and run following commands:
 
-**Run Project**
+### Frontend
+To access React (Frontend) use following commands:
 ```sh
-make run
-```
-**Stop Project**
-```sh
-make stop
+make attach-fe
 ```
 
-
-## Frontend
-### start
-To start React (Frontend) use following commands:
-```sh
-make start-fe
-```
-The frontend server should be running on [localhost:8080](https://localhost:8080)
-
-## Backend
+### Backend
 To start Golang (Backend) use following commands:
 ```sh
-make start-be
+make attach-be
 ```
-you can access to golang sh by using this command
-```sh
-docker-compose exec be-container sh
-```
-
-## Wireframe & Design
+### Wireframe & Design
 Panejornv0.02 [Wireframe&Design](https://www.figma.com/file/V1ouHFM6acG9L1xGNmbxZf/Panejorn-app-ver0.2?node-id=0%3A1)
 
-## Project structures
+### Project structures
 
 This project is handle structure like this
 
-### Frontend
+**Frontend**
 - public
   - icons
 
