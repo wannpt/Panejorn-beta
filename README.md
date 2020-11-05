@@ -32,6 +32,8 @@ The backend server should be running on [localhost:8000](https://localhost:8000)
   - Golang/ Echo go framework
 - **Database**: 
   - *WIP*
+- **Hosting**
+  - Netlify
 
 
 ### Frontend
@@ -41,9 +43,9 @@ make attach-fe
 ```
 
 ### Backend
-To start Golang (Backend) use following commands:
+To access Golang (Backend) use following commands:
 ```sh
-make attach-be
+docker-compose exec be-container sh
 ```
 ### Wireframe & Design
 Panejornv0.02 [Wireframe&Design](https://www.figma.com/file/V1ouHFM6acG9L1xGNmbxZf/Panejorn-app-ver0.2?node-id=0%3A1)
