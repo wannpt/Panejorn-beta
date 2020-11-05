@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.css';
 
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import home4Fill from '@iconify/icons-ri/home-4-fill';
 
 function Navbar() {
