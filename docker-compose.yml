@@ -12,3 +12,13 @@ services:
     ports: 
       - '8080:8080'
     command: sh -c 'npm run start'
+
+  be-container:
+    tty: true
+    container_name: be-container
+    build:
+      context: .
+      dockerfile:
+    volumes: 
+      - ./backend:/go/src/app
+    working_dir: /go/src/app
