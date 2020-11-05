@@ -18,7 +18,7 @@ services:
     container_name: be-container
     build:
       context: .
-      dockerfile:
+      dockerfile: go.Dockerfile
     volumes: 
       - ./backend:/go/src/app
     working_dir: /go/src/app
