@@ -3,6 +3,7 @@
 ## Tech stacked
 - **Frontend**: 
   - React/ typescript
+  - Ant Design
 - **Backend**: 
   - Golang/ Echo go framework
 - **Database**: 
