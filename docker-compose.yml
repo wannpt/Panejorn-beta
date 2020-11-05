@@ -21,4 +21,6 @@ services:
       dockerfile: go.Dockerfile
     volumes: 
       - ./backend:/go/src/app
+    ports: 
+      - '8000:8000'
     working_dir: /go/src/app
