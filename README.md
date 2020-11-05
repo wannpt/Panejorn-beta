@@ -1,9 +1,12 @@
 # Panejorn-beta v0.02
 
 ## Tech stacked
-- Frontend: React/ typescript
-- Backend: Golang/ Echo go framework
-- Database: *WIP*
+- **Frontend**: 
+  - React/ typescript
+- **Backend**: 
+  - Golang/ Echo go framework
+- **Database**: 
+  - *WIP*
 
 ## Get started
 Clone this project to your local and run following commands:
