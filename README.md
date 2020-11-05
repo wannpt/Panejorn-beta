@@ -11,10 +11,6 @@
 ## Get started
 Clone this project to your local and run following commands:
 
-**Build docker images**
-```sh
-make build
-```
 **Run Project**
 ```sh
 make run
