@@ -7,7 +7,7 @@ WORKDIR $PROJECT_ROOT
 
 #Install package
 COPY ./frontend/package.json .
-COPY ./frontend/package-lock.json .
+COPY ./frontend/yarn.lock .
 
 #copy source file to build process
 COPY ./frontend/tsconfig.json .
@@ -15,9 +15,9 @@ COPY ./frontend/public ./public
 COPY ./frontend/src ./src
 
 #install dependencies
-RUN npm install --silence
-RUN npm install react-scripts -g --silence
+RUN yarn --silence
+RUN yarn add react-scripts -g --silence
 
 EXPOSE 8080
 #Build the app
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
