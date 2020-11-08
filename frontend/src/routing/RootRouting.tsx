@@ -14,12 +14,10 @@ const CollectionPage = Loadable({
 
 const RootRoutes = () => {
     return (
-        <BrowserRouter>
-            <Switch>
-                <Route path="/" exact component={Homepage} />
-                <Route path="/collections" exact component={CollectionPage} />
-            </Switch>
-        </BrowserRouter>
+        <Switch>
+            <Route path="/" exact component={Homepage} />
+            <Route path="/collections" exact component={CollectionPage} />
+        </Switch>
     );
 };
 
