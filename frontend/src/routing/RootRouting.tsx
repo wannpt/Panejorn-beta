@@ -1,7 +1,6 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter, Router } from 'react-router-dom';
+import { Switch, Route} from 'react-router-dom';
 import Loadable from 'react-loadable';
-import App from '../App';
 
 const Homepage = Loadable({
     loader: () => import('../pages/Homepage'),
