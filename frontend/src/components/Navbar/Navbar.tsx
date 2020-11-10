@@ -31,22 +31,20 @@ const navbarConstant:MapPathToIcon[] = [
 const Navbar = () => {  
 
 
-    const [icons, setIcons] = useState<MapPathToIcon[]>(navbarConstant)
-    const location = useLocation()
+    const [icons, setIcons] = useState<MapPathToIcon[]>(navbarConstant);
+    const location = useLocation();
     
     useEffect(() => {
-        console.log(location.pathname)
             const path = location.pathname
             setIcons(prev => {
                 return prev.map(el => {
                     const pattern = new RegExp('^'+el.path + '$')
                     const selected = path.match(pattern)
-                    console.log(path ,selected)
                     if(selected)
                     return {...el, active: true}
                     return {...el, active: false}
-                })
-            })
+                });
+            });
             
         
         
@@ -58,9 +56,9 @@ const Navbar = () => {
                 const icon = el.active ? el.fill : el.line;
                 return (
                 <Link to={el.path} className='col-3'>
-                <Icon icon={icon} style={el.style} />
-            </Link>
-                )
+                    <Icon icon={icon} style={el.style} />
+                </Link>
+                );
             })}
         </div>
     );
