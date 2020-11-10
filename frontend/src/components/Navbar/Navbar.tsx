@@ -37,10 +37,8 @@ const Navbar = () => {
     useEffect(() => {
         console.log(location.pathname)
             const path = location.pathname
-            // const setIcon = icons.findIndex(el => el.key === path)
             setIcons(prev => {
                 return prev.map(el => {
-                    // const patter = new RegExp()
                     const pattern = new RegExp('^'+el.path + '$')
                     const selected = path.match(pattern)
                     console.log(path ,selected)
@@ -55,7 +53,7 @@ const Navbar = () => {
     },[location.pathname]);
     
     return (
-        <div className="navbar text-center">
+        <div className="navbar text-center" data-testid='navbar-component'>
             {icons.map(el => {
                 const icon = el.active ? el.fill : el.line;
                 return (
