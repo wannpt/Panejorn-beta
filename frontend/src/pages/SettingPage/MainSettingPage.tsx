@@ -7,3 +7,5 @@ function MainSettingPage() {
         </div>
     )
 }
+
+export default MainSettingPage;

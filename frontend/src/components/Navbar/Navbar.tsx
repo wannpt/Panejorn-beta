@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Navbar.css';
-import { NavLink as Link, useHistory, useLocation } from 'react-router-dom';
-//@ts-ignore
-import ScriptTag from 'react-script-tag';
+import { NavLink as Link, useLocation } from 'react-router-dom';
 
-import { Icon, IconifyIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import home4line from '@iconify/icons-ri/home-4-line';
 import home4fill from '@iconify/icons-ri/home-4-fill';
 import roundCollectionsBookmark from '@iconify/icons-ic/round-collections-bookmark';
@@ -13,7 +11,6 @@ import compass3fill from '@iconify/icons-ri/compass-3-fill';
 import compass3line from '@iconify/icons-ri/compass-3-line';
 import user3fill from '@iconify/icons-ri/user-3-fill';
 import user3line from '@iconify/icons-ri/user-3-line';
-import { fileURLToPath } from 'url';
 
 type MapPathToIcon = {
     key: string,
@@ -27,7 +24,8 @@ type MapPathToIcon = {
 const navbarConstant:MapPathToIcon[] = [
     {key: 'home', path: '/', fill: home4fill, line: home4line, active: true},
     {key: 'collections', path: '/collections', fill: roundCollectionsBookmark, line: outlineCollectionsBookmark, active: false},
-    {key: 'explore', path: '/explore', fill: roundCollectionsBookmark, line: outlineCollectionsBookmark, active: false},
+    {key: 'explore', path: '/explore', fill: compass3fill, line: compass3line, active: false},
+    {key: 'setting', path: '/setting', fill: user3fill, line: user3line, active: false}
 ].map(el => ({...el, style: {color: '#E66973', fontSize: '20px'}}))
 
 const Navbar = () => {  

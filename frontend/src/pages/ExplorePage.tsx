@@ -7,3 +7,5 @@ function ExplorePage() {
         </div>
     )
 }
+
+export default ExplorePage;
