@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../../App.scss';
 import './Navbar.css';
 import { NavLink as Link, useLocation } from 'react-router-dom';
 
@@ -26,7 +27,7 @@ const navbarConstant:MapPathToIcon[] = [
     {key: 'collections', path: '/collections', fill: roundCollectionsBookmark, line: outlineCollectionsBookmark, active: false},
     {key: 'explore', path: '/explore', fill: compass3fill, line: compass3line, active: false},
     {key: 'setting', path: '/setting', fill: user3fill, line: user3line, active: false}
-].map(el => ({...el, style: {color: '#E66973', fontSize: '20px'}}))
+].map(el => ({...el, style: {color: '#E66973', fontSize: '24px'}}))
 
 const Navbar = () => {  
 
@@ -51,7 +52,7 @@ const Navbar = () => {
     },[location.pathname]);
     
     return (
-        <div className="navbar text-center" data-testid='navbar-component'>
+        <div className="app-tabbar text-center" data-testid='navbar-component'>
             {icons.map(el => {
                 const icon = el.active ? el.fill : el.line;
                 return (
