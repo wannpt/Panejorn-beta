@@ -30,16 +30,22 @@
   bottom: 0;
   left: 0;
   width: 100vw;
-  height: 60px;
+  height: 45px;
   display: flex;
   background-color: #ffffff;
-  padding-top: 15px;
+  padding-top: 10px;
 
 
   // iPhone XR, 11, 11 Pro Max
   @media screen and (height: 848px) and (width: 414px) {
     height: 80px;
   }
+
+  // flutter screen
+  @media screen and (height: 852px) and (width: 414px) {
+    height: 80px;
+  }
+
   // iPhone X, 11 Pro
   @media screen and (height: 768px) and (width: 375px) {
     height: 80px;
