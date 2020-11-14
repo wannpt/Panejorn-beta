@@ -1,5 +1,4 @@
 import React from 'react'
-import './Homepage.scss'
 
 function Homepage() {
     const screenWidth = window.innerWidth;
