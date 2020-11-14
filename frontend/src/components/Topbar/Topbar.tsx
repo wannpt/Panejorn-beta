@@ -13,7 +13,6 @@ type TopbarType = {
     options?: React.FC[],
     isEdit: boolean
     styleClass: string,
-   // active: boolean
 }
 
 const topbarConstant: TopbarType[] = [
@@ -39,10 +38,6 @@ function Topbar() {
                 setTopbar(el)
 
         })
-        // const pattern = new RegExp('^/' + '$')
-        // const selected = path.match(pattern);
-        // if(selected)
-        //     setTopbar();
 
 },[location.pathname]);
 
