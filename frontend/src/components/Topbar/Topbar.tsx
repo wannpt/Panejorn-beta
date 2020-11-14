@@ -35,8 +35,8 @@ function Topbar() {
             const pattern = new RegExp('^' + el.path + '$')
             const selected = path.match(pattern);
             if(selected)
-                setTopbar(el)
-
+                return setTopbar(el)
+            return el
         })
 
 },[location.pathname]);
