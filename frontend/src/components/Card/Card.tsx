@@ -6,19 +6,25 @@ import calendarLine from '@iconify/icons-ri/calendar-line';
 import mapPin2Line from '@iconify/icons-ri/map-pin-2-line';
 import starFill from '@iconify/icons-ri/star-fill';
 import pushpin2Fill from '@iconify/icons-ri/pushpin-2-fill';
+import navigationLine from '@iconify/icons-ri/navigation-line';
 
 type cardType = {
     title: string,
     details: cardDetail[],
     option?: any,
     isPinned?: boolean, 
-    nextLoc?: any,
+    nextLoc?: cardLocation,
 }
 
 type cardDetail = {
     icon?: any,
     detail: string
     style?: React.CSSProperties
+}
+
+type cardLocation = {
+    nextLoc: string, 
+    time: string
 }
 
 const cardDefault: cardType = {
@@ -33,8 +39,25 @@ const cardDefault: cardType = {
 }
 
 
+
+
 const Card = (props : cardType) => {
     const [cardState, setCardState]= useState(props);
+    
+    let nextLocCard = () => {
+        return (
+            <div className='row'>
+                <hr></hr>
+                <p>test</p>
+                <div className='card-title'>
+                    <span>{cardState.nextLoc?.nextLoc}</span>
+                </div>
+                <div className='card-detail'>
+                    <span>{cardState.nextLoc?.time}</span>
+                </div>
+            </div>
+        )
+    }
 
     // useEffect(() => {
     //     setCardState(prev => {
@@ -43,7 +66,6 @@ const Card = (props : cardType) => {
     //         return {...prev, isPinned:true, option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} /> }
     //     })
     // },[cardState.isPinned])
-
 
     function PinnedCard(){
         setCardState(prev => {
@@ -96,6 +118,37 @@ const Card = (props : cardType) => {
                 </div>
 
             </div>
+            {cardState.nextLoc && (
+                    <div className='row align-items-center'>
+                        <hr style={{
+                            color: '#F5F2F2',
+                            backgroundColor: '#F5F2F2',
+                            height: .5,
+                            borderColor : '#F5F2F2',
+                            width: '90%'
+                        }}/>
+                        <div className='col-10'>
+
+                            <p className='extra-small-title'> สถานที่ต่อไป </p>
+
+                            <div className='title'>
+                                <span>{cardState.nextLoc?.nextLoc}</span>
+                            </div>
+                        
+                            <div className='card-detail'>
+                                <span>{cardState.nextLoc?.time}</span>
+                            </div>
+                        </div>
+                        <div className='col-2 px-0'>
+                            <div className='card-option'>
+                                <button>
+                                    <Icon icon={navigationLine} style={{color: '#E66973', fontSize: '24px'}} rotate='90deg' />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+        
         </div>
     );
 }
