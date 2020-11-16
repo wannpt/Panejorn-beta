@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Card.scss';
 
 import { Icon } from '@iconify/react';
@@ -8,33 +8,72 @@ import starFill from '@iconify/icons-ri/star-fill';
 import pushpin2Fill from '@iconify/icons-ri/pushpin-2-fill';
 
 type cardType = {
-    type: string,
     title: string,
     details: cardDetail[],
-    option?: any
+    option?: any,
+    isPinned?: boolean, 
+    nextLoc?: any,
 }
 
 type cardDetail = {
     icon?: any,
     detail: string
+    style?: React.CSSProperties
 }
 
 const cardDefault: cardType = {
-    type: 'large',
     title: 'แพลนไปเที่ยวแบบจำลอง',
     details: [
-        { icon: <Icon icon={calendarLine} style={{color: '#E66973', fontSize: '16px'}} />, detail: '09 พ.ย. 63 - 12 พ.ย. 63'},
-        { icon: <Icon icon={mapPin2Line} style={{color: '#E66973', fontSize: '16px'}} />, detail: 'จังหวัดกาญจนบุรี'},
-        { icon: <Icon icon={starFill} style={{color: '#FFE600', fontSize: '16px'}} />, detail: '4.8'},
-    ],
-    option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} />
+        { icon: calendarLine, detail: '09 พ.ย. 63 - 12 พ.ย. 63'},
+        { icon: mapPin2Line, detail: 'จังหวัดกาญจนบุรี'},
+        { icon: starFill, detail: '4.8', style: {color: '#FFE600', fontSize:'16px'}},
+    ].map(el => {
+        if(el.icon !== starFill)
+            return  {...el, style:{color: '#E66973', fontSize: '16px'}}
+        return {...el}
+    }),
+    option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} />,
+    isPinned : false,
 }
+
 
 const Card = () => {
     const [cardState, setCardState]= useState(cardDefault);
 
+    // useEffect(() => {
+    //     setCardState(prev => {
+    //         if(prev.isPinned)
+    //             return {...prev, isPinned: false, option: <Icon icon={pushpin2Fill} style={{color: '#FFFFFF', fontSize: '24px'}} /> }
+    //         return {...prev, isPinned:true, option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} /> }
+    //     })
+    // },[cardState.isPinned])
+
+
+    function PinnedCard(){
+        setCardState(prev => {
+            if(prev.isPinned){
+                let newDetails = prev.details.map(el => {
+                    if(el.icon !== starFill)
+                        return {...el, style:{ color: '#E66973', fontSize: '16px'}}
+                    return {...el}
+                })
+                return {...prev, isPinned: false, details: newDetails ,option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} />}
+            }
+            
+            else {
+                let newDetails =  prev.details.map(el => {
+                    if(el.icon !== starFill)
+                        return {...el, style:{ color: '#FFFFFF', fontSize: '16px'}}
+                    return {...el}
+                })
+                return {...prev, isPinned: true, details: newDetails , option: <Icon icon={pushpin2Fill} style={{color: '#FFFFFF', fontSize: '24px'}} />}  
+            }
+        })
+    }
+
+
     return (
-        <div className='card-container'>
+        <div className={ cardState.isPinned ? 'card-container gradient-background white-text' : 'card-container'}>
             <div className='row align-items-center'>
                 
                 <div className='col-10'>
@@ -45,7 +84,7 @@ const Card = () => {
                     {cardState.details.map(el => {
                        return( 
                         <div className='card-detail'>
-                            {el.icon}
+                            <Icon icon={el.icon} style={el.style} />
                             <span className='ml-2'> {el.detail}</span>
                         </div>
                     )})}
@@ -54,7 +93,9 @@ const Card = () => {
 
                 <div className='col-2 px-0'>
                     <div className='card-option'>
-                        {cardState.option}
+                        <button onClick={PinnedCard}>
+                            {cardState.option}
+                        </button>
                     </div>
                 </div>
 
