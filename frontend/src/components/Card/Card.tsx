@@ -24,21 +24,17 @@ type cardDetail = {
 const cardDefault: cardType = {
     title: 'แพลนไปเที่ยวแบบจำลอง',
     details: [
-        { icon: calendarLine, detail: '09 พ.ย. 63 - 12 พ.ย. 63'},
-        { icon: mapPin2Line, detail: 'จังหวัดกาญจนบุรี'},
+        { icon: calendarLine, detail: '09 พ.ย. 63 - 12 พ.ย. 63', style:{color: '#E66973', fontSize: '16px'}},
+        { icon: mapPin2Line, detail: 'จังหวัดกาญจนบุรี', style:{color: '#E66973', fontSize: '16px'}},
         { icon: starFill, detail: '4.8', style: {color: '#FFE600', fontSize:'16px'}},
-    ].map(el => {
-        if(el.icon !== starFill)
-            return  {...el, style:{color: '#E66973', fontSize: '16px'}}
-        return {...el}
-    }),
+    ],
     option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} />,
     isPinned : false,
 }
 
 
-const Card = () => {
-    const [cardState, setCardState]= useState(cardDefault);
+const Card = (props : cardType) => {
+    const [cardState, setCardState]= useState(props);
 
     // useEffect(() => {
     //     setCardState(prev => {

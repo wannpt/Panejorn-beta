@@ -6,7 +6,6 @@ function Homepage() {
 
     return (
         <div className='gradient-background default-padding'>
-            <Card/>
         </div>
     );
 }
