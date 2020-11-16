@@ -42,6 +42,10 @@ const cardListDefault: cardType[] = [
         ],
         option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} />,
         isPinned: false, 
+        nextLoc: {
+            nextLoc: 'สถานีดวงจันทร์',
+            time: '09.00น - 19.00น',
+        }
     },
     {
         title: 'ทดสอบสักหน่อย2',
