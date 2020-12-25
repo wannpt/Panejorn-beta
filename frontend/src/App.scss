@@ -1,4 +1,9 @@
 
+input, button{
+  border:none;
+  background: none;
+}
+
 .App{
   font-family: 'Kanit', sans-serif;
   background-color: #fafafa;
@@ -55,4 +60,14 @@ background: -moz-linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,11
 background: -webkit-linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,115,1) 100%);
 background: linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,115,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f3bb80",endColorstr="#e66973",GradientType=1);
+}
+
+.white-text{
+  color:white;
+}
+
+.extra-small-title{
+  font-weight: 600;
+  color: #969191;
+  font-size: 0.75rem;
 }
