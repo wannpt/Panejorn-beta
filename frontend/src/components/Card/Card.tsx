@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Card.scss';
 
-import { Icon, IconifyIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import calendarLine from '@iconify/icons-ri/calendar-line';
 import mapPin2Line from '@iconify/icons-ri/map-pin-2-line';
 import starFill from '@iconify/icons-ri/star-fill';
@@ -27,16 +27,6 @@ type cardLocation = {
     time: string
 }
 
-const cardDefault: cardType = {
-    title: 'แพลนไปเที่ยวแบบจำลอง',
-    details: [
-        { type: 'date', detail: '09 พ.ย. 63 - 12 พ.ย. 63', style:{color: '#E66973', fontSize: '16px'}},
-        { type: 'place', detail: 'จังหวัดกาญจนบุรี', style:{color: '#E66973', fontSize: '16px'}},
-        { type: 'rate', detail: '4.8', style: {color: '#FFE600', fontSize:'16px'}},
-    ],
-    option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} />,
-    isPinned : false,
-}
 
 const MapStringToIcon :any = {
     'date' : calendarLine,
@@ -51,20 +41,6 @@ const MapStringToIcon :any = {
 const Card = (props : cardType) => {
     const [cardState, setCardState]= useState(props);
     
-    let nextLocCard = () => {
-        return (
-            <div className='row'>
-                <hr></hr>
-                <p>test</p>
-                <div className='card-title'>
-                    <span>{cardState.nextLoc?.nextLoc}</span>
-                </div>
-                <div className='card-detail'>
-                    <span>{cardState.nextLoc?.time}</span>
-                </div>
-            </div>
-        )
-    }
 
     // useEffect(() => {
     //     setCardState(prev => {
@@ -136,7 +112,7 @@ const Card = (props : cardType) => {
                         }}/>
                         <div className='col-10'>
 
-                            <p className='extra-small-title mb-2'> สถานที่ต่อไป </p>
+                            <p className='extra-small-title mb-2    '> สถานที่ต่อไป </p>
 
                             <div className='title'>
                                 <span>{cardState.nextLoc?.nextLoc}</span>
