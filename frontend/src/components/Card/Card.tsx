@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Card.scss';
 
-import { Icon } from '@iconify/react';
+import { Icon, IconifyIcon } from '@iconify/react';
 import calendarLine from '@iconify/icons-ri/calendar-line';
 import mapPin2Line from '@iconify/icons-ri/map-pin-2-line';
 import starFill from '@iconify/icons-ri/star-fill';
@@ -17,7 +17,7 @@ type cardType = {
 }
 
 type cardDetail = {
-    icon?: any,
+    type: any,
     detail: string
     style?: React.CSSProperties
 }
@@ -30,12 +30,19 @@ type cardLocation = {
 const cardDefault: cardType = {
     title: 'แพลนไปเที่ยวแบบจำลอง',
     details: [
-        { icon: calendarLine, detail: '09 พ.ย. 63 - 12 พ.ย. 63', style:{color: '#E66973', fontSize: '16px'}},
-        { icon: mapPin2Line, detail: 'จังหวัดกาญจนบุรี', style:{color: '#E66973', fontSize: '16px'}},
-        { icon: starFill, detail: '4.8', style: {color: '#FFE600', fontSize:'16px'}},
+        { type: 'date', detail: '09 พ.ย. 63 - 12 พ.ย. 63', style:{color: '#E66973', fontSize: '16px'}},
+        { type: 'place', detail: 'จังหวัดกาญจนบุรี', style:{color: '#E66973', fontSize: '16px'}},
+        { type: 'rate', detail: '4.8', style: {color: '#FFE600', fontSize:'16px'}},
     ],
     option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} />,
     isPinned : false,
+}
+
+const MapStringToIcon :any = {
+    'date' : calendarLine,
+    'place' : mapPin2Line,
+    'rate' : starFill,
+    'pin' : pushpin2Fill
 }
 
 
@@ -71,7 +78,7 @@ const Card = (props : cardType) => {
         setCardState(prev => {
             if(prev.isPinned){
                 let newDetails = prev.details.map(el => {
-                    if(el.icon !== starFill)
+                    if(el.type !== 'rate')
                         return {...el, style:{ color: '#E66973', fontSize: '16px'}}
                     return {...el}
                 })
@@ -80,7 +87,7 @@ const Card = (props : cardType) => {
             
             else {
                 let newDetails =  prev.details.map(el => {
-                    if(el.icon !== starFill)
+                    if(el.type !== 'rate')
                         return {...el, style:{ color: '#FFFFFF', fontSize: '16px'}}
                     return {...el}
                 })
@@ -102,7 +109,7 @@ const Card = (props : cardType) => {
                     {cardState.details.map(el => {
                        return( 
                         <div className='card-detail'>
-                            <Icon icon={el.icon} style={el.style} />
+                            <Icon icon={(MapStringToIcon[el.type])} style={el.style} />
                             <span className='ml-2'> {el.detail}</span>
                         </div>
                     )})}
@@ -129,7 +136,7 @@ const Card = (props : cardType) => {
                         }}/>
                         <div className='col-10'>
 
-                            <p className='extra-small-title'> สถานที่ต่อไป </p>
+                            <p className='extra-small-title mb-2'> สถานที่ต่อไป </p>
 
                             <div className='title'>
                                 <span>{cardState.nextLoc?.nextLoc}</span>
