@@ -72,7 +72,10 @@ const cardListDefault: cardType[] = [
 
 function PlansCollectionPage() {
 
-    const [cardList, setCardList] = useState(cardListDefault)
+//  const [cardList, setCardList] = useState(cardListDefault)
+//temp
+    const cardList = cardListDefault;
+//endtemp
 
     return (
         <div className='default-padding'>
