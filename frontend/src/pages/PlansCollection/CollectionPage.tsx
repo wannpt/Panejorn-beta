@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from '../../components/Card/Card'
 
 import { Icon } from '@iconify/react';
@@ -83,11 +83,13 @@ function PlansCollectionPage() {
             {cardList.map(el => {
                 if(el.isPinned)
                     return <Card {...el}/>
+                return {};
             })}
             <p className='title'>แผนทั้งหมด (3)</p>
             {cardList.map(el => {
                 if(!el.isPinned)
                     return <Card {...el}/>
+                return {};
             })}
         </div>
     );
