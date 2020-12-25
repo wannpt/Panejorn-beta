@@ -83,13 +83,13 @@ function PlansCollectionPage() {
             {cardList.map(el => {
                 if(el.isPinned)
                     return <Card {...el}/>
-                return {};
+                return null;
             })}
             <p className='title'>แผนทั้งหมด (3)</p>
             {cardList.map(el => {
                 if(!el.isPinned)
                     return <Card {...el}/>
-                return {};
+                return null;
             })}
         </div>
     );
