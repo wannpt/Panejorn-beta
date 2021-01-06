@@ -1,0 +1,21 @@
+.card-news{
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.07);
+    height: 25vh;
+    width: 60vw;
+  }
+
+  .news-container{
+      overflow-x: scroll;
+      height: fit-content;
+  }
+
+  .news-container::-webkit-scrollbar {display: none;}
+
+  .news-scroller{
+    display:flex;
+    overflow-x: hidden;
+    width: fit-content;
+    height: 26vh;
+  }

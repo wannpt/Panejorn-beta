@@ -71,3 +71,9 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f3bb80",endCo
   color: #969191;
   font-size: 0.75rem;
 }
+
+.color-text{
+  background: -webkit-linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,115,1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
