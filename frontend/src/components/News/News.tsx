@@ -6,6 +6,7 @@ import './News.scss';
 //temp
 import Image1 from '../../Images/cover_kbank-850x567.jpg';
 import Image2 from '../../Images/s_179897_9953.jpg';
+import { Link } from 'react-router-dom';
 
 type NewsType = {
     image: string,
@@ -27,8 +28,11 @@ const NewsCard = (img:string) => {
       };
 
     return (
-    <div className='card-news mr-3' style={style}>
-    </div>
+        <Link to={'/place/2'}>
+            <div className='card-news mr-3' style={style}>
+       
+            </div>  
+        </Link>
     );
 }
 

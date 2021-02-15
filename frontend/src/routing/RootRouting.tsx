@@ -22,6 +22,11 @@ const SettingPage = Loadable({
     loading: () => null
 });
 
+const PlacePage = Loadable({
+    loader: () => import('../pages/PlaceDetails/PlaceDetailsPage'),
+    loading: () => null
+})
+
 
 const RootRoutes = () => {
     return (
@@ -30,6 +35,7 @@ const RootRoutes = () => {
             <Route path="/collections" exact component={CollectionPage} />
             <Route path="/explore" exact component={ExplorePage} />
             <Route path="/setting" exact component={SettingPage} />
+            <Route path="/place/:id" component={PlacePage} />
         </Switch>
     );
 };
