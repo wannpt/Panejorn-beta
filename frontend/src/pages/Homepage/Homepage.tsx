@@ -1,6 +1,7 @@
 
 import React from 'react'
 import Card from '../../components/Card/Card'
+import News from '../../components/News/News'
 
 const cardDefault: cardType =  {
     title: 'ทดสอบสักหน่อย',
@@ -35,12 +36,17 @@ function Homepage() {
 
      
     return (
-        <div className='gradient-background default-padding'>
-            <div className='pb-4'>
-                <p className='small-title white-text mb-2'>แผนเที่ยวปัจจุบัน</p>
-                <Card   title={cardDefault.title}
-                        details={cardDefault.details}
-                        nextLoc={cardDefault.nextLoc} />
+        <div>
+            <div className='gradient-background default-padding'>
+                <div className='pb-4'>
+                    <p className='small-title white-text mb-2'>แผนเที่ยวปัจจุบัน</p>
+                    <Card   title={cardDefault.title}
+                            details={cardDefault.details}
+                            nextLoc={cardDefault.nextLoc} />
+                </div>
+            </div>
+            <div className='px-3 py-4'>
+                <News/>
             </div>
         </div>
     );
