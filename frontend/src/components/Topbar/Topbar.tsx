@@ -12,14 +12,15 @@ type TopbarType = {
     canReturn: boolean,
     options?: React.FC[],
     isEdit: boolean
-    styleClass: string,
+    isHidden: boolean,
 }
 
 const topbarConstant: TopbarType[] = [
-    { title: 'หน้าแรก', path: '/' , canReturn: false, isEdit: false, styleClass: 'topbar'},
-    { title: 'แผนของฉัน', path: '/collections', canReturn: false, isEdit: true, styleClass: 'topbar gradient-background'},
-    { title: 'สำรวจ', path:'/explore',canReturn: false, isEdit: false, styleClass: 'topbar gradient-background'},
-    { title: 'ตั้งค่า', path:'/setting',canReturn: false, isEdit: false, styleClass: 'topbar gradient-background'},
+    { title: 'หน้าแรก', path: '/' , canReturn: false, isEdit: false, isHidden: true},
+    { title: 'แผนของฉัน', path: '/collections', canReturn: false, isEdit: true, isHidden: false},
+    { title: 'สำรวจ', path:'/explore',canReturn: false, isEdit: false, isHidden: false},
+    { title: 'ตั้งค่า', path:'/setting',canReturn: false, isEdit: false, isHidden: false},
+    { title: 'รายละเอียดสถานที่', path:'/place', canReturn: true, isEdit:false, isHidden: true}
     ]
 
 
@@ -41,15 +42,17 @@ function Topbar() {
 
 },[location.pathname]);
 
+    if( topBar.isHidden)
+        return null
     
     return (
-        <div className={topBar.styleClass}>
+        <div className='topbar gradient-background'>
            <div className='row'>
                 <div className='col'>
                     <span> {topBar.title} </span>
                 </div>
                 <div className='col text-center'>
-                    <span> {topBar.isEdit? 'edit': 'not-edit'} </span>
+                    <span> {topBar.isEdit? 'edit': ''} </span>
                 </div>
                 <div className='col text-right'>
                     <span> options </span>
