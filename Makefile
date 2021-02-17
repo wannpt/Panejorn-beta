@@ -16,4 +16,4 @@ attach-fe:
 
 #attach backend container
 attach-be:
-	docker-compose exec be-container go run main.go
+	docker-compose exec be-container gomon .

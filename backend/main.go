@@ -2,18 +2,22 @@ package main
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
+	"os"
 
-	"net/http"
-
-	"github.com/labstack/echo"
+	"app/routers"
 )
 
-func main() {
-	fmt.Println("Experiment Echo")
-	e := echo.New()
-	e.GET("/", func(c echo.Context) error{ 
-		return c.String(http.StatusOK, "Hello, Gopher!")
-	})
-	e.Logger.Fatal(e.Start(":8000"))
+func init() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Println("cannot read .env file. %v", err)
+	}
 }
 
+func main() {
+	r := routers.SetUpRouter()
+	port := os.Getenv("port")
+	fmt.Println("Starting server on the port ", port)
+	r.Logger.Fatal(r.Start(":" + port))
+}
