@@ -33,24 +33,32 @@ const Navbar = () => {
 
 
     const [icons, setIcons] = useState<MapPathToIcon[]>(navbarConstant);
+    const [isHidden, setIsHidden] = useState(true)
     const location = useLocation();
     
     useEffect(() => {
             const path = location.pathname
+            setIsHidden(true)
             setIcons(prev => {
                 return prev.map(el => {
                     const pattern = new RegExp('^'+el.path + '$')
                     const selected = path.match(pattern)
                     if(selected)
-                    return {...el, active: true}
+                        return {...el, active: true}
                     return {...el, active: false}
                 });
             });
+            navbarConstant.map(el => {
+                if(location.pathname === el.path)
+                    setIsHidden(false);
+            })
             
-        
-        
     },[location.pathname]);
     
+
+    if(isHidden)
+        return null
+
     return (
         <div className="app-tabbar text-center" data-testid='navbar-component'>
             {icons.map(el => {
