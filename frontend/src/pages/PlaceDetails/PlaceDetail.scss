@@ -1,0 +1,16 @@
+img{
+    width: 100%;
+    height: 40vh;
+}
+
+.close-button{
+    position: absolute;
+    left: 16px;
+    top: 1rem;
+    color: white;
+    width: 3rem;
+    height: 3rem;
+    font-size: 36px;
+    z-index: 999;
+    padding: 0;
+}

@@ -10,10 +10,14 @@ run:
 stop:
 	docker-compose down
 
+# build backend image
+build-be:
+	docker build -f go.Dockerfile -t be-container .
+
 #attach frontend container
 attach-fe:
 	docker-compose exec fe-container sh
 
 #attach backend container
 attach-be:
-	docker-compose exec be-container go run main.go
+	docker run be-container

@@ -1,15 +1,15 @@
 version: "3.8"
 
-services: 
+services:
   fe-container:
     tty: true
     container_name: fe-container
     build:
       context: .
       dockerfile: react.Dockerfile
-    volumes: 
+    volumes:
       - './frontend:/opt/app'
-    ports: 
+    ports:
       - '8080:8080'
     command: sh -c 'npm run start'
 
@@ -19,8 +19,8 @@ services:
     build:
       context: .
       dockerfile: go.Dockerfile
-    volumes: 
+    volumes:
       - ./backend:/go/src/app
-    ports: 
+    ports:
       - '8000:8000'
     working_dir: /go/src/app

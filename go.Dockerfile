@@ -1,15 +1,19 @@
-FROM golang:1.15.3-alpine
+FROM golang:1.15.6-alpine3.12 AS builder
 
-EXPOSE 8000
+ENV GO111MODULE=on
 
 ENV PROJECT_ROOT /go/src/app
 RUN mkdir -p $PROJECT_ROOT
 WORKDIR $PROJECT_ROOT
+
 COPY ./backend .
+RUN go clean --modcache
+RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
-#Init git for golang package
-RUN apk add --no-cache bash git openssh 
 
-#Get 'echo' dependencies
-RUN go get -u github.com/labstack/echo/...
 
+FROM scratch AS production
+COPY --from=builder /go/src/app .
+EXPOSE 8000
+CMD ["./main"]
