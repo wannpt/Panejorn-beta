@@ -4,7 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 
-	"app/handlers"
+	"backend/handlers"
 )
 
 func SetUpRouter() *echo.Echo{

@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"time"
 
-	"app/db"
-	"app/models"
-	res "app/resources"
+	"backend/db"
+	"backend/models"
+	res "backend/resources"
 )
 
 func GetCurrentLocation(c echo.Context) error {

@@ -5,7 +5,7 @@ import (
 	"github.com/joho/godotenv"
 	"os"
 
-	"app/routers"
+	"backend/routers"
 )
 
 func init() {
@@ -18,6 +18,6 @@ func init() {
 func main() {
 	r := routers.SetUpRouter()
 	port := os.Getenv("port")
-	fmt.Println("Starting server on the port ", port)
+	fmt.Println("starting server on the port", port)
 	r.Logger.Fatal(r.Start(":" + port))
 }

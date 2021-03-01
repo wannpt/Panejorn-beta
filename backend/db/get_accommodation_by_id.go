@@ -3,7 +3,7 @@ package db
 import (
 	"log"
 
-	"app/models"
+	"backend/models"
 )
 
 func GetAccommodationById(accomId string) (models.Accommodation, error) {

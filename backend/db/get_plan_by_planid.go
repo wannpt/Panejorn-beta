@@ -3,7 +3,7 @@ package db
 import (
 	"log"
 
-	"app/models"
+	"backend/models"
 )
 
 func GetPlanByPlanId(planId int64) (models.Plan, error) {

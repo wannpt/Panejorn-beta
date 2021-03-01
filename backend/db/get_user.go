@@ -1,7 +1,7 @@
 package db
 
 import (
-	"app/models"
+	"backend/models"
 )
 
 func GetUser(email string) (models.User, error) {

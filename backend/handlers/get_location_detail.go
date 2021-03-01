@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"app/db"
-	res "app/resources"
+	"backend/db"
+	res "backend/resources"
 )
 
 func GetLocationDetail(c echo.Context) error {

@@ -3,7 +3,7 @@ package db
 import (
 	"log"
 
-	"app/models"
+	"backend/models"
 )
 
 func GetAttractionById(attractionId string) (models.Attraction, error) {

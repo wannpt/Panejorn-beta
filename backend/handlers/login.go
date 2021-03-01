@@ -5,8 +5,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 
-	"app/db"
-	res "app/resources"
+	"backend/db"
+	res "backend/resources"
 )
 
 func Login(c echo.Context) error {

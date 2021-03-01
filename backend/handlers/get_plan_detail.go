@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"app/db"
-	res "app/resources"
+	"backend/db"
+	res "backend/resources"
 )
 
 func GetPlanDetail(c echo.Context) error {

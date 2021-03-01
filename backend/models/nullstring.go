@@ -4,7 +4,7 @@ import (
 	"database/sql/driver"
 	"errors"
 
-	res "app/resources"
+	res "backend/resources"
 )
 
 type NullString string
