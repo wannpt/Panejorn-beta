@@ -13,7 +13,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
 
 
-FROM alpine:latest AS production
+FROM scratch AS production
 COPY --from=builder /go/src/app .
 EXPOSE 8000
 CMD ["./main"]
