@@ -11,7 +11,7 @@ services:
       - './frontend:/opt/app'
     ports:
       - '8080:8080'
-    command: sh -c 'npm run start'
+
 
   be-container:
     tty: true
