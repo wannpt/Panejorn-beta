@@ -8,6 +8,7 @@ services:
       context: .
       dockerfile: react.Dockerfile
     volumes:
+      - '/opt/app/node_modules'
       - './frontend:/opt/app'
     ports:
       - '8080:8080'
