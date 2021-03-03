@@ -16,12 +16,11 @@ build: build-be build-fe
 
 # build backend image
 build-be:
-	docker build -f go.Dockerfile -t be-container .
+	docker-compose build be-container
 
 #build frontend image
 build-fe:
-	docker build -f react.Dockerfile -t fe-container .
-
+	docker-compose build fe-container
 
 #attach frontend container
 attach-fe:
@@ -29,4 +28,4 @@ attach-fe:
 
 #attach backend container
 attach-be:
-	docker-compose run be-container
+	docker-compose run --service-ports be-container
