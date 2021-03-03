@@ -15,9 +15,10 @@ COPY ./frontend/public ./public
 COPY ./frontend/src ./src
 
 #install dependencies
-RUN yarn --silence
-RUN yarn add react-scripts -g --silence
+RUN yarn -g --silence
 
+#Expose port to make sure that port is free
 EXPOSE 8080
+
 #Build the app
 CMD ["yarn", "start"]
