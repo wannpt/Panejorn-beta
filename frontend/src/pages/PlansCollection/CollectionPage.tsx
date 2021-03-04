@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../../components/Card/Card';
-
-import { Icon } from '@iconify/react';
-import calendarLine from '@iconify/icons-ri/calendar-line';
-import mapPin2Line from '@iconify/icons-ri/map-pin-2-line';
-import starFill from '@iconify/icons-ri/star-fill';
-import pushpin2Fill from '@iconify/icons-ri/pushpin-2-fill';
 import { CardCollections } from '../../constant/Types/CardTypes';
-import { GetPlanCollection } from '../../constant/api/PlansAPI/PlansAPI';
 
 const CardsDefault: CardCollections = {
 	pinnedPlans: [
