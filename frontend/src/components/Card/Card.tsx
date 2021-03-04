@@ -8,6 +8,7 @@ import mapPin2Line from '@iconify/icons-ri/map-pin-2-line';
 import starFill from '@iconify/icons-ri/star-fill';
 import pushpin2Fill from '@iconify/icons-ri/pushpin-2-fill';
 import navigationLine from '@iconify/icons-ri/navigation-line';
+import { Link } from 'react-router-dom';
 
 const Card = (props: any) => {
 	const [cardState, setCardState] = useState<CardType | StatusCard>(props.data);
@@ -17,29 +18,34 @@ const Card = (props: any) => {
 	}
 
 	return (
-		<div className={props.isPinned ? 'card-container gradient-background white-text' : 'card-container'}>
+		<div className={props.isPinned ? 'card-container gradient-background ' : 'card-container'}>
 			<div className='row align-items-center'>
 				<div className='col-10'>
-					<div className='title'>
-						<span>{cardState.planName}</span>
-					</div>
+					<Link to={'/plan?planId=' + cardState.planID}>
+						<div className={props.isPinned ? 'row white-text': 'row'}>
+							<div className='col-12'>
+								<div className='title'>
+									<span>{cardState.planName}</span>
+								</div>
 
-					<div className='subtitle'>
-						<Icon icon={calendarLine} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#E66973' }} />
-						<span className='pl-2'> {cardState.dateRange} </span>
-					</div>
+								<div className='subtitle'>
+									<Icon icon={calendarLine} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#E66973' }} />
+									<span className='pl-2'> {cardState.dateRange} </span>
+								</div>
 
-					<div className='subtitle'>
-						<Icon icon={mapPin2Line} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#E66973' }} />
-						<span className='pl-2'> {cardState.province} </span>
-					</div>
+								<div className='subtitle'>
+									<Icon icon={mapPin2Line} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#E66973' }} />
+									<span className='pl-2'> {cardState.province} </span>
+								</div>
 
-					<div className='subtitle'>
-						<Icon icon={starFill} style={{ color: '#FFE600' }} />
-						<span className='pl-2'> {cardState.planScore} </span>
-					</div>
+								<div className='subtitle'>
+									<Icon icon={starFill} style={{ color: '#FFE600' }} />
+									<span className='pl-2'> {cardState.planScore} </span>
+								</div>
+							</div>
+						</div>
+					</Link>
 				</div>
-
 				<div className='col-2 px-0'>
 					{!props.isStatus && (
 						<div className='card-option'>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import PlaceCard from '../../components/Card/PlaceCard';
 import { PlanType } from '../../constant/Types/PlanTypes';
 import './PlanDetails.scss';
@@ -34,9 +35,11 @@ export const PlanDetailsPage = (props: any) => {
 	const [planDetail, setPlanDetail] = useState<PlanType>(PlanDetailConstant);
 	const [isLoading, setIsLoading] = useState(true);
 
+    const params = useLocation();
+
 	useEffect(() => {
 		console.log('getting...');
-		fetch('http://localhost:8000/getPlanDetail?planId=1', {
+		fetch('http://localhost:8000/getPlanDetail' + params.search, {
 			method: 'GET',
 		})
 			.then((res) => res.json())

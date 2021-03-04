@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import '../../App.scss';
 import './Topbar.scss';
@@ -43,13 +43,21 @@ function Topbar() {
 
 },[location.pathname]);
 
+    const history = useHistory();
+
+    const goBackHandler = () => {
+        history.goBack();
+    };
+
+
     if( topBar.isHidden)
         return null
     
     return (
         <div className='topbar gradient-background'>
            <div className='row'>
-                <div className='col'>
+                <div className='col' onClick={goBackHandler}>
+                    {topBar.canReturn? '<' : ''}
                     <span> {topBar.title} </span>
                 </div>
                 <div className='col text-center'>
