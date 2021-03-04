@@ -10,8 +10,7 @@ import (
 )
 
 func GetLocationDetail(c echo.Context) error {
-	reqBody := res.GetRequestBody(c)
-	placeId := reqBody["placeId"].(string)
+	placeId := c.QueryParam("placeId")
 	placeType := res.PlaceId2PlaceType(placeId)
 
 	var placeInformation interface{}

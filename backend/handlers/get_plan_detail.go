@@ -13,8 +13,12 @@ import (
 
 func GetPlanDetail(c echo.Context) error {
 	result := make(map[string]interface{}, 0)
-	reqBody := res.GetRequestBody(c)
-	planId := int64(reqBody["planId"].(float64))
+
+	planId, err := res.Str2Int(c.QueryParam("planId"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	plan, err := db.GetPlanByPlanId(planId)
 	if err != nil {
 		log.Fatalf("cannot query plan by this plan id. %v", err)

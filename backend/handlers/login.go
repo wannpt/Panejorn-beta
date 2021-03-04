@@ -6,14 +6,12 @@ import (
 	"net/http"
 
 	"backend/db"
-	res "backend/resources"
 )
 
 func Login(c echo.Context) error {
-	reqBody := res.GetRequestBody(c)
-	email := reqBody["email"].(string)
-	user, err := db.GetUser(email)
 	result := make(map[string]interface{}, 0)
+	email := c.QueryParam("email")
+	user, err := db.GetUser(email)
 
 	// Account isn't fund
 	if err != nil {
@@ -22,7 +20,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusOK, result)
 	}
 
-	password := reqBody["password"].(string)
+	password := c.QueryParam("password")
 
 	// Password matches
 	if comparePassword(user.Password, password) {

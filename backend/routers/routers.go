@@ -15,11 +15,11 @@ func SetUpRouter() *echo.Echo{
 	e.Use(middleware.Recover())
 	 
 	// Handlers
-	e.POST("/login", handlers.Login)
-	e.POST("/getCurrentLocation", handlers.GetCurrentLocation)
-	e.POST("/getPlanCollection", handlers.GetPlanCollection)
-	e.POST("/getPlanDetail", handlers.GetPlanDetail)
-	e.POST("/getLocationDetail", handlers.GetLocationDetail)
+	e.GET("/login", handlers.Login)
+	e.GET("/getCurrentLocation", handlers.GetCurrentLocation)
+	e.GET("/getPlanCollection", handlers.GetPlanCollection)
+	e.GET("/getPlanDetail", handlers.GetPlanDetail)
+	e.GET("/getLocationDetail", handlers.GetLocationDetail)
 
 	return e
 }
