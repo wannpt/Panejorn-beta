@@ -75,7 +75,7 @@ const Card = (props: any) => {
 					{!props.isStatus && (
 						<div className='card-option'>
 							<button onClick={PinnedCard}>
-								<Icon icon={pushpin2Fill} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#C4C4C4' }} />
+								<Icon icon={pushpin2Fill} style={props.isPinned ? { color: '#FFFFFF', fontSize: '24px' } : { color: '#C4C4C4', fontSize: '24px'}} />
 							</button>
 						</div>
 					)}

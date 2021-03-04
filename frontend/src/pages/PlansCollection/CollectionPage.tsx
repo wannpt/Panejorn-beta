@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../../components/Card/Card';
 
 import { Icon } from '@iconify/react';
@@ -9,20 +9,6 @@ import pushpin2Fill from '@iconify/icons-ri/pushpin-2-fill';
 import { CardCollections } from '../../constant/Types/CardTypes';
 import { GetPlanCollection } from '../../constant/api/PlansAPI/PlansAPI';
 
-type cardType = {
-	title: string;
-	details: cardDetail[];
-	option?: any;
-	isPinned?: boolean;
-	nextLoc?: any;
-};
-
-type cardDetail = {
-	type: any;
-	detail: string;
-	style?: React.CSSProperties;
-};
-
 const CardsDefault: CardCollections = {
 	pinnedPlans: [
 		{
@@ -30,53 +16,57 @@ const CardsDefault: CardCollections = {
 			dateRange: '09 ธ.ค. 63 - 12 ธ.ค. 63',
 			province: 'กาญจนบุรี',
 			planScore: 4.8,
-		}
+		},
 	],
 	plans: [
 		{
-            "planName": "โซโล่เชียงใหม่",
-            "dateRange": "12 ธ.ค. 63 - 14 ธ.ค. 63",
-            "province": "เชียงใหม่",
-            "planScore": 0
-        },
-        {
-            "planName": "ทัวร์อีสาน",
-            "dateRange": "10 ก.ค. 63 - 12 ก.ค. 63",
-            "province": "ชัยภูมิ",
-            "planScore": 4.8
-        }
-	]
-}
-
+			planName: 'โซโล่เชียงใหม่',
+			dateRange: '12 ธ.ค. 63 - 14 ธ.ค. 63',
+			province: 'เชียงใหม่',
+			planScore: 0,
+		},
+		{
+			planName: 'ทัวร์อีสาน',
+			dateRange: '10 ก.ค. 63 - 12 ก.ค. 63',
+			province: 'ชัยภูมิ',
+			planScore: 4.8,
+		},
+	],
+};
 
 function PlansCollectionPage() {
-	//  const [cardList, setCardList] = useState(cardListDefault)
-	//temp
-	const cardList = CardsDefault;
-	//endtemp
-	let temp;
+	const [isLoading, setIsLoading] = useState(true);
+	const [cardList, setCardList] = useState(CardsDefault)
 
 	//Must fetch Plan collection here!
 	useEffect(() => {
-		temp = GetPlanCollection(4)
-		console.log(temp)
-	}, [])
+		console.log('getting...');
+		fetch('http://localhost:8000/getPlanCollection?userId=4', {
+			method: 'GET',
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				console.log(result);
+				setCardList(result);
+				setIsLoading(false);
+			});
+	}, []);
 
 	return (
-		<div className='default-padding'>
-			<p className='title'>ที่ปักหมุดไว้ (1)</p>
-			{
-				cardList.pinnedPlans.map(el => {
-					return <Card data={el} isPinned={true} isStatus={false}/>
-				})
-			}
-			<p className='title'>แผนทั้งหมด (3)</p>
-			{
-				cardList.plans.map(el =>{
-					return <Card data={el} isPinned={false} isStatus={false}/>
-				})
-			}
-		</div>
+		<>
+			{!isLoading && (
+				<div className='default-padding'>
+					<p className='title'>ที่ปักหมุดไว้ (1)</p>
+					{cardList.pinnedPlans.map((el) => {
+						return <Card data={el} isPinned={true} isStatus={false} />;
+					})}
+					<p className='title'>แผนทั้งหมด (3)</p>
+					{cardList.plans.map((el) => {
+						return <Card data={el} isPinned={false} isStatus={false} />;
+					})}
+				</div>
+			)}
+		</>
 	);
 }
 
