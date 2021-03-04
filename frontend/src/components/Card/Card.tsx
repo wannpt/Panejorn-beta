@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Card.scss';
-import { CardType } from '../../constant/Types/CardTypes';
+import { CardType, StatusCard } from '../../constant/Types/CardTypes';
 
 import { Icon } from '@iconify/react';
 import calendarLine from '@iconify/icons-ri/calendar-line';
@@ -14,7 +14,7 @@ const PinnedStyle = {
 } as CSSStyleDeclaration;
 
 const Card = (props: any) => {
-	const [cardState, setCardState] = useState<CardType>(props.data);
+	const [cardState, setCardState] = useState<CardType | StatusCard>(props.data);
 
 	// useEffect(() => {
 	//     setCardState(prev => {
@@ -72,16 +72,18 @@ const Card = (props: any) => {
 				</div>
 
 				<div className='col-2 px-0'>
-					<div className='card-option'>
-						<button onClick={PinnedCard}>
-							<Icon icon={pushpin2Fill} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#C4C4C4' }} />
-						</button>
-					</div>
+					{!props.isStatus && (
+						<div className='card-option'>
+							<button onClick={PinnedCard}>
+								<Icon icon={pushpin2Fill} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#C4C4C4' }} />
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
 
 			{/* big card section */}
-			{/* {cardState.nextLoc && (
+			{props.isStatus && (
 				<div className='row align-items-center'>
 					<hr
 						style={{
@@ -96,26 +98,22 @@ const Card = (props: any) => {
 						<p className='extra-small-title mb-2    '> สถานที่ต่อไป </p>
 
 						<div className='title'>
-							<span>{cardState.nextLoc?.nextLoc}</span>
+							<span>{props.data.nextLoc}</span>
 						</div>
 
 						<div className='card-detail'>
-							<span>{cardState.nextLoc?.time}</span>
+							<span>{props.data.time}</span>
 						</div>
 					</div>
 					<div className='col-2 px-0'>
 						<div className='card-option'>
 							<button>
-								<Icon
-									icon={navigationLine}
-									style={{ color: '#E66973', fontSize: '24px' }}
-									rotate='90deg'
-								/>
+								<Icon icon={navigationLine} style={{ color: '#E66973', fontSize: '24px' }} rotate='90deg' />
 							</button>
 						</div>
 					</div>
 				</div>
-			)} */}
+			)}
 		</div>
 	);
 };

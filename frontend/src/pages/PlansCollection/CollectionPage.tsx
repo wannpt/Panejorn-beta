@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '../../components/Card/Card';
 
 import { Icon } from '@iconify/react';
@@ -7,6 +7,7 @@ import mapPin2Line from '@iconify/icons-ri/map-pin-2-line';
 import starFill from '@iconify/icons-ri/star-fill';
 import pushpin2Fill from '@iconify/icons-ri/pushpin-2-fill';
 import { CardCollections } from '../../constant/Types/CardTypes';
+import { GetPlanCollection } from '../../constant/api/PlansAPI/PlansAPI';
 
 type cardType = {
 	title: string;
@@ -53,19 +54,26 @@ function PlansCollectionPage() {
 	//temp
 	const cardList = CardsDefault;
 	//endtemp
+	let temp;
+
+	//Must fetch Plan collection here!
+	useEffect(() => {
+		temp = GetPlanCollection(4)
+		console.log(temp)
+	}, [])
 
 	return (
 		<div className='default-padding'>
 			<p className='title'>ที่ปักหมุดไว้ (1)</p>
 			{
 				cardList.pinnedPlans.map(el => {
-					return <Card data={el} isPinned={true}/>
+					return <Card data={el} isPinned={true} isStatus={false}/>
 				})
 			}
 			<p className='title'>แผนทั้งหมด (3)</p>
 			{
 				cardList.plans.map(el =>{
-					return <Card data={el} isPinned={false}/>
+					return <Card data={el} isPinned={false} isStatus={false}/>
 				})
 			}
 		</div>
