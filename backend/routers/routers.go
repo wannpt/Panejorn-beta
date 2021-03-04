@@ -13,7 +13,9 @@ func SetUpRouter() *echo.Echo{
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	 
+	e.Use(middleware.CORS())
+
+
 	// Handlers
 	e.GET("/login", handlers.Login)
 	e.GET("/getCurrentLocation", handlers.GetCurrentLocation)
