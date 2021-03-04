@@ -25,3 +25,16 @@ services:
     ports:
       - '8000:8000'
     working_dir: /go/src/app
+
+
+  reng-container:
+    tty: true
+    container_name: reng-container
+    build:
+      context: .
+      dockerfile: python.Dockerfile
+    volumes:
+      - './recommender-engine:/opt/app'
+    ports:
+      - '8040:8040'
+    working_dir: /opt/app
