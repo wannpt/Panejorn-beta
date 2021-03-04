@@ -53,7 +53,7 @@ function PlansCollectionPage() {
 					{cardList.pinnedPlans.map((el) => {
 						return <Card data={el} isPinned={true} isStatus={false} />;
 					})}
-					<p className='title'>แผนทั้งหมด (3)</p>
+					<p className='title'>แผนทั้งหมด (1)</p>
 					{cardList.plans.map((el) => {
 						return <Card data={el} isPinned={false} isStatus={false} />;
 					})}
