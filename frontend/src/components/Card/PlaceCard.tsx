@@ -10,8 +10,8 @@ import barricadeLine from '@iconify/icons-ri/barricade-line';
 import appsLine from '@iconify/icons-ri/apps-line';
 
 const MapIconToType = [
-	{ key: 'attraction', icon: barricadeLine },
-	{ key: 'restaurant', icon: restaurantLine },
+	{ key: 'ATTRACTION', icon: barricadeLine },
+	{ key: 'RESTAURANT', icon: restaurantLine },
 ];
 
 export const PlaceCard = (props: any) => {
@@ -27,7 +27,7 @@ export const PlaceCard = (props: any) => {
 	return (
 		<div className='card-container'>
 			<div className='row align-items-center'>
-				<div className='col-2'>
+				<div className='col-2 pl-4 pr-0'>
                     {
                         MapIconToType.map(el => {
                             if(el.key === props.type)

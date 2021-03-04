@@ -36,7 +36,7 @@ export const PlanDetailsPage = (props: any) => {
 
 	useEffect(() => {
 		console.log('getting...');
-		fetch('http://localhost:8000/getPlanDetail?planId=2', {
+		fetch('http://localhost:8000/getPlanDetail?planId=1', {
 			method: 'GET',
 		})
 			.then((res) => res.json())
@@ -79,6 +79,15 @@ export const PlanDetailsPage = (props: any) => {
 										</div>
 									);
 								})}
+								<hr
+									style={{
+										color: '#F5F2F2',
+										backgroundColor: '#F5F2F2',
+										height: 0.5,
+										borderColor: '#F5F2F2',
+										width: '90%',
+									}}
+								/>
 							</div>
 						);
 					})}
@@ -86,6 +95,6 @@ export const PlanDetailsPage = (props: any) => {
 			)}
 		</>
 	);
-}
+};
 
 export default PlanDetailsPage;
