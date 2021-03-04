@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import '../../App.scss';
 import './Topbar.scss';
@@ -20,7 +20,8 @@ const topbarConstant: TopbarType[] = [
     { title: 'แผนของฉัน', path: '/collections', canReturn: false, isEdit: true, isHidden: false},
     { title: 'สำรวจ', path:'/explore',canReturn: false, isEdit: false, isHidden: false},
     { title: 'ตั้งค่า', path:'/setting',canReturn: false, isEdit: false, isHidden: false},
-    { title: 'รายละเอียดสถานที่', path:'/place', canReturn: true, isEdit:false, isHidden: true}
+    { title: 'รายละเอียดสถานที่', path:'/place', canReturn: true, isEdit:false, isHidden: true},
+    { title: 'แผนเที่ยว', path:'/plan', canReturn: true, isEdit:false, isHidden: false}
     ]
 
 
@@ -42,13 +43,21 @@ function Topbar() {
 
 },[location.pathname]);
 
+    const history = useHistory();
+
+    const goBackHandler = () => {
+        history.goBack();
+    };
+
+
     if( topBar.isHidden)
         return null
     
     return (
         <div className='topbar gradient-background'>
            <div className='row'>
-                <div className='col'>
+                <div className='col' onClick={goBackHandler}>
+                    {topBar.canReturn? '<' : ''}
                     <span> {topBar.title} </span>
                 </div>
                 <div className='col text-center'>

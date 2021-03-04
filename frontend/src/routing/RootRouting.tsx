@@ -27,6 +27,11 @@ const PlacePage = Loadable({
     loading: () => null
 })
 
+const PlanDetail = Loadable({
+    loader: () => import('../pages/PlanDetailsPage/PlanDetailsPage'),
+    loading: () => null
+})
+
 
 const RootRoutes = () => {
     return (
@@ -36,6 +41,7 @@ const RootRoutes = () => {
             <Route path="/explore" exact component={ExplorePage} />
             <Route path="/setting" exact component={SettingPage} />
             <Route path="/place/:id" component={PlacePage} />
+            <Route path="/plan" component={PlanDetail} />
         </Switch>
     );
 };

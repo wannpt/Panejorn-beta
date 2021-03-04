@@ -9,6 +9,7 @@ const cardDefault: StatusCard =
 		"dateRange": "12 ธ.ค. 63 - 14 ธ.ค. 63",
 		"province": "เชียงใหม่",
 		"planScore": 0,
+		planID: 0,
 		nextLoc: 'สักที่นี่แหละ',
 		time: '09.45น. - 10.30น.'
 	};

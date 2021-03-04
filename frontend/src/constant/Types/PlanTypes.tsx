@@ -1,6 +1,6 @@
 
 export type PlaceType = {
-    placeID: string,
+    placeId: string,
     placeType: string,
     placeName: string,
     timeRange: string,
@@ -10,15 +10,16 @@ export interface PlaceDetails extends PlaceType {
     //need works
 }
 
-export type PlanType = {
-    planID: string,
-    planName: string,
-    dataRange: string,
-    province: string,
-    planDetails: {
-        day: number,
-        date: string,
-        detail: PlaceType[],
+type details = {
+    day: number,
+    date: string,
+    detail: PlaceType[]
+}
 
-    }[]
+export type PlanType = {
+    planId: number,
+    planName: string,
+    dateRange: string,
+    province: string,
+    planDetail: details[]
 }
