@@ -14,8 +14,12 @@ import (
 
 func GetCurrentLocation(c echo.Context) error {
 	result := make(map[string]interface{}, 0)
-	reqBody := res.GetRequestBody(c)
-	userId := int64(reqBody["userId"].(float64))
+
+	userId, err := res.Str2Int(c.QueryParam("userId"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	plans, err := db.GetPlansByUserID(userId)
 	if err != nil {
 		log.Fatalf("cannot query plan of this user. %v", err)

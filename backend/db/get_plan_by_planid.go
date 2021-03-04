@@ -6,7 +6,7 @@ import (
 	"backend/models"
 )
 
-func GetPlanByPlanId(planId int64) (models.Plan, error) {
+func GetPlanByPlanId(planId int) (models.Plan, error) {
 	database := ConnectDatabase()
 	defer database.Close()
 

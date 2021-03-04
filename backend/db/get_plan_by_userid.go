@@ -6,7 +6,7 @@ import (
 	"backend/models"
 )
 
-func GetPlansByUserID(user_id int64) ([]models.Plan, error) {
+func GetPlansByUserID(user_id int) ([]models.Plan, error) {
 	database := ConnectDatabase()
 	defer database.Close()
 
