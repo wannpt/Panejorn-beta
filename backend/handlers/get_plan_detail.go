@@ -33,33 +33,41 @@ func GetPlanDetail(c echo.Context) error {
 		strDate = fmt.Sprintf("%s - %s", res.Date2ThaiDateString(start_date, 1), res.Date2ThaiDateString(end_date, 1))
 	}
 
-	planDetail := plan.PlanDetail
-	planDetailOutput := make(map[int]interface{}, 0)
-	for i := range planDetail {
-		if _, ok := planDetailOutput[planDetail[i].Day]; !ok {
-			date := start_date.AddDate(0, 0, planDetail[i].Day-1)
-			planDetailOutput[planDetail[i].Day] = map[string]interface{}{
-				"day":    planDetail[i].Day,
-				"date":   res.Date2ThaiDateString(date, 2),
-				"detail": []map[string]interface{}{},
-			}
+	planDetails := plan.PlanDetail
+	planDetailOutput := make([]map[string]interface{}, 0)
+	previousDay := planDetails[0].Day
+	detailList := make([]map[string]interface{}, 0)
+	
+	for i := range planDetails {
+		// Keep storing the data of that day
+		if previousDay == planDetails[i].Day{ 
+			detailList = append(detailList, map[string]interface{}{
+				"placeId": planDetails[i].PlaceId,
+				"placeName": planDetails[i].PlaceName,
+				"placeType": res.PlaceId2PlaceType(planDetails[i].PlaceId),
+				"timeRange": res.Minute2ClockRangeString(planDetails[i].StartTime, planDetails[i].EndTime, 1),
+			})
+		} else { // New day
+			date := start_date.AddDate(0, 0, planDetails[i-1].Day-1)
+			planDetailOutput = append(planDetailOutput, map[string]interface{}{
+				"day": planDetails[i-1].Day,
+				"date": res.Date2ThaiDateString(date, 2),
+				"detail": detailList,
+			})
+			previousDay = planDetails[i].Day
+			detailList = make([]map[string]interface{}, 0)
 		}
-		planDetailDay, ok := planDetailOutput[planDetail[i].Day].(map[string]interface{})
-		if !ok {
-			log.Fatalf("cannot convert to map[string]interface{}. %v", err)
+
+		// Last day of the plan
+		if i == len(planDetails)-1 {
+			date := start_date.AddDate(0, 0, planDetails[i-1].Day-1)
+			planDetailOutput = append(planDetailOutput, map[string]interface{}{
+				"day": planDetails[i-1].Day,
+				"date": res.Date2ThaiDateString(date, 2),
+				"detail": detailList,
+			})
+			previousDay = planDetails[i].Day
 		}
-		detailList, ok := planDetailDay["detail"].([]map[string]interface{})
-		if !ok {
-			log.Fatalf("cannot convert to map[string]interface{}. %v", err)
-		}
-		detailList = append(detailList, map[string]interface{}{
-			"placeId":   planDetail[i].PlaceId,
-			"placeName": planDetail[i].PlaceName,
-			"placeType": res.PlaceId2PlaceType(planDetail[i].PlaceId),
-			"timeRange": res.Minute2ClockRangeString(planDetail[i].StartTime, planDetail[i].EndTime, 1),
-		})
-		planDetailDay["detail"] = detailList
-		planDetailOutput[planDetail[i].Day] = planDetailDay
 	}
 	result["planId"] = plan.PlanId
 	result["planName"] = plan.PlanName
