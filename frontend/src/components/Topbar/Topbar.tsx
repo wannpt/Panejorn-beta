@@ -17,7 +17,7 @@ type TopbarType = {
 
 const topbarConstant: TopbarType[] = [
     { title: 'หน้าแรก', path: '/' , canReturn: false, isEdit: false, isHidden: true},
-    { title: 'แผนของฉัน', path: '/collections', canReturn: false, isEdit: true, isHidden: false},
+    { title: 'แผนของฉัน', path: '/collections', canReturn: false, isEdit: false, isHidden: false},
     { title: 'สำรวจ', path:'/explore',canReturn: false, isEdit: false, isHidden: false},
     { title: 'ตั้งค่า', path:'/setting',canReturn: false, isEdit: false, isHidden: false},
     { title: 'รายละเอียดสถานที่', path:'/place', canReturn: true, isEdit:false, isHidden: true},
