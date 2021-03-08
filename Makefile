@@ -32,8 +32,8 @@ attach-fe:
 
 # Attach backend container
 attach-be:
-	docker-compose start be-container
+	docker-compose up be-container
 
 # Attach recommender engine container
 attach-reng:
-	docker-compose start reng-container
+	docker-compose up reng-container
