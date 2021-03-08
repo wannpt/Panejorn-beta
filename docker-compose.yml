@@ -13,7 +13,6 @@ services:
     ports:
       - '8080:8080'
 
-
   be-container:
     tty: true
     container_name: be-container
@@ -26,7 +25,6 @@ services:
       - '8000:8000'
     working_dir: /go/src/app
 
-
   reng-container:
     tty: true
     container_name: reng-container
@@ -36,5 +34,6 @@ services:
     volumes:
       - './recommender-engine:/opt/app'
     ports:
-      - '8040:8040'
+      - '0.0.0.0:8040:8040'
     working_dir: /opt/app
+    

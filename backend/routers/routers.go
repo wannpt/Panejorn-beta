@@ -22,6 +22,8 @@ func SetUpRouter() *echo.Echo{
 	e.GET("/getPlanCollection", handlers.GetPlanCollection)
 	e.GET("/getPlanDetail", handlers.GetPlanDetail)
 	e.GET("/getLocationDetail", handlers.GetLocationDetail)
+	
+	e.GET("/createPlan", handlers.CreatePlan)
 
 	return e
 }
