@@ -21,7 +21,6 @@ def trip_recommender():
 @app.route('/', methods=['GET'])
 @cross_origin()
 def hello_world():
-    print("hello, python!")
     return 'Hello, Python!'
 
 if __name__ == '__main__':

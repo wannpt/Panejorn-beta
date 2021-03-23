@@ -32,8 +32,8 @@ attach-fe:
 
 # Attach backend container
 attach-be:
-	docker-compose run --service-ports be-container
+	docker-compose up be-container
 
 # Attach recommender engine container
 attach-reng:
-	docker-compose run --service-ports reng-container
+	docker-compose up reng-container
