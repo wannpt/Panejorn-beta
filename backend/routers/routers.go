@@ -15,13 +15,14 @@ func SetUpRouter() *echo.Echo{
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
 
-
 	// Handlers
 	e.GET("/login", handlers.Login)
 	e.GET("/getCurrentLocation", handlers.GetCurrentLocation)
 	e.GET("/getPlanCollection", handlers.GetPlanCollection)
 	e.GET("/getPlanDetail", handlers.GetPlanDetail)
 	e.GET("/getLocationDetail", handlers.GetLocationDetail)
+
+	e.GET("/createPlan", handlers.CreatePlan)
 
 	return e
 }
