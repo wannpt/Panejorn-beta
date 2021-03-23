@@ -34,6 +34,6 @@ services:
     volumes:
       - './recommender-engine:/opt/app'
     ports:
-      - '0.0.0.0:8040:8040'
+      - '8040:8040'
     working_dir: /opt/app
     

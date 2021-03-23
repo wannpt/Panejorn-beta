@@ -39,7 +39,7 @@ func CreatePlan(c echo.Context) error{
 		log.Fatal(err)
 	}
 
-	resp, err := http.Post("http://localhost:8040/trip-recommender-system", "application/json", bytes.NewBuffer(reqBody))
+	resp, err := http.Post("http://reng-container:8040/trip-recommender-system", "application/json", bytes.NewBuffer(reqBody))
 	// resp, err := http.Get("http://localhost:8040/")
 	if err != nil{
 		log.Fatal(err)
