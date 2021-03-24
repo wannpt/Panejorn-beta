@@ -22,7 +22,7 @@ func SetUpRouter() *echo.Echo{
 	e.GET("/getPlanDetail", handlers.GetPlanDetail)
 	e.GET("/getLocationDetail", handlers.GetLocationDetail)
 
-	e.GET("/createPlan", handlers.CreatePlan)
+	e.POST("/createPlan", handlers.CreatePlan)
 
 	return e
 }
