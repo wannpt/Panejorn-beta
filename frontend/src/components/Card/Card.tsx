@@ -8,74 +8,54 @@ import mapPin2Line from '@iconify/icons-ri/map-pin-2-line';
 import starFill from '@iconify/icons-ri/star-fill';
 import pushpin2Fill from '@iconify/icons-ri/pushpin-2-fill';
 import navigationLine from '@iconify/icons-ri/navigation-line';
-
-const PinnedStyle = {
-	color: '#FFFFFF',
-} as CSSStyleDeclaration;
+import { Link } from 'react-router-dom';
 
 const Card = (props: any) => {
 	const [cardState, setCardState] = useState<CardType | StatusCard>(props.data);
 
-	// useEffect(() => {
-	//     setCardState(prev => {
-	//         if(prev.isPinned)
-	//             return {...prev, isPinned: false, option: <Icon icon={pushpin2Fill} style={{color: '#FFFFFF', fontSize: '24px'}} /> }
-	//         return {...prev, isPinned:true, option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} /> }
-	//     })
-	// },[cardState.isPinned])
-
 	function PinnedCard() {
 		return true;
-		// setCardState(prev => {
-		//     if(prev.isPinned){
-		//         let newDetails = prev.details.map(el => {
-		//             if(el.type !== 'rate')
-		//                 return {...el, style:{ color: '#E66973', fontSize: '16px'}}
-		//             return {...el}
-		//         })
-		//         return {...prev, isPinned: false, details: newDetails ,option: <Icon icon={pushpin2Fill} style={{color: '#C4C4C4', fontSize: '24px'}} />}
-		//     }
-
-		//     else {
-		//         let newDetails =  prev.details.map(el => {
-		//             if(el.type !== 'rate')
-		//                 return {...el, style:{ color: '#FFFFFF', fontSize: '16px'}}
-		//             return {...el}
-		//         })
-		//         return {...prev, isPinned: true, details: newDetails , option: <Icon icon={pushpin2Fill} style={{color: '#FFFFFF', fontSize: '24px'}} />}
-		//     }
-		// })
 	}
 
 	return (
-		<div className={props.isPinned ? 'card-container gradient-background white-text' : 'card-container'}>
+		<div className={props.isPinned ? 'card-container gradient-background ' : 'card-container'}>
 			<div className='row align-items-center'>
 				<div className='col-10'>
-					<div className='title'>
-						<span>{cardState.planName}</span>
-					</div>
+					<Link to={'/plan?planId=' + cardState.planID}>
+						<div className={props.isPinned ? 'row white-text': 'row'}>
+							<div className='col-12'>
+								<div className='title'>
+									<span>{cardState.planName}</span>
+								</div>
 
-					<div className='subtitle'>
-						<Icon icon={calendarLine} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#E66973' }} />
-						<span className='pl-2'> {cardState.dateRange} </span>
-					</div>
+								<div className='subtitle'>
+									<Icon icon={calendarLine} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#E66973' }} />
+									<span className='pl-2'> {cardState.dateRange} </span>
+								</div>
 
-					<div className='subtitle'>
-						<Icon icon={mapPin2Line} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#E66973' }} />
-						<span className='pl-2'> {cardState.province} </span>
-					</div>
+								<div className='subtitle'>
+									<Icon icon={mapPin2Line} style={props.isPinned ? { color: '#FFFFFF' } : { color: '#E66973' }} />
+									<span className='pl-2'> {cardState.province} </span>
+								</div>
 
-					<div className='subtitle'>
-						<Icon icon={starFill} style={{ color: '#FFE600' }} />
-						<span className='pl-2'> {cardState.planScore} </span>
-					</div>
+								<div className='subtitle'>
+									<Icon icon={starFill} style={{ color: '#FFE600' }} />
+									<span className='pl-2'> {cardState.planScore} </span>
+								</div>
+							</div>
+						</div>
+					</Link>
 				</div>
-
 				<div className='col-2 px-0'>
 					{!props.isStatus && (
 						<div className='card-option'>
 							<button onClick={PinnedCard}>
-								<Icon icon={pushpin2Fill} style={props.isPinned ? { color: '#FFFFFF', fontSize: '24px' } : { color: '#C4C4C4', fontSize: '24px'}} />
+								<Icon
+									icon={pushpin2Fill}
+									style={
+										props.isPinned ? { color: '#FFFFFF', fontSize: '24px' } : { color: '#C4C4C4', fontSize: '24px' }
+									}
+								/>
 							</button>
 						</div>
 					)}

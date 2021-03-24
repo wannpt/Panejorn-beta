@@ -3,7 +3,8 @@ export type CardType = {
     dateRange: string,
     province: string,
     planScore: number,
-    isPinned?: boolean
+    isPinned?: boolean,
+    planID: number
 }
 
 export interface StatusCard extends CardType {

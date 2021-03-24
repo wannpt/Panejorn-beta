@@ -5,19 +5,14 @@ import { StatusCard } from '../../constant/Types/CardTypes';
 
 const cardDefault: StatusCard = 
 	{
-		"planName": "โซโล่เชียงใหม่",
-		"dateRange": "12 ธ.ค. 63 - 14 ธ.ค. 63",
-		"province": "เชียงใหม่",
+		"planName": "เที่ยวหนึ่งวันกับคนอย่างเธอ",
+		"dateRange": "18 ม.ค. 64",
+		"province": "กรุงเทพมหานคร",
 		"planScore": 0,
-		nextLoc: 'สักที่นี่แหละ',
-		time: '09.45น. - 10.30น.'
+		planID: 0,
+		nextLoc: 'ซาฟารีเวิลด์',
+		time: '10.00น. - 13.30น.'
 	};
-
-type cardDetail = {
-	type: any;
-	detail: string;
-	style?: React.CSSProperties;
-};
 
 function Homepage() {
 	return (
