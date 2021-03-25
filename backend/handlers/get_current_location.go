@@ -23,7 +23,6 @@ func GetCurrentLocation(c echo.Context) error {
 
 	plans, err := db.GetPlansByUserID(userId)
 	if err != nil {
-		// log.Panic("cannot query plan of this user.", err)
 		log.Printf("cannot query plan of this user. %v", err)
 		return c.JSON(http.StatusInternalServerError, nil)
 	}

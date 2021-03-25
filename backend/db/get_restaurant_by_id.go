@@ -60,7 +60,6 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 	rows1, err := database.Query(sqlStatement, restaurantId)
 	defer rows1.Close()
 	if err != nil {
-		// log.Panic("unable to execute the query. ", err)
 		log.Printf("unable to execute the query. %v", err)
 		return models.Restaurant{}, err
 	}
@@ -72,7 +71,6 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 			&restaurantType.Description,
 		)
 		if err != nil {
-			// log.Panic("unable to scan the row for restaurant type. ", err)
 			log.Printf("unable to scan the row for restaurant type. %v", err)
 			return models.Restaurant{}, err
 		}
@@ -92,7 +90,6 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 	rows2, err := database.Query(sqlStatement, restaurantId)
 	defer rows2.Close()
 	if err != nil {
-		// log.Panic("unable to execute the query. ", err)
 		log.Printf("unable to execute the query. %v", err)
 		return models.Restaurant{}, err
 	}
@@ -104,7 +101,6 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 			&cuisineType.Description,
 		)
 		if err != nil {
-			// log.Panic("unable to scan the row for cuisine type. ", err)
 			log.Printf("unable to scan the row for cuisine type. %v", err)
 			return models.Restaurant{}, err
 		}

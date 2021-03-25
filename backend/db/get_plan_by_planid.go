@@ -41,7 +41,6 @@ func GetPlanByPlanId(planId int) (models.Plan, error) {
 		&plan.UpdatedTime,
 	)
 	if err != nil {
-		// log.Fatalf("unable to scan the row. %v", err)
 		log.Printf("unable to scan the row. %v", err)
 		return models.Plan{}, err
 	}
@@ -51,7 +50,6 @@ func GetPlanByPlanId(planId int) (models.Plan, error) {
 	rows, err := database.Query(sqlStatement, plan.PlanId)
 	defer rows.Close()
 	if err != nil {
-		// log.Fatalf("unable to execute the query. %v", err)
 		log.Printf("unable to execute the query. %v", err)
 		return models.Plan{}, err
 	}
@@ -78,7 +76,6 @@ func GetPlanByPlanId(planId int) (models.Plan, error) {
 		)
 
 		if err != nil {
-			// log.Fatalf("unable to execute the query. %v", err)
 			log.Printf("unable to execute the query. %v", err)
 			return models.Plan{}, err
 		}

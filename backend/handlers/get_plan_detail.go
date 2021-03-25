@@ -16,14 +16,12 @@ func GetPlanDetail(c echo.Context) error {
 
 	planId, err := res.Str2Int(c.QueryParam("planId"))
 	if err != nil {
-		// log.Fatal(err)
 		log.Printf("cannot convert string to integer. %v", err)
 		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	plan, err := db.GetPlanByPlanId(planId)
 	if err != nil {
-		// log.Fatalf("cannot query plan by this plan id. %v", err)
 		log.Printf("cannot query plan by this plan id. %v", err)
 		return c.JSON(http.StatusInternalServerError, nil)
 	}

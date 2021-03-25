@@ -59,7 +59,6 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 	rows1, err := database.Query(sqlStatement, accomId)
 	defer rows1.Close()
 	if err != nil {
-		// log.Panic("unable to execute the query. ", err)
 		log.Panic("unable to execute the query. ", err)
 		return models.Accommodation{}, err
 	}
@@ -71,7 +70,6 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 			&facility.Description,
 		)
 		if err != nil {
-			// log.Panic("unable to scan the row for facilities. ", err)
 			log.Printf("unable to scan the row for facilities. %v", err)
 			return models.Accommodation{}, err
 		}
@@ -91,7 +89,6 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 	rows2, err := database.Query(sqlStatement, accomId)
 	defer rows2.Close()
 	if err != nil {
-		// log.Panic("unable to execute the query. ", err)
 		log.Printf("unable to execute the query. %v", err)
 		return models.Accommodation{}, err
 	}
@@ -103,7 +100,6 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 			&service.Description,
 		)
 		if err != nil {
-			// log.Panic("unable to scan the row for services. ", err)
 			log.Printf("unable to scan the row for services. %v", err)
 			return models.Accommodation{}, err
 		}

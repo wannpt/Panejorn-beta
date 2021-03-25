@@ -72,7 +72,6 @@ func GetAttractionById(attractionId string) (models.Attraction, error) {
 	rows1, err := database.Query(sqlStatement, attractionId)
 	defer rows1.Close()
 	if err != nil {
-		// log.Panic("unable to execute the query. ", err)
 		log.Printf("unable to execute the query. %v", err)
 		return models.Attraction{}, err
 	}
@@ -99,7 +98,6 @@ func GetAttractionById(attractionId string) (models.Attraction, error) {
 	rows2, err := database.Query(sqlStatement, attractionId)
 	defer rows2.Close()
 	if err != nil {
-		// log.Panic("unable to execute the query. ", err)
 		log.Printf("unable to execute the query. %v", err)
 		return models.Attraction{}, err
 	}
@@ -111,7 +109,6 @@ func GetAttractionById(attractionId string) (models.Attraction, error) {
 			&facility.Description,
 		)
 		if err != nil {
-			// log.Panic("unable to scan the row for facilities. ", err)
 			log.Printf("unable to scan the row for facilities. %v", err)
 			return models.Attraction{}, err
 		}
