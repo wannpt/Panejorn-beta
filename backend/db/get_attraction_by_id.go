@@ -48,13 +48,19 @@ func GetAttractionById(attractionId string) (models.Attraction, error) {
 		&attraction.Saturday,
 		&attraction.Sunday,
 		&attraction.RecommendedDuration,
+		&attraction.Tag1,
+		&attraction.Tag2,
+		&attraction.Tag3,
+		&attraction.Tag4,
+		&attraction.Tag5,
 		&attraction.CreationTime,
 		&attraction.DeletionTime,
 		&attraction.UpdatedTime,
 	)
 
 	if err != nil {
-		log.Fatalf("no rows were returned. %v", err)
+		log.Printf("no rows were returned. %v", err)
+		return models.Attraction{}, err
 	}
 
 	sqlStatement = `SELECT r.attraction_type_id, t.description
@@ -66,14 +72,15 @@ func GetAttractionById(attractionId string) (models.Attraction, error) {
 	rows1, err := database.Query(sqlStatement, attractionId)
 	defer rows1.Close()
 	if err != nil {
-		log.Fatalf("unable to execute the query. %v", err)
+		log.Printf("unable to execute the query. %v", err)
+		return models.Attraction{}, err
 	}
 
 	for rows1.Next() {
 		var attractionType models.AttractionType
 		err = rows1.Scan(&attractionType.TypeId, &attractionType.Description)
 		if err != nil {
-			log.Fatalf("unable to scan the row for attraction type. %v", err)
+			log.Panic("unable to scan the row for attraction type. ", err)
 		}
 		attraction.AttractionTypes = append(attraction.AttractionTypes, attractionType)
 	}
@@ -91,7 +98,8 @@ func GetAttractionById(attractionId string) (models.Attraction, error) {
 	rows2, err := database.Query(sqlStatement, attractionId)
 	defer rows2.Close()
 	if err != nil {
-		log.Fatalf("unable to execute the query. %v", err)
+		log.Printf("unable to execute the query. %v", err)
+		return models.Attraction{}, err
 	}
 
 	for rows2.Next() {
@@ -101,7 +109,8 @@ func GetAttractionById(attractionId string) (models.Attraction, error) {
 			&facility.Description,
 		)
 		if err != nil {
-			log.Fatalf("unable to scan the row for facilities. %v", err)
+			log.Printf("unable to scan the row for facilities. %v", err)
+			return models.Attraction{}, err
 		}
 		attraction.Facilities = append(attraction.Facilities, facility)
 	}

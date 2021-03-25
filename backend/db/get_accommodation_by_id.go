@@ -46,7 +46,8 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 	)
 
 	if err != nil {
-		log.Fatalf("no rows were returned. %v", err)
+		log.Printf("no rows were returned. %v", err)
+		return models.Accommodation{}, err
 	}
 
 	sqlStatement = `SELECT r.facility_id, t.description
@@ -58,7 +59,8 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 	rows1, err := database.Query(sqlStatement, accomId)
 	defer rows1.Close()
 	if err != nil {
-		log.Fatalf("unable to execute the query. %v", err)
+		log.Panic("unable to execute the query. ", err)
+		return models.Accommodation{}, err
 	}
 
 	for rows1.Next() {
@@ -68,7 +70,8 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 			&facility.Description,
 		)
 		if err != nil {
-			log.Fatalf("unable to scan the row for facilities. %v", err)
+			log.Printf("unable to scan the row for facilities. %v", err)
+			return models.Accommodation{}, err
 		}
 		accom.Facilities = append(accom.Facilities, facility)
 	}
@@ -86,7 +89,8 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 	rows2, err := database.Query(sqlStatement, accomId)
 	defer rows2.Close()
 	if err != nil {
-		log.Fatalf("unable to execute the query. %v", err)
+		log.Printf("unable to execute the query. %v", err)
+		return models.Accommodation{}, err
 	}
 
 	for rows2.Next() {
@@ -96,13 +100,10 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 			&service.Description,
 		)
 		if err != nil {
-			log.Fatalf("unable to scan the row for services. %v", err)
+			log.Printf("unable to scan the row for services. %v", err)
+			return models.Accommodation{}, err
 		}
 		accom.Services = append(accom.Services, service)
-	}
-
-	if accom.Services == nil {
-		accom.Services = make([]models.Service, 0)
 	}
 
 	return accom, err

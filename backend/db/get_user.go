@@ -1,6 +1,8 @@
 package db
 
 import (
+	"log"
+
 	"backend/models"
 )
 
@@ -30,5 +32,11 @@ func GetUser(email string) (models.User, error) {
 		&user.DeletionTime,
 		&user.UpdatedTime,
 	)
+
+	if err != nil {
+		log.Printf("unable to scan the row. %v", err)
+		return models.User{}, err
+	}
+
 	return user, err
 }

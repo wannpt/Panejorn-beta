@@ -7,7 +7,7 @@ import (
 	"backend/handlers"
 )
 
-func SetUpRouter() *echo.Echo{
+func SetUpRouter() *echo.Echo {
 	e := echo.New()
 
 	// Middleware
