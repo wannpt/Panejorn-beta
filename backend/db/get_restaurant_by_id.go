@@ -47,7 +47,8 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 	)
 
 	if err != nil {
-		log.Fatalf("no row were returned. %v", err)
+		log.Printf("no rows were returned. %v", err)
+		return models.Restaurant{}, err
 	}
 
 	sqlStatement = `SELECT r.restaurant_type_id, t.description
@@ -59,7 +60,9 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 	rows1, err := database.Query(sqlStatement, restaurantId)
 	defer rows1.Close()
 	if err != nil {
-		log.Fatalf("unable to execute the query. %v", err)
+		// log.Panic("unable to execute the query. ", err)
+		log.Printf("unable to execute the query. %v", err)
+		return models.Restaurant{}, err
 	}
 
 	for rows1.Next() {
@@ -69,7 +72,9 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 			&restaurantType.Description,
 		)
 		if err != nil {
-			log.Fatalf("unable to scan the row for restaurant type. %v", err)
+			// log.Panic("unable to scan the row for restaurant type. ", err)
+			log.Printf("unable to scan the row for restaurant type. %v", err)
+			return models.Restaurant{}, err
 		}
 		restaurant.RestaurantTypes = append(restaurant.RestaurantTypes, restaurantType)
 	}
@@ -86,6 +91,11 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 
 	rows2, err := database.Query(sqlStatement, restaurantId)
 	defer rows2.Close()
+	if err != nil {
+		// log.Panic("unable to execute the query. ", err)
+		log.Printf("unable to execute the query. %v", err)
+		return models.Restaurant{}, err
+	}
 
 	for rows2.Next() {
 		var cuisineType models.CuisineType
@@ -94,7 +104,9 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 			&cuisineType.Description,
 		)
 		if err != nil {
-			log.Fatalf("unable to scan the row for cuisine type. %v", err)
+			// log.Panic("unable to scan the row for cuisine type. ", err)
+			log.Printf("unable to scan the row for cuisine type. %v", err)
+			return models.Restaurant{}, err
 		}
 		restaurant.CuisineTypes = append(restaurant.CuisineTypes, cuisineType)
 	}
@@ -119,7 +131,8 @@ func GetRestaurantById(restaurantId string) (models.Restaurant, error) {
 			&michelin.Year,
 		)
 		if err != nil {
-			log.Fatalf("unable to scan the row for michelin. %v", err)
+			log.Printf("unable to scan the row for michelin. %v", err)
+			return models.Restaurant{}, err
 		}
 		restaurant.Michelins = append(restaurant.Michelins, michelin)
 	}

@@ -17,7 +17,9 @@ func GetPlansByUserID(user_id int) ([]models.Plan, error) {
 	rows1, err := database.Query(sqlStatement, &user_id)
 	defer rows1.Close()
 	if err != nil {
-		log.Fatalf("unable to execute the query. %v", err)
+		// log.Fatalf("unable to execute the query. %v", err)
+		log.Printf("unable to execute the query. %v", err)
+		return []models.Plan{}, err
 	}
 
 	for rows1.Next() {
@@ -47,7 +49,9 @@ func GetPlansByUserID(user_id int) ([]models.Plan, error) {
 			&plan.UpdatedTime,
 		)
 		if err != nil {
-			log.Fatalf("unable to scan the row. %v", err)
+			// log.Fatalf("unable to scan the row. %v", err)
+			log.Printf("unable to scan the row. %v", err)
+			return []models.Plan{}, err
 		}
 
 		sqlStatement = `SELECT * FROM plan__planDetail WHERE plan_id=$1`
@@ -55,7 +59,9 @@ func GetPlansByUserID(user_id int) ([]models.Plan, error) {
 		rows2, err := database.Query(sqlStatement, plan.PlanId)
 		defer rows2.Close()
 		if err != nil {
-			log.Fatalf("unable to execute the query. %v", err)
+			// log.Fatalf("unable to execute the query. %v", err)
+			log.Printf("unable to execute the query. %v", err)
+			return []models.Plan{}, err
 		}
 
 		for rows2.Next() {
@@ -80,7 +86,9 @@ func GetPlansByUserID(user_id int) ([]models.Plan, error) {
 			)
 
 			if err != nil {
-				log.Fatalf("unable to execute the query. %v", err)
+				// log.Fatalf("unable to execute the query. %v", err)
+				log.Printf("unable to execute the query. %v", err)
+				return []models.Plan{}, err
 			}
 			plan.PlanDetail = append(plan.PlanDetail, planDetail)
 		}

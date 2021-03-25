@@ -16,12 +16,16 @@ func GetPlanCollection(c echo.Context) error {
 
 	userId, err := res.Str2Int(c.QueryParam("userId"))
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
+		log.Printf("cannot convert string to integer. %v", err)
+		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	plans, err := db.GetPlansByUserID(userId)
 	if err != nil {
-		log.Fatalf("cannot query plan of this user. %v", err)
+		// log.Fatalf("cannot query plan of this user. %v", err)
+		log.Printf("cannot query plan of this user. %v", err)
+		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	pinnedPlans := make([]map[string]interface{}, 0)

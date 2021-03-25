@@ -16,12 +16,16 @@ func GetPlanDetail(c echo.Context) error {
 
 	planId, err := res.Str2Int(c.QueryParam("planId"))
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
+		log.Printf("cannot convert string to integer. %v", err)
+		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	plan, err := db.GetPlanByPlanId(planId)
 	if err != nil {
-		log.Fatalf("cannot query plan by this plan id. %v", err)
+		// log.Fatalf("cannot query plan by this plan id. %v", err)
+		log.Printf("cannot query plan by this plan id. %v", err)
+		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	var strDate string
@@ -37,12 +41,12 @@ func GetPlanDetail(c echo.Context) error {
 	planDetailOutput := make([]map[string]interface{}, 0)
 	previousDay := planDetails[0].Day
 	detailList := make([]map[string]interface{}, 0)
-	
+
 	for i := range planDetails {
 		// Keep storing the data of that day
-		if previousDay == planDetails[i].Day{ 
+		if previousDay == planDetails[i].Day {
 			detailList = append(detailList, map[string]interface{}{
-				"placeId": planDetails[i].PlaceId,
+				"placeId":   planDetails[i].PlaceId,
 				"placeName": planDetails[i].PlaceName,
 				"placeType": res.PlaceId2PlaceType(planDetails[i].PlaceId),
 				"timeRange": res.Minute2ClockRangeString(planDetails[i].StartTime, planDetails[i].EndTime, 1),
@@ -50,8 +54,8 @@ func GetPlanDetail(c echo.Context) error {
 		} else { // New day
 			date := start_date.AddDate(0, 0, planDetails[i-1].Day-1)
 			planDetailOutput = append(planDetailOutput, map[string]interface{}{
-				"day": planDetails[i-1].Day,
-				"date": res.Date2ThaiDateString(date, 2),
+				"day":    planDetails[i-1].Day,
+				"date":   res.Date2ThaiDateString(date, 2),
 				"detail": detailList,
 			})
 			previousDay = planDetails[i].Day
@@ -62,8 +66,8 @@ func GetPlanDetail(c echo.Context) error {
 		if i == len(planDetails)-1 {
 			date := start_date.AddDate(0, 0, planDetails[i-1].Day-1)
 			planDetailOutput = append(planDetailOutput, map[string]interface{}{
-				"day": planDetails[i-1].Day,
-				"date": res.Date2ThaiDateString(date, 2),
+				"day":    planDetails[i-1].Day,
+				"date":   res.Date2ThaiDateString(date, 2),
 				"detail": detailList,
 			})
 			previousDay = planDetails[i].Day
