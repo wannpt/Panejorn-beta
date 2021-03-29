@@ -24,7 +24,11 @@ input, button{
   background-color: #fafafa;
   height: 100vh;
   width: 100vw;
-  }
+}
+
+.modal{
+  font-family: 'Kanit', sans-serif;
+}
 
 .small-title{
   font-size: 14px;
@@ -99,4 +103,9 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f3bb80",endCo
   background: -webkit-linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,115,1) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+button.btn{
+  background-color: transparent !important;
+  border-color: transparent;
 }

@@ -4,6 +4,7 @@ import './Navbar.css';
 import { NavLink as Link, useLocation } from 'react-router-dom';
 
 import { Icon } from '@iconify/react';
+
 import home4line from '@iconify/icons-ri/home-4-line';
 import home4fill from '@iconify/icons-ri/home-4-fill';
 import roundCollectionsBookmark from '@iconify/icons-ic/round-collections-bookmark';
