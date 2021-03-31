@@ -76,5 +76,6 @@ func GetPlanDetail(c echo.Context) error {
 	result["dateRange"] = strDate
 	result["province"] = plan.MainLocation
 	result["planDetail"] = planDetailOutput
+	result["budget"] = plan.Budget
 	return c.JSON(http.StatusOK, result)
 }
