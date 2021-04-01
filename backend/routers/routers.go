@@ -17,10 +17,10 @@ func SetUpRouter() *echo.Echo {
 
 	// Handlers
 	e.GET("/login", handlers.Login)
-	e.GET("/getCurrentLocation", handlers.GetCurrentLocation)
-	e.GET("/getPlanCollection", handlers.GetPlanCollection)
-	e.GET("/getPlanDetail", handlers.GetPlanDetail)
-	e.GET("/getLocationDetail", handlers.GetLocationDetail)
+	e.GET("/currentLocation", handlers.GetCurrentLocation)
+	e.GET("/planCollection", handlers.GetPlanCollection)
+	e.GET("/planCollection/plans", handlers.GetPlanDetail)
+	e.GET("/locations", handlers.GetLocationDetail)
 
 	e.POST("/createPlan", handlers.CreatePlan)
 
