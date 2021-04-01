@@ -36,8 +36,8 @@ input, button{
 }
 
 .big-title{
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 16px !important;
+  font-weight: 600 !important;
 }
 
 .app-logo{
@@ -108,4 +108,24 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f3bb80",endCo
 button.btn{
   background-color: transparent !important;
   border-color: transparent;
+}
+
+.modal-body-bg{
+  background-color: #fafafa;
+}
+
+//======== overriding Bootstrap css ==========//
+
+//Input box
+.form-control {
+  background-color: white;
+  border-radius: 16px;
+  padding: 16px 12px;
+  width: 100%;
+  height: calc(1rem + 32px)
+}
+
+.form-control:focus {
+  border-color: rgb(243,187,128);
+  box-shadow: 0 0 0 0.05rem #F3BB80;
 }

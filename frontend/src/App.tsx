@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.scss';
 import RootRoutes from './routing/RootRouting';
 
