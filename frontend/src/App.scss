@@ -1,131 +1,209 @@
-
-Link{
-  color:black !important;
-  text-decoration: none;
+Link {
+	color: black !important;
+	text-decoration: none;
 }
 
-a{
-  color:black !important;
-  text-decoration: none;
+a {
+	color: black !important;
+	text-decoration: none;
 }
 
-a:hover{
-  color:black !important;
-  text-decoration: none;
+a:hover {
+	color: black !important;
+	text-decoration: none;
 }
 
-input, button{
-  border:none;
-  background: none;
+input,
+button {
+	border: none;
+	background: none;
 }
 
-.App{
-  font-family: 'Kanit', sans-serif;
-  background-color: #fafafa;
-  height: 100vh;
-  width: 100vw;
+.App {
+	font-family: 'Kanit', sans-serif;
+	background-color: #fafafa;
+	height: 100vh;
+	width: 100vw;
 }
 
-.modal{
-  font-family: 'Kanit', sans-serif;
+.modal {
+	font-family: 'Kanit', sans-serif;
 }
 
-.small-title{
-  font-size: 14px;
-  font-weight: 600;
+.small-title {
+	font-size: 14px;
+	font-weight: 600;
 }
 
-.big-title{
-  font-size: 16px !important;
-  font-weight: 600 !important;
+.big-title {
+	font-size: 16px !important;
+	font-weight: 600 !important;
 }
 
-.app-logo{
-  height: 72px;
-  position:fixed;
-  top: 16px;
-  margin: 0;
-  padding: 0;
+.app-logo {
+	height: 72px;
+	position: fixed;
+	top: 16px;
+	margin: 0;
+	padding: 0;
 }
 
 .app-tabbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: 45px;
-  display: flex;
-  background-color: #ffffff;
-  padding-top: 10px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 45px;
+	display: flex;
+	background-color: #ffffff;
+	padding-top: 10px;
 
+	// iPhone XR, 11, 11 Pro Max
+	@media screen and (height: 848px) and (width: 414px) {
+		height: 80px;
+	}
 
-  // iPhone XR, 11, 11 Pro Max
-  @media screen and (height: 848px) and (width: 414px) {
-    height: 80px;
-  }
+	// flutter screen
+	@media screen and (height: 852px) and (width: 414px) {
+		height: 80px;
+	}
 
-  // flutter screen
-  @media screen and (height: 852px) and (width: 414px) {
-    height: 80px;
-  }
-
-  // iPhone X, 11 Pro
-  @media screen and (height: 768px) and (width: 375px) {
-    height: 80px;
-  }
+	// iPhone X, 11 Pro
+	@media screen and (height: 768px) and (width: 375px) {
+		height: 80px;
+	}
 }
 
-.default-padding{
-  padding-right: 16px;
-  padding-left: 16px;
-  padding-top: 96px;
+.default-padding {
+	padding-right: 16px;
+	padding-left: 16px;
+	padding-top: 96px;
 }
 
-.gradient-background{
-  background: rgb(243,187,128);
-background: -moz-linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,115,1) 100%);
-background: -webkit-linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,115,1) 100%);
-background: linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,115,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f3bb80",endColorstr="#e66973",GradientType=1);
+.gradient-background {
+	background: rgb(243, 187, 128);
+	background: -moz-linear-gradient(135deg, rgba(243, 187, 128, 1) 0%, rgba(230, 105, 115, 1) 100%);
+	background: -webkit-linear-gradient(135deg, rgba(243, 187, 128, 1) 0%, rgba(230, 105, 115, 1) 100%);
+	background: linear-gradient(135deg, rgba(243, 187, 128, 1) 0%, rgba(230, 105, 115, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f3bb80",endColorstr="#e66973",GradientType=1);
 }
 
-.white-text{
-  color:white;
+.white-text {
+	color: white;
 }
 
-.extra-small-title{
-  font-weight: 600;
-  color: #969191;
-  font-size: 0.75rem;
+.extra-small-title {
+	font-weight: 600;
+	color: #969191;
+	font-size: 0.75rem;
 }
 
-.color-text{
-  background: -webkit-linear-gradient(135deg, rgba(243,187,128,1) 0%, rgba(230,105,115,1) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.color-text {
+	background: -webkit-linear-gradient(135deg, rgba(243, 187, 128, 1) 0%, rgba(230, 105, 115, 1) 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
-button.btn{
-  background-color: transparent !important;
-  border-color: transparent;
+button.btn {
+	background-color: transparent !important;
+	border-color: transparent;
 }
 
-.modal-body-bg{
-  background-color: #fafafa;
+
+
+.modal-body-bg {
+	background-color: #fafafa;
 }
+
+//======== overriding datePicker css ==========//
+.nice-dates-day::before{
+  background: -webkit-linear-gradient(270deg, rgba(243, 187, 128, 1) 0%, rgba(230, 105, 115, 1) 100%);
+  // background:rgb(243, 187, 128);
+}
+
+.nice-dates-popover{
+  position: absolute !important;
+  left: 0rem;
+  // top: 50%;
+}
+
 
 //======== overriding Bootstrap css ==========//
 
 //Input box
 .form-control {
-  background-color: white;
-  border-radius: 16px;
-  padding: 16px 12px;
-  width: 100%;
-  height: calc(1rem + 32px)
+  font-weight: normal;
+	background-color: white;
+  border: 0px;
+	border-radius: 16px;
+	// padding: 16px 12px;
+	width: 100%;
+	height: calc(1rem + 32px);
+  
+}
+
+.force-white-bg {
+  background-color: white !important;
 }
 
 .form-control:focus {
-  border-color: rgb(243,187,128);
-  box-shadow: 0 0 0 0.05rem #F3BB80;
+	border-color: rgb(243, 187, 128);
+	box-shadow: 0 0 0 0.05rem #f3bb80;
+}
+
+.form-label {
+	font-size: 14px;
+	font-weight: 600;
+  padding-left: .25rem;
+  display: inline-block;
+}
+
+//select box
+option{
+  font-size: 1rem;
+}
+
+//dropdown
+.dropdown-toggle {
+  text-align: start;
+  color: black !important;
+  align-items: center;
+  border: 0px;
+	border-radius: 16px;
+	padding: 16px 12px;
+	width: 100%;
+	height: calc(1rem + 32px);
+}
+
+.dropdown-toggle:focus {
+  color: black;
+  border-color: rgb(243, 187, 128);
+	box-shadow: 0 0 0 0.05rem #f3bb80;
+}
+
+.dropdown-toggle:active {
+  color: black;
+  border-color: rgb(243, 187, 128);
+	box-shadow: 0 0 0 0.05rem #f3bb80;
+}
+
+.submit-btn {
+  border-radius: 10px;
+  width: 100%;
+  height: calc(1rem + 32px);
+}
+
+.submit-btn {
+  border-radius: 10px;
+  border-color: rgb(243, 187, 128) !important;
+  width: 100%;
+  height: calc(1rem + 32px);
+}
+
+.modal-content {
+  border-radius: 1rem !important;
+}
+
+.modal-body {
+  border-radius: 1rem !important;
 }

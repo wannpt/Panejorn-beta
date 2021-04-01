@@ -9,6 +9,7 @@ const PlanDetailConstant = {
 	planName: 'เที่ยวหนึ่งวันกับคนอย่างเธอ',
 	dateRange: '09 พ.ย. 63',
 	province: 'กรุงเทพมหานคร',
+	budget: 5000,
 	planDetail: [
 		{
 			day: 1,

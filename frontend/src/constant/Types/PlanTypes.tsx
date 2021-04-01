@@ -16,10 +16,20 @@ type details = {
     detail: PlaceType[]
 }
 
-export type PlanType = {
-    planId: number,
+export type CreatingPlanType = {
     planName: string,
     dateRange: string,
-    province: string,
+    province: string
+    budget: number,
+    //number of people? 
+    
+    //advance setting
+    startTime? : string,
+    endTime? : string,
+    //5attributes
+}
+export interface PlanType extends CreatingPlanType {
+    planId: number,
     planDetail: details[]
 }
+

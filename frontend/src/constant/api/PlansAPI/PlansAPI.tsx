@@ -1,5 +1,3 @@
-import { Result } from "antd"
-
 export const GetPlanCollection = (params: any) => {
     console.log('getting...')
    fetch('http://localhost:8000/getPlanCollection?userId=' + params, {
