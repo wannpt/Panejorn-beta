@@ -17,6 +17,7 @@ type details = {
 }
 
 export type CreatingPlanType = {
+    type?: string,
     planName: string,
     dateRange: string,
     province: string
@@ -31,5 +32,10 @@ export type CreatingPlanType = {
 export interface PlanType extends CreatingPlanType {
     planId: number,
     planDetail: details[]
+}
+
+export interface PlanChoices extends PlanType {
+    planDetail2: details[],
+    planDetail3: details[]
 }
 

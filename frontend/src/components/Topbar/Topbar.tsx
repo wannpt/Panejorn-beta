@@ -67,7 +67,6 @@ function Topbar() {
 				</div>
 			</div>
 
-			{/* <CreatePlan show={showModal === 'CreatePlan' ? true : false} /> */}
 		</div>
 	);
 }

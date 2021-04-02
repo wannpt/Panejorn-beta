@@ -69,7 +69,8 @@ const CreatePlan = (props: any) => {
 		const payload = {
 			...input,
 			startDate: DateFormatter(startDate),
-			endDate: DateFormatter(endDate)
+			endDate: DateFormatter(endDate),
+			type: 'auto',
 		}
 		console.log('submit value => ', payload);
 		
