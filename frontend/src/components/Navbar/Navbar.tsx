@@ -4,6 +4,7 @@ import './Navbar.css';
 import { NavLink as Link, useLocation } from 'react-router-dom';
 
 import { Icon } from '@iconify/react';
+
 import home4line from '@iconify/icons-ri/home-4-line';
 import home4fill from '@iconify/icons-ri/home-4-fill';
 import roundCollectionsBookmark from '@iconify/icons-ic/round-collections-bookmark';
@@ -26,7 +27,8 @@ const navbarConstant:MapPathToIcon[] = [
     {key: 'home', path: '/', fill: home4fill, line: home4line, active: true},
     {key: 'collections', path: '/collections', fill: roundCollectionsBookmark, line: outlineCollectionsBookmark, active: false},
     {key: 'explore', path: '/explore', fill: compass3fill, line: compass3line, active: false},
-    {key: 'setting', path: '/setting', fill: user3fill, line: user3line, active: false}
+    {key: 'setting', path: '/setting', fill: user3fill, line: user3line, active: false},
+    
 ].map(el => ({...el, style: {color: '#E66973', fontSize: '24px'}}))
 
 const Navbar = () => {  

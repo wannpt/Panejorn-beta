@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../../components/Card/Card';
 import News from '../../components/News/News';
+import Logo from '../../Images/Group 23.svg';
 import { StatusCard } from '../../constant/Types/CardTypes';
 
 const cardDefault: StatusCard = 
@@ -18,6 +19,7 @@ function Homepage() {
 	return (
 		<div>
 			<div className='gradient-background default-padding'>
+			<img src={Logo} className='app-logo' alt='app logo' />
 				<div className='pb-4'>
 					<p className='small-title white-text mb-2'>แผนเที่ยวปัจจุบัน</p>
 					<Card data={cardDefault} isPinned={false} isStatus={true} />
