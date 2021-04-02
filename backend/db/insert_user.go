@@ -6,7 +6,7 @@ import (
 	"backend/models"
 )
 
-func InsertUser(user models.User) int{
+func InsertUser(user models.User) int {
 	database := ConnectDatabase()
 	defer database.Close()
 

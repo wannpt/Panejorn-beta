@@ -68,11 +68,11 @@ func CreateUser(c echo.Context) error {
 	//////////////////////////////////////////////////////////
 
 	user := models.User{
-		Email: email,
-		Password: res.HashPassword(password),
-		Username: username,
-		DateOfBirth: birth_date.Unix(),
-		Status: 1,
+		Email:        email,
+		Password:     res.HashPassword(password),
+		Username:     username,
+		DateOfBirth:  birth_date.Unix(),
+		Status:       1,
 		CreationTime: res.TimeZone(time.Now()).Unix(),
 	}
 

@@ -1,9 +1,9 @@
 package resources
 
 import (
-	"log"
 	"encoding/json"
 	"github.com/labstack/echo"
+	"log"
 )
 
 func GetRequestBody(c echo.Context) map[string]interface{} {

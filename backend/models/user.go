@@ -5,7 +5,7 @@ type User struct {
 	Email        string    `json:"email"`
 	Password     string    `json:"password"`
 	Username     string    `json:"username"`
-	DateOfBirth  int64       `json:"dob"`
+	DateOfBirth  int64     `json:"dob"`
 	Status       int       `json:"status"`
 	Image        []byte    `json:"image"`
 	Tag1         float64   `json:"tag1"`
