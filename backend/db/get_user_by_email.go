@@ -6,19 +6,21 @@ import (
 	"backend/models"
 )
 
-func GetUser(email string) (models.User, error) {
+func GetUserByEmail(email string) (models.User, error) {
 	database := ConnectDatabase()
 	defer database.Close()
 
 	sqlStatement := "SELECT * FROM user__userInfo WHERE email = $1"
 
 	row := database.QueryRow(sqlStatement, email)
+
 	var user models.User
+	
 	err := row.Scan(
 		&user.UserId,
 		&user.Email,
 		&user.Password,
-		&user.UserName,
+		&user.Username,
 		&user.DateOfBirth,
 		&user.Status,
 		&user.Image,

@@ -2,16 +2,16 @@ package handlers
 
 import (
 	"github.com/labstack/echo"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 
 	"backend/db"
+	res "backend/resources"
 )
 
 func Login(c echo.Context) error {
 	result := make(map[string]interface{}, 0)
 	email := c.QueryParam("email")
-	user, err := db.GetUser(email)
+	user, err := db.GetUserByEmail(email)
 
 	// Account isn't fund
 	if err != nil {
@@ -23,7 +23,7 @@ func Login(c echo.Context) error {
 	password := c.QueryParam("password")
 
 	// Password matches
-	if comparePassword(user.Password, password) {
+	if res.MatchPassword(user.Password, password) {
 		result["status"] = true
 		result["result"] = user
 		return c.JSON(http.StatusOK, result)
@@ -32,18 +32,4 @@ func Login(c echo.Context) error {
 		result["message"] = "Invalid password."
 		return c.JSON(http.StatusOK, result)
 	}
-}
-
-func hashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
-}
-
-func comparePassword(hashedPassword string, password string) bool {
-	byteHashedPassword := []byte(hashedPassword)
-	bytePassword := []byte(password)
-	if err := bcrypt.CompareHashAndPassword(byteHashedPassword, bytePassword); err != nil { // Both of them don't match together
-		return false
-	}
-	return true
 }
