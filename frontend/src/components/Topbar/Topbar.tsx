@@ -23,6 +23,7 @@ const topbarConstant: TopbarType[] = [
 	{ title: 'ตั้งค่า', path: '/setting', canReturn: false, isEdit: false, isHidden: false },
 	{ title: 'รายละเอียดสถานที่', path: '/place', canReturn: true, isEdit: false, isHidden: true },
 	{ title: 'แผนเที่ยว', path: '/plan', canReturn: true, isEdit: false, isHidden: false },
+	{ title: 'เลือกแผนเที่ยว', path: '/planSelection', canReturn: true, isEdit: true, isHidden: true}
 ];
 
 function Topbar() {
@@ -57,7 +58,7 @@ function Topbar() {
 					<span> {topBar.title} </span>
 				</div>
 				<div className='col text-center'>
-					<span> {topBar.isEdit ? 'edit' : ''} </span>
+					<span> {topBar.isEdit ? 'เลือกแผนเที่ยว' : ''} </span>
 				</div>
 				<div className='col text-right d-flex justify-content-end'>
 					{topBar.options?.map((el) => {
