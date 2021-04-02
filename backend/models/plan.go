@@ -5,7 +5,8 @@ type Plan struct {
 	PlanName         string       `json:"planName"`
 	StartDate        int64        `json:"startDate"`
 	EndDate          int64        `json:"endDate"`
-	Budget           int          `json:"budget"`
+	MinBudget        int          `json:"minBudget"`
+	MaxBudget        int          `json:"maxBudget"`
 	NumberOfChildren int          `json:"numberOfChildren"`
 	NumberOfAdults   int          `json:"numberOfAdults"`
 	PlanScore        NullFloat64  `json:"planScore"`
@@ -13,7 +14,7 @@ type Plan struct {
 	Distance         float64      `json:"distance"`
 	Diversity        float64      `json:"diversity"`
 	Status           int          `json:"status"`
-	UserID           int          `json:"userID"`
+	UserId           int          `json:"userID"`
 	Tag1             float64      `json:"tag1"`
 	Tag2             float64      `json:"tag2"`
 	Tag3             float64      `json:"tag3"`

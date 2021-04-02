@@ -28,6 +28,7 @@ func GetPlanCollection(c echo.Context) error {
 
 	pinnedPlans := make([]map[string]interface{}, 0)
 	unpinnedPlans := make([]map[string]interface{}, 0)
+
 	for i := range plans {
 		var strDate string
 		start_date := res.TimeZone(time.Unix(plans[i].StartDate, 0))
@@ -48,7 +49,7 @@ func GetPlanCollection(c echo.Context) error {
 		if plans[i].Pinned == true {
 			pinnedPlans = append(pinnedPlans, plan)
 		} else {
-			unpinnedPlans = append(pinnedPlans, plan)
+			unpinnedPlans = append(unpinnedPlans, plan)
 		}
 	}
 	result["pinnedPlans"] = pinnedPlans

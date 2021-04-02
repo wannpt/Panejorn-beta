@@ -4,10 +4,10 @@ import (
 	"log"
 )
 
-func UpdateUserTagScore(info map[string]interface{}) int64{
+func UpdateUserTagScore(info map[string]interface{}) int64 {
 	database := ConnectDatabase()
 	defer database.Close()
-	
+
 	sqlStatement := `
 	UPDATE user__userInfo
 	SET tag1=$2, tag2=$3, tag3=$4, tag4=$5, tag5=$6, updated_time=$7

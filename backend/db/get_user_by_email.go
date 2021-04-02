@@ -15,7 +15,7 @@ func GetUserByEmail(email string) (models.User, error) {
 	row := database.QueryRow(sqlStatement, email)
 
 	var user models.User
-	
+
 	err := row.Scan(
 		&user.UserId,
 		&user.Email,
