@@ -1,2 +1,5 @@
 Flask==1.1.2
 Flask-Cors==3.0.10
+python-dotenv==0.17.0
+psycopg2-binary==2.8.6
+numpy==1.20.2

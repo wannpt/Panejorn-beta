@@ -62,7 +62,7 @@ func CreatePlan(c echo.Context) error {
 		if err != nil {
 			log.Panic("cannot decode the response body.", err)
 		}
-		result["planId"] = db.InsertPlan(plan)
+		// result["planId"] = db.InsertPlan(plan)
 		result["success"] = true
 
 
