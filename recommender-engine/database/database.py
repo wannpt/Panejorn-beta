@@ -1,5 +1,6 @@
 import psycopg2
 import numpy as np
+import pandas as pd
 from urllib.parse import *
 from psycopg2.extensions import register_adapter, AsIs
 psycopg2.extensions.register_adapter(np.int64, psycopg2._psycopg.AsIs)
@@ -14,13 +15,26 @@ def ConnectDatabase(DATABASE_URL):
                         )
     return conn
 
-def GetAttractions(DATABASE_URL):
+def GetAttractions(DATABASE_URL, province="all"):
     conn = ConnectDatabase(DATABASE_URL)
-    SQL = "SELECT attraction_id, attraction_name, latitude, longitude, thai_child_fee, thai_adult_fee, foreigner_child_fee, foreigner_adult_fee, province, monday, tuesday, thursday, friday, saturday, sunday, recommended_duration, tag1, tag2, tag3, tag4, tag5\
-           FROM attraction__attractionDetail\
-           "
+    if province == "all":
+        SQL = "SELECT attraction_id, attraction_name, latitude, longitude, thai_child_fee, thai_adult_fee, province, monday, tuesday, thursday, friday, saturday, sunday, recommended_duration, tag1, tag2, tag3, tag4, tag5\
+            FROM attraction__attractionDetail\
+            "
+    else:
+        SQL = """SELECT attraction_id, attraction_name, latitude, longitude, thai_child_fee, thai_adult_fee, province, monday, tuesday, thursday, friday, saturday, sunday, recommended_duration, tag1, tag2, tag3, tag4, tag5\
+            FROM attraction__attractionDetail\
+            WHERE province = %s\
+            """
     with conn:
         with conn.cursor() as curs:
-            curs.execute(SQL)
+            curs.execute(SQL, (province, ))
             data = curs.fetchall()
-    return data
+
+    column_names = ['attraction_id', 'attraction_name', 'latitude', 'longitude',
+               'thai_child_fee', 'thai_adult_fee', 'province', 'monday',
+               'tuesday', 'wednesday', 'thursday', 'friday',
+               'saturday', 'sunday', 'recommended_duration', 'tag1'
+               'tag2', 'tag3', 'tag4', 'tag5',
+    ]
+    return pd.DataFrame(data, columns=column_names)

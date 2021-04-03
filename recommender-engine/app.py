@@ -27,10 +27,13 @@ def trip_recommender():
 @app.route('/attractions', methods=['GET'])
 @cross_origin()
 def get_attractions():
-    attractions = GetAttractions(DATABASE_URL)
-    print(f"# Attractions: {len(attractions)}")
-    for i, attraction in enumerate(attractions):
-        print(f"{i:3d}\t{attraction[1]}")
+    
+    province = "กรุงเทพมหานคร"
+
+    attractions = GetAttractions(DATABASE_URL, province)
+
+    print(attractions.iloc[0])
+    
     result = {
         'success': True
     }
