@@ -59,3 +59,9 @@
     background: -webkit-linear-gradient(270deg, rgba(243, 187, 128, 1) 0%, rgba(230, 105, 115, 1) 100%);
     color: white;
 }
+
+.submit-btn{
+    position:fixed;
+    width: calc(100vw - 16px);
+    bottom: 16px;
+}

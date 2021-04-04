@@ -9,13 +9,12 @@ import Slider from 'react-slick';
 import PlaceCard from '../../components/Card/PlaceCard';
 import { PlaceType } from '../../constant/Types/PlanTypes';
 
-const defaultPlace:PlaceType = {
-    placeId: '1',
-    placeType: 'attraction',
-    placeName: 'ดวงดาวแห่งความร้าก',
-    timeRange: '10.00-12.00',
-}
-
+const defaultPlace: PlaceType = {
+	placeId: '1',
+	placeType: 'attraction',
+	placeName: 'ดวงดาวแห่งความร้าก',
+	timeRange: '10.00-12.00',
+};
 
 const PlanSelectionPage = (props: any) => {
 	const location = useLocation();
@@ -25,7 +24,7 @@ const PlanSelectionPage = (props: any) => {
 	const [data, setData] = useState<any>(payload);
 	const [selectIndex, setSelectIndex] = useState<number>(0);
 	const [planDetail, setPlanDetail] = useState<any>();
-	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const settings = {
 		dots: false,
@@ -36,18 +35,18 @@ const PlanSelectionPage = (props: any) => {
 		arrows: false,
 	};
 
-	useEffect(() => {
-		console.log('getting...');
-		fetch('http://localhost:8000/planCollection/plans?planId=1', {
-			method: 'GET',
-		})
-			.then((res) => res.json())
-			.then((result) => {
-				console.log(result);
-				setPlanDetail(result);
-				setIsLoading(false);
-			});
-	}, []);
+	// useEffect(() => {
+	// 	console.log('getting...');
+	// 	fetch('http://localhost:8000/planCollection/plans?planId=1', {
+	// 		method: 'GET',
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((result) => {
+	// 			console.log(result);
+	// 			setPlanDetail(result);
+	// 			setIsLoading(false);
+	// 		});
+	// }, []);
 
 	console.log(data);
 	return (
@@ -98,18 +97,18 @@ const PlanSelectionPage = (props: any) => {
 					</div>
 					<Slider {...settings} afterChange={(index) => setSelectIndex(index)}>
 						<div className='px-2'>
-                            <div className='my-2'>
-                                <PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
-                            </div>
-                            <div className='my-2'>
-                                <PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
-                            </div>
-                            <div className='my-2'>
-                                <PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
-                            </div>
-                            <div className='my-2'>
-                                <PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
-                            </div>
+							<div className='my-2'>
+								<PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
+							</div>
+							<div className='my-2'>
+								<PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
+							</div>
+							<div className='my-2'>
+								<PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
+							</div>
+							<div className='my-2'>
+								<PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
+							</div>
 						</div>
 						<div>
 							<h1>2</h1>
@@ -118,6 +117,9 @@ const PlanSelectionPage = (props: any) => {
 							<h1>3</h1>
 						</div>
 					</Slider>
+					<div className='container-fluid px-2 '>
+						<button className='submit-btn gradient-background text-white'>เลือกแผนนี้</button>
+					</div>
 				</>
 			)}
 		</div>
