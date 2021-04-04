@@ -37,6 +37,11 @@ const PlanSelection = Loadable({
     loading: () => null
 })
 
+const Login = Loadable({
+    loader: () => import('../pages/Login/LoginPage'),
+    loading: () => null
+})
+
 
 const RootRoutes = () => {
     return (
@@ -48,6 +53,7 @@ const RootRoutes = () => {
             <Route path="/place/:id" component={PlacePage} />
             <Route path="/plan" component={PlanDetail} />
             <Route path='/planSelection' component={PlanSelection} />
+            <Route path='/login' component={Login} />
         </Switch>
     );
 };
