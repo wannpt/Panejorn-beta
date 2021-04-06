@@ -1,10 +1,18 @@
 package routers
 
 import (
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
+	"os"
 
 	"backend/handlers"
+)
+
+var (
+	key = []byte(os.Getenv("SESSION_KEY"))
+	store = sessions.NewCookieStore(key)
 )
 
 func SetUpRouter() *echo.Echo {
@@ -14,14 +22,16 @@ func SetUpRouter() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
+	e.Use(session.Middleware(store))
 
 	// Handlers
-	e.GET("/user/login", handlers.Login)
 	e.GET("/currentLocation", handlers.GetCurrentLocation)
 	e.GET("/planCollection", handlers.GetPlanCollection)
 	e.GET("/planCollection/plans", handlers.GetPlanDetail)
 	e.GET("/locations", handlers.GetLocationDetail)
+	e.GET("/user/logout", handlers.Logout)
 
+	e.POST("/user/login", handlers.Login)
 	e.POST("/planCollection/plans", handlers.CreatePlan)
 	e.POST("/user/registration", handlers.CreateUser)
 
