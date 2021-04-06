@@ -79,6 +79,12 @@ func CreateUser(c echo.Context) error {
 	userId := db.InsertUser(user)
 	result["userId"] = userId
 
+	info := map[string]interface{}{
+		"userId": userId,
+		"authenticated": true,
+	}
+	res.CreateSession(c, info)
+
 	return c.JSON(http.StatusOK, result)
 }
 

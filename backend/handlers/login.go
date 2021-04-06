@@ -3,8 +3,6 @@ package handlers
 import (
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"github.com/gorilla/sessions"
-	"github.com/labstack/echo-contrib/session"
 	_ "fmt"
 
 	"backend/db"
@@ -30,15 +28,12 @@ func Login(c echo.Context) error {
 	if res.MatchPassword(user.Password, password) {
 		result["success"] = true
 		result["result"] = user
-		sess, _ := session.Get("session", c)
-		sess.Options = &sessions.Options {
-			Path: "/",
-			MaxAge: 86400 * 7,
-			HttpOnly: true,
+		info := map[string]interface{}{
+			"userId": user.UserId,
+			"authenticated": true,
 		}
-		sess.Values["authenticated"] = true
-		sess.Values["userId"] = user.UserId
-		sess.Save(c.Request(), c.Response())
+		res.CreateSession(c, info)
+
 		return c.JSON(http.StatusOK, result)
 		
 	} else { // Password doesn't match

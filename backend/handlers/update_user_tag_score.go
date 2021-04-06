@@ -10,6 +10,12 @@ import (
 )
 
 func UpdateUserTagScore(c echo.Context) error {
+
+	// Check session exists or not
+	if !res.IsAuthenticated(c) {
+		return c.NoContent(http.StatusForbidden)
+	}
+
 	result := make(map[string]interface{}, 0)
 	requestBody := res.GetRequestBody(c)
 
