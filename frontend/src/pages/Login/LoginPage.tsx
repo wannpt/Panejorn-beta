@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 const LoginPage = () => {
 	const [input, setInput] = useState<any>();
+	const [showModal, setShowModal] = useState<boolean>(false);
+	const handleOpen = () => setShowModal(true);
+	const handleClose = () => setShowModal(false);
+	const [message, setMessage] = useState<string>('temp');
+	let history = useHistory();
+	let resp: any;
 
-    useEffect(() => {
-        const script = document.createElement('script');
-      
-        script.src = "https://apis.google.com/js/platform.js";
-        script.async = true;
-      
-        document.body.appendChild(script);
-      
-        return () => {
-          document.body.removeChild(script);
-        }
-      }, []);
+	useEffect(() => {
+		const script = document.createElement('script');
+
+		script.src = 'https://apis.google.com/js/platform.js';
+		script.async = true;
+
+		document.body.appendChild(script);
+
+		return () => {
+			document.body.removeChild(script);
+		};
+	}, []);
 
 	const onChangeHandler = (e: any) => {
 		const { target } = e;
@@ -25,8 +32,33 @@ const LoginPage = () => {
 		setInput({ ...input, [name]: value });
 	};
 
-	const SubmitHandler = () => {
+	//Click to login
+	const SubmitHandler = async () => {
 		console.log(input);
+
+		const response = await fetch('http://localhost:8000/user/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			// credentials: 'include',
+			body: JSON.stringify(input),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				resp = result;
+				localStorage.sid = resp.result.userId;
+				setMessage(result.message);
+				console.log(result.result.userId)
+			});
+
+		if (!resp.success) {
+			return setShowModal(true);
+		}
+
+		if (resp.success) {
+			history.push('')
+		}
 	};
 
 	return (
@@ -40,7 +72,7 @@ const LoginPage = () => {
 						{/* Email */}
 
 						<Form.Control
-							name='username'
+							name='email'
 							type='email'
 							placeholder='ชื่อผู้ใช้'
 							className='input-textbox mb-2'
@@ -64,7 +96,7 @@ const LoginPage = () => {
 			<div className='row'>
 				<div className='col-12 text-center'>
 					<span> หรือ </span>
-                    <div className="g-signin2" data-onsuccess="onSignIn"></div>
+					<div className='g-signin2' data-onsuccess='onSignIn'></div>
 					<Button className='gradient-background submit-btn btn my-2' onClick={SubmitHandler}>
 						Google
 					</Button>
@@ -75,14 +107,21 @@ const LoginPage = () => {
 					</Button>
 				</div>
 			</div>
-            <div className='row'>
-                <div className='col-12 text-center my-4'>
-                    <a>ลืมรหัสผ่าน?</a>
-                </div>
-                <div className='col-12 text-center'>
-                    <a>ยังไม่เป็นสมาชิก?</a>
-                </div>
-            </div>
+			<div className='row'>
+				<div className='col-12 text-center my-4'>
+					<a>ลืมรหัสผ่าน?</a>
+				</div>
+				<div className='col-12 text-center'>
+					<a>ยังไม่เป็นสมาชิก?</a>
+				</div>
+			</div>
+
+			<Modal show={showModal} onHide={handleClose}>
+				<Modal.Header className='' closeButton>
+					<Modal.Title className='col text-center color-text big-title'> เกิดข้อผิดพลาด </Modal.Title>
+				</Modal.Header>
+				<Modal.Body className='modal-body-bg'>{message}</Modal.Body>
+			</Modal>
 		</div>
 	);
 };
