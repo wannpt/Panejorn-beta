@@ -2,7 +2,7 @@ package handlers
 
 import (
 	_ "fmt"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"net/http"
 	"regexp"
 	"time"
@@ -49,7 +49,7 @@ func CreateUser(c echo.Context) error {
 	password := requestBody["password"].(string)
 	if !isPasswordValid(password) {
 		result["success"] = false
-		result["message"] = "ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-z, และ 0-9 อย่างน้อย 1 ตัวอักษร"
+		result["message"] = "ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร"
 		return c.JSON(http.StatusInternalServerError, result)
 	}
 	//////////////////////////////////////////////////////////
