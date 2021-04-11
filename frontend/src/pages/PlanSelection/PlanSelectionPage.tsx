@@ -118,7 +118,7 @@ const PlanSelectionPage = (props: any) => {
 						</div>
 					</Slider>
 					<div className='container-fluid px-2 '>
-						<button className='submit-btn gradient-background text-white'>เลือกแผนนี้</button>
+						<button className='submit-btn select-this-plan-btn gradient-background text-white'>เลือกแผนนี้</button>
 					</div>
 				</>
 			)}
