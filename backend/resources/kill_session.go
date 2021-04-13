@@ -5,10 +5,10 @@ import (
 	"github.com/labstack/echo-contrib/session"
 )
 
-func IsAuthenticated(c echo.Context) bool {
+func KillSession(c echo.Context) {
 	sess, _ := session.Get("session", c)
-	if auth, ok := sess.Values["authenticated"].(bool); !ok || !auth {
-		return false
-	}
-	return true
+
+	// Like destroying the session
+	sess.Options.MaxAge = -1
+	sess.Save(c.Request(), c.Response())
 }
