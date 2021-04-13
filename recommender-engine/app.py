@@ -10,6 +10,7 @@ cors = CORS(app)
 
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
+attractions = GetAttractions(DATABASE_URL)
 
 @app.route('/trip-recommender-system', methods=['POST'])
 @cross_origin()
@@ -19,24 +20,10 @@ def trip_recommender():
     req_body = request.json
 
     print(req_body)
+    print(attractions.iloc[0])
 
     result = req_body
     
-    return jsonify(result)
-
-@app.route('/attractions', methods=['GET'])
-@cross_origin()
-def get_attractions():
-    
-    province = "กรุงเทพมหานคร"
-
-    attractions = GetAttractions(DATABASE_URL, province)
-
-    print(attractions.iloc[0])
-    
-    result = {
-        'success': True
-    }
     return jsonify(result)
 
 @app.route('/', methods=['GET'])
