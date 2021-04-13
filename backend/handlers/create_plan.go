@@ -15,6 +15,12 @@ import (
 )
 
 func CreatePlan(c echo.Context) error {
+
+	// Check session exists or not
+	if !res.IsAuthenticated(c) {
+		return c.NoContent(http.StatusForbidden)
+	}
+
 	result := make(map[string]interface{}, 0)
 	requestBody := res.GetRequestBody(c)
 
@@ -31,7 +37,9 @@ func CreatePlan(c echo.Context) error {
 	numberOfChildren := int(requestBody["numberOfChildren"].(float64))
 	numberOfAdults := int(requestBody["numberOfAdult"].(float64))
 	mainLocation := requestBody["province"].(string)
-	userId := int(requestBody["userId"].(float64))
+	
+	sess := res.GetSession(c)
+	userId := sess.Values["userId"].(int)
 
 	plan := models.Plan{
 		PlanName:         planName,

@@ -19,8 +19,11 @@ func UpdateUserTagScore(c echo.Context) error {
 	result := make(map[string]interface{}, 0)
 	requestBody := res.GetRequestBody(c)
 
+	sess := res.GetSession(c)
+	userId := sess.Values["userId"].(int)
+
 	info := map[string]interface{}{
-		"userId":      requestBody["userId"],
+		"userId":      userId,
 		"tag1":        requestBody["tag1"],
 		"tag2":        requestBody["tag2"],
 		"tag3":        requestBody["tag3"],

@@ -21,11 +21,8 @@ func GetCurrentLocation(c echo.Context) error {
 
 	result := make(map[string]interface{}, 0)
 
-	userId, err := res.Str2Int(c.QueryParam("userId"))
-	if err != nil {
-		log.Printf("cannot convert string to integer. %v", err)
-		return c.JSON(http.StatusInternalServerError, nil)
-	}
+	sess := res.GetSession(c)
+	userId := sess.Values["userId"].(int)
 
 	plans, err := db.GetPlansByUserID(userId)
 	if err != nil {
