@@ -15,26 +15,20 @@ def ConnectDatabase(DATABASE_URL):
                         )
     return conn
 
-def GetAttractions(DATABASE_URL, province="all"):
+def GetAttractions(DATABASE_URL):
     conn = ConnectDatabase(DATABASE_URL)
-    if province == "all":
-        SQL = "SELECT attraction_id, attraction_name, latitude, longitude, thai_child_fee, thai_adult_fee, province, monday, tuesday, thursday, friday, saturday, sunday, recommended_duration, tag1, tag2, tag3, tag4, tag5\
-            FROM attraction__attractionDetail\
-            "
-    else:
-        SQL = """SELECT attraction_id, attraction_name, latitude, longitude, thai_child_fee, thai_adult_fee, province, monday, tuesday, thursday, friday, saturday, sunday, recommended_duration, tag1, tag2, tag3, tag4, tag5\
-            FROM attraction__attractionDetail\
-            WHERE province = %s\
-            """
+    SQL = "SELECT attraction_id, attraction_name, latitude, longitude, thai_child_fee, thai_adult_fee, province, monday, tuesday, wednesday, thursday, friday, saturday, sunday, recommended_duration, tag1, tag2, tag3, tag4, tag5\
+        FROM attraction__attractionDetail\
+        "
     with conn:
         with conn.cursor() as curs:
-            curs.execute(SQL, (province, ))
+            curs.execute(SQL)
             data = curs.fetchall()
 
     column_names = ['attraction_id', 'attraction_name', 'latitude', 'longitude',
                'thai_child_fee', 'thai_adult_fee', 'province', 'monday',
                'tuesday', 'wednesday', 'thursday', 'friday',
-               'saturday', 'sunday', 'recommended_duration', 'tag1'
+               'saturday', 'sunday', 'recommended_duration', 'tag1',
                'tag2', 'tag3', 'tag4', 'tag5',
     ]
     return pd.DataFrame(data, columns=column_names)
