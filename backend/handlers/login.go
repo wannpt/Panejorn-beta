@@ -27,7 +27,6 @@ func Login(c echo.Context) error {
 	// Password matches
 	if res.MatchPassword(user.Password, password) {
 		result["success"] = true
-		result["result"] = user
 		info := map[string]interface{}{
 			"userId": user.UserId,
 			"authenticated": true,
