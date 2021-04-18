@@ -45,7 +45,7 @@ const LoginPage = () => {
 			.then((res) => res.json())
 			.then((result) => {
 				resp = result;
-				localStorage.sid = resp.result.userId;
+				localStorage.setItem('user', JSON.stringify(resp));
 				setMessage(result.message);
 				console.log(result.result.userId);
 			});
@@ -55,7 +55,7 @@ const LoginPage = () => {
 		}
 
 		if (resp.success) {
-			history.push('/login');
+			history.push('/profile');
 		}
 	};
 

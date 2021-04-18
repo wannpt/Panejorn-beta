@@ -18,8 +18,8 @@ const LoginPage = () => {
 	}, []);
 
 	const selectedComponent = () => {
-		console.log(localStorage.sid)
-		if (localStorage.sid) return <Profile />;
+		console.log(localStorage.user)
+		if (localStorage.user) return <Profile />;
 		else return <Login />;
 	};
 	return <>{selectedComponent()}</>;

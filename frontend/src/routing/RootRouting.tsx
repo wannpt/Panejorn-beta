@@ -53,7 +53,7 @@ const RootRoutes = () => {
             <Route path="/place/:id" component={PlacePage} />
             <Route path="/plan" component={PlanDetail} />
             <Route path='/planSelection' component={PlanSelection} />
-            <Route path='/login' component={Login} />
+            <Route path='/profile' component={Login} />
         </Switch>
     );
 };
