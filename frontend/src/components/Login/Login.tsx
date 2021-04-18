@@ -33,7 +33,6 @@ const LoginPage = () => {
 
 	//Click to login
 	const SubmitHandler = async () => {
-		console.log(input);
 
 		const response = await fetch('http://localhost:8000/user/login', {
 			method: 'POST',
@@ -47,7 +46,6 @@ const LoginPage = () => {
 				resp = result;
 				localStorage.setItem('user', JSON.stringify(resp));
 				setMessage(result.message);
-				console.log(result.result.userId);
 			});
 
 		if (!resp.success) {
