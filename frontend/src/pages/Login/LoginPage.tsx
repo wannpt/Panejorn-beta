@@ -4,9 +4,8 @@ import Profile from '../../components/Profile/Profile';
 
 const LoginPage = () => {
 
-
 	const selectedComponent = () => {
-		if (localStorage.user) return <Profile />;
+		if (localStorage.status === '1') return <Profile />;
 		else return <Login />;
 	};
 	return <>{selectedComponent()}</>;

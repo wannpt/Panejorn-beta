@@ -5,6 +5,7 @@ export type User = {
 	tag3: number;
 	tag4: number;
 	tag5: number;
+	image?: any;
 };
 
 export type UserStats = {

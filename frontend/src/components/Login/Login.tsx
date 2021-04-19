@@ -1,3 +1,4 @@
+import { SSL_OP_COOKIE_EXCHANGE } from 'constants';
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
@@ -34,17 +35,18 @@ const LoginPage = () => {
 	//Click to login
 	const SubmitHandler = async () => {
 
-		const response = await fetch('http://localhost:8000/user/login', {
+		const response = await fetch('/user/login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			credentials: 'include',
 			body: JSON.stringify(input),
 		})
 			.then((res) => res.json())
 			.then((result) => {
 				resp = result;
-				localStorage.setItem('user', JSON.stringify(resp));
+				localStorage.setItem('status', "1");
 				setMessage(result.message);
 			});
 
