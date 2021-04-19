@@ -30,6 +30,7 @@ func SetUpRouter() *echo.Echo {
 	e.GET("/planCollection/plans", handlers.GetPlanDetail)
 	e.GET("/locations", handlers.GetLocationDetail)
 	e.GET("/user/logout", handlers.Logout)
+	e.GET("/user/profile", handlers.GetUser)
 
 	e.POST("/user/login", handlers.Login)
 	e.POST("/planCollection/plans", handlers.CreatePlan)

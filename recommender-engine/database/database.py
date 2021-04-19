@@ -32,3 +32,18 @@ def GetAttractions(DATABASE_URL):
                'tag2', 'tag3', 'tag4', 'tag5',
     ]
     return pd.DataFrame(data, columns=column_names)
+
+def GetAccommodations(DATABASE_URL):
+    conn = ConnectDatabase(DATABASE_URL)
+    SQL = "SELECT accommodation_id, accommodation_name, latitude, longitude, province,\
+    display_checkin_time, display_checkout_time, price_range\
+    FROM accommodation__accommodationDetail\
+    "
+    with conn:
+        with conn.cursor() as curs:
+            curs.execute(SQL)
+            data = curs.fetchall()
+    column_names = ['accommodation_id', 'accommodation_name', 'latitude', 'longitude', 'province',
+            'display_checkin_time', 'display_checkout_time', 'price_range'
+    ]
+    return pd.DataFrame(data, columns=column_names)
