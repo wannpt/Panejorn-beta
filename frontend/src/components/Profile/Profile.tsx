@@ -47,7 +47,7 @@ const Profile = () => {
 	}, []);
 
 	const LogOutHandler = () => {
-		fetch('http://localhost:8000/user/logout', {
+		fetch('/user/logout', {
 			method: 'GET',
 		}).then(() => {
 			localStorage.clear();
@@ -85,7 +85,7 @@ const Profile = () => {
 						</div>
 					</div>
 
-					<Button className='gradient-background submit-btn btn' onClick={LogOutHandler}>
+					<Button className='gradient-background submit-btn btn' style={{marginBottom:60}} onClick={LogOutHandler}>
 						ลงชื่อออก
 					</Button>
 				</div>
