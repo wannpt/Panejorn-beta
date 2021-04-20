@@ -40,7 +40,7 @@ export const PlanDetailsPage = (props: any) => {
 
 	useEffect(() => {
 		console.log('getting...');
-		fetch('http://localhost:8000/getPlanDetail' + params.search, {
+		fetch('/planCollection/plans' + params.search, {
 			method: 'GET',
 		})
 			.then((res) => res.json())
