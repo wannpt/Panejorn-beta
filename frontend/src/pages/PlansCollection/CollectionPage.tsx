@@ -36,7 +36,6 @@ function PlansCollectionPage() {
 
 	//Must fetch Plan collection here!
 	useEffect(() => {
-		console.log('getting...');
 		fetch('http://localhost:8000/getPlanCollection?userId=4', {
 			method: 'GET',
 		})

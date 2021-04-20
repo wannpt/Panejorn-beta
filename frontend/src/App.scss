@@ -92,6 +92,10 @@ button {
 	color: white;
 }
 
+.black-text {
+	color: black;
+}
+
 .extra-small-title {
 	font-weight: 600;
 	color: #969191;
@@ -109,41 +113,37 @@ button.btn {
 	border-color: transparent;
 }
 
-
-
 .modal-body-bg {
 	background-color: #fafafa;
 }
 
 //======== overriding datePicker css ==========//
-.nice-dates-day::before{
-  background: -webkit-linear-gradient(270deg, rgba(243, 187, 128, 1) 0%, rgba(230, 105, 115, 1) 100%);
-  // background:rgb(243, 187, 128);
+.nice-dates-day::before {
+	background: -webkit-linear-gradient(270deg, rgba(243, 187, 128, 1) 0%, rgba(230, 105, 115, 1) 100%);
+	// background:rgb(243, 187, 128);
 }
 
-.nice-dates-popover{
-  position: absolute !important;
-  left: 0rem;
-  // top: 50%;
+.nice-dates-popover {
+	position: absolute !important;
+	left: 0rem;
+	// top: 50%;
 }
-
 
 //======== overriding Bootstrap css ==========//
 
 //Input box
 .form-control {
-  font-weight: normal;
+	font-weight: normal;
 	background-color: white;
-  border: 0px;
+	border: 0px;
 	border-radius: 16px;
 	// padding: 16px 12px;
 	width: 100%;
 	height: calc(1rem + 32px);
-  
 }
 
 .force-white-bg {
-  background-color: white !important;
+	background-color: white !important;
 }
 
 .form-control:focus {
@@ -154,21 +154,21 @@ button.btn {
 .form-label {
 	font-size: 14px;
 	font-weight: 600;
-  padding-left: .25rem;
-  display: inline-block;
+	padding-left: 0.25rem;
+	display: inline-block;
 }
 
 //select box
-option{
-  font-size: 1rem;
+option {
+	font-size: 1rem;
 }
 
 //dropdown
 .dropdown-toggle {
-  text-align: start;
-  color: black !important;
-  align-items: center;
-  border: 0px;
+	text-align: start;
+	color: black !important;
+	align-items: center;
+	border: 0px;
 	border-radius: 16px;
 	padding: 16px 12px;
 	width: 100%;
@@ -176,34 +176,48 @@ option{
 }
 
 .dropdown-toggle:focus {
-  color: black;
-  border-color: rgb(243, 187, 128);
+	color: black;
+	border-color: rgb(243, 187, 128);
 	box-shadow: 0 0 0 0.05rem #f3bb80;
 }
 
 .dropdown-toggle:active {
-  color: black;
-  border-color: rgb(243, 187, 128);
+	color: black;
+	border-color: rgb(243, 187, 128);
 	box-shadow: 0 0 0 0.05rem #f3bb80;
 }
 
 .submit-btn {
-  border-radius: 10px;
-  width: 100%;
-  height: calc(1rem + 32px);
+	border-radius: 10px;
+	width: 100%;
+	height: calc(1rem + 32px);
 }
 
 .submit-btn {
-  border-radius: 10px;
-  border-color: rgb(243, 187, 128) !important;
-  width: 100%;
-  height: calc(1rem + 32px);
+	border-radius: 10px;
+	border-color: rgb(243, 187, 128) !important;
+	width: 100%;
+	height: calc(1rem + 32px);
 }
 
 .modal-content {
-  border-radius: 1rem !important;
+	border-radius: 1rem !important;
 }
 
 .modal-body {
-  border-radius: 1rem !important;
+	border-radius: 1rem !important;
+}
+
+// For login
+.google-btn-holder {
+	// background: rgb(219, 68, 55);
+	border-color: linear-gradient(
+		325deg,
+		rgba(219, 68, 55, 1) 0%,
+		rgba(15, 157, 88, 1) 20%,
+		rgba(66, 133, 244, 1) 40%,
+		rgba(244, 180, 0, 1) 60%,
+		rgba(219, 68, 55, 1) 80%,
+		rgba(66, 133, 244, 1) 100%
+	);
 }

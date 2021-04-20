@@ -27,7 +27,7 @@ const navbarConstant:MapPathToIcon[] = [
     {key: 'home', path: '/', fill: home4fill, line: home4line, active: true},
     {key: 'collections', path: '/collections', fill: roundCollectionsBookmark, line: outlineCollectionsBookmark, active: false},
     {key: 'explore', path: '/explore', fill: compass3fill, line: compass3line, active: false},
-    {key: 'setting', path: '/setting', fill: user3fill, line: user3line, active: false},
+    {key: 'profile', path: '/profile', fill: user3fill, line: user3line, active: false},
     
 ].map(el => ({...el, style: {color: '#E66973', fontSize: '24px'}}))
 
