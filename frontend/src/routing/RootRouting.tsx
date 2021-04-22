@@ -50,7 +50,7 @@ const RootRoutes = () => {
             <Route path="/collections" exact component={CollectionPage} />
             <Route path="/explore" exact component={ExplorePage} />
             <Route path="/setting" exact component={SettingPage} />
-            <Route path="/place/:id" component={PlacePage} />
+            <Route path="/place" component={PlacePage} />
             <Route path="/plan" component={PlanDetail} />
             <Route path='/planSelection' component={PlanSelection} />
             <Route path='/profile' component={Login} />

@@ -8,6 +8,7 @@ import mapPin2Line from '@iconify/icons-ri/map-pin-2-line';
 import timeLine from '@iconify/icons-ri/time-line';
 import barricadeLine from '@iconify/icons-ri/barricade-line';
 import appsLine from '@iconify/icons-ri/apps-line';
+import { useHistory, useParams } from 'react-router';
 
 const MapIconToType = [
 	{ key: 'ATTRACTION', icon: barricadeLine },
@@ -16,6 +17,7 @@ const MapIconToType = [
 
 export const PlaceCard = (props: any) => {
 	let selectedIcon: any;
+	const history = useHistory();
     
     const GetIcon = () => {
 		MapIconToType.map((el) => {
@@ -24,8 +26,12 @@ export const PlaceCard = (props: any) => {
 		});
 	};
 
+	const onCLickHandler = () => {
+		history.push('/place?placeId=' + props.data.placeId)
+	}
+	
 	return (
-		<div className='card-container'>
+		<div className='card-container' onClick={onCLickHandler}>
 			<div className='row align-items-center'>
 				<div className='col-2 pl-4 pr-0'>
                     {
