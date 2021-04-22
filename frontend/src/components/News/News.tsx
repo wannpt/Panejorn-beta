@@ -10,12 +10,12 @@ import { Link } from 'react-router-dom';
 
 type NewsType = {
     image: string,
-    id: number
+    placeId: string
 }
 
 const NewsList: NewsType[] = [
-    {image: Image1, id: 0},
-    {image: Image2, id: 1}
+    {image: Image1, placeId: "P03007826"},
+    {image: Image2, placeId: "P03007826"}
 ]
 
 const NewsCard = (img:string) => {
@@ -28,7 +28,7 @@ const NewsCard = (img:string) => {
       };
 
     return (
-        <Link to={'/place/2'}>
+        <Link to={'/place?placeId=P03007826'}>
             <div className='card-news mr-3' style={style}>
        
             </div>  
