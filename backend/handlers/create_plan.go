@@ -3,7 +3,6 @@ package handlers
 import (
 	"bytes"
 	"encoding/json"
-	_ "fmt"
 	"github.com/labstack/echo/v4"
 	"log"
 	"net/http"
@@ -37,9 +36,13 @@ func CreatePlan(c echo.Context) error {
 	numberOfChildren := int(requestBody["numberOfChildren"].(float64))
 	numberOfAdults := int(requestBody["numberOfAdult"].(float64))
 	mainLocation := requestBody["province"].(string)
-	
+
 	sess := res.GetSession(c)
 	userId := sess.Values["userId"].(int)
+	user, err := db.GetUserByUserId(userId)
+	if err != nil {
+		return c.NoContent(http.StatusInternalServerError)
+	}
 
 	plan := models.Plan{
 		PlanName:         planName,
@@ -58,6 +61,7 @@ func CreatePlan(c echo.Context) error {
 
 	// Create plan using the Trip Recommender system
 	if requestBody["type"] == "auto" {
+		requestBody["userTagScores"] = user.GetTagScores()
 		requestBody, err := json.Marshal(requestBody)
 		resp, err := http.Post("http://reng-container:8040/trip-recommender-system", "application/json", bytes.NewBuffer(requestBody))
 		if err != nil {
@@ -73,12 +77,10 @@ func CreatePlan(c echo.Context) error {
 		// result["planId"] = db.InsertPlan(plan)
 		result["success"] = true
 
-
 		////////////////////////////////////////////////////////////////////
 		// Write code here for inserting plan and plan detail into database
 		////////////////////////////////////////////////////////////////////
 
-		
 	} else { // Create plan manually
 		result["planId"] = db.InsertPlan(plan)
 		result["success"] = true

@@ -14,7 +14,7 @@ func GetLocationDetail(c echo.Context) error {
 	if !res.IsAuthenticated(c) {
 		return c.NoContent(http.StatusForbidden)
 	}
-	
+
 	placeId := c.QueryParam("placeId")
 	placeType := res.PlaceId2PlaceType(placeId)
 

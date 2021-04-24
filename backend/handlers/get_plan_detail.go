@@ -17,7 +17,7 @@ func GetPlanDetail(c echo.Context) error {
 	if !res.IsAuthenticated(c) {
 		return c.NoContent(http.StatusForbidden)
 	}
-	
+
 	result := make(map[string]interface{}, 0)
 
 	planId, err := res.Str2Int(c.QueryParam("planId"))

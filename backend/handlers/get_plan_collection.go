@@ -17,12 +17,12 @@ func GetPlanCollection(c echo.Context) error {
 	if !res.IsAuthenticated(c) {
 		return c.NoContent(http.StatusForbidden)
 	}
-	
+
 	result := make(map[string]interface{}, 0)
 
 	sess := res.GetSession(c)
 	userId := sess.Values["userId"].(int)
-	
+
 	plans, err := db.GetPlansByUserID(userId)
 	if err != nil {
 		log.Printf("cannot query plan of this user. %v", err)

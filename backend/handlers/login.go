@@ -1,9 +1,9 @@
 package handlers
 
 import (
+	_ "fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
-	_ "fmt"
 
 	"backend/db"
 	res "backend/resources"
@@ -28,13 +28,13 @@ func Login(c echo.Context) error {
 	if res.MatchPassword(user.Password, password) {
 		result["success"] = true
 		info := map[string]interface{}{
-			"userId": user.UserId,
+			"userId":        user.UserId,
 			"authenticated": true,
 		}
 		res.CreateSession(c, info)
 
 		return c.JSON(http.StatusOK, result)
-		
+
 	} else { // Password doesn't match
 		result["success"] = false
 		result["message"] = "Invalid password."
