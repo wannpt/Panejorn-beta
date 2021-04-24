@@ -80,7 +80,7 @@ func CreateUser(c echo.Context) error {
 	result["userId"] = userId
 
 	info := map[string]interface{}{
-		"userId": userId,
+		"userId":        userId,
 		"authenticated": true,
 	}
 	res.CreateSession(c, info)

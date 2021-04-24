@@ -17,3 +17,7 @@ type User struct {
 	DeletionTime NullInt64 `json:"deletionTime"`
 	UpdatedTime  NullInt64 `json:"updatedTime"`
 }
+
+func (u User) GetTagScores() []float64 {
+	return []float64{u.Tag1, u.Tag2, u.Tag3, u.Tag4, u.Tag5}
+}
