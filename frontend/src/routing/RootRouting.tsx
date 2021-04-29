@@ -43,7 +43,7 @@ const Login = Loadable({
 })
 
 const Tagscore = Loadable({
-    loader: ()=> import('../pages/ProfilePage/TagscorePage'),
+    loader: ()=> import('../pages/RegisterPage/TagscorePage'),
     loading: () => null
 })
 
@@ -64,7 +64,7 @@ const RootRoutes = () => {
             <Route path="/plan" component={PlanDetail} />
             <Route path='/planSelection' component={PlanSelection} />
             <Route path='/profile' component={Login} />
-            <Route path='/profile/tagscore' component={Tagscore} />
+            <Route path='/register/tagscore' component={Tagscore} />
             <Route path='/register' component={Register} />
         </Switch>
     );
