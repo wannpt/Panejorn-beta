@@ -17,7 +17,7 @@ def ConnectDatabase(DATABASE_URL):
 
 def GetAttractions(DATABASE_URL):
     conn = ConnectDatabase(DATABASE_URL)
-    SQL = "SELECT attraction_id, attraction_name, latitude, longitude, thai_child_fee, thai_adult_fee, province, monday, tuesday, wednesday, thursday, friday, saturday, sunday, recommended_duration, tag1, tag2, tag3, tag4, tag5\
+    SQL = "SELECT attraction_id, attraction_name, latitude, longitude, thai_child_fee, thai_adult_fee, province, monday, tuesday, wednesday, thursday, friday, saturday, sunday, recommended_duration, tag1, tag2, tag3, tag4, tag5, detail\
         FROM attraction__attractionDetail\
         "
     with conn:
@@ -28,10 +28,36 @@ def GetAttractions(DATABASE_URL):
     column_names = ['attraction_id', 'attraction_name', 'latitude', 'longitude',
                'thai_child_fee', 'thai_adult_fee', 'province', 'monday',
                'tuesday', 'wednesday', 'thursday', 'friday',
-               'saturday', 'sunday', 'recommended_duration', 'tag1',
-               'tag2', 'tag3', 'tag4', 'tag5',
+               'saturday', 'sunday', 'recommended_duration', 'ธรรมชาติ', 'นันทนาการ',
+                'ประวัติศาสตร์', 'วัฒนธรรม', 'ศิลปะ', 'detail'
     ]
     return pd.DataFrame(data, columns=column_names)
+
+def GetAttractionsRegisType(DATABASE_URL):
+    conn = ConnectDatabase(DATABASE_URL)
+    SQL = "SELECT attraction_id, attraction_type_id\
+        FROM attraction__regis_attractionType\
+        "
+    with conn:
+        with conn.cursor() as curs:
+            curs.execute(SQL)
+            data = curs.fetchall()
+
+    column_names = ['attraction_id', 'attraction_type_id']
+    return pd.DataFrame(data, columns = column_names)
+
+def GetAttractionsType(DATABASE_URL):
+    conn = ConnectDatabase(DATABASE_URL)
+    SQL = "SELECT attraction_type_id, description\
+        FROM attraction__attractionType\
+        "
+    with conn:
+        with conn.cursor() as curs:
+            curs.execute(SQL)
+            data = curs.fetchall()
+
+    column_names = ['attraction_type_id', 'description']
+    return pd.DataFrame(data, columns = column_names)
 
 def GetAccommodations(DATABASE_URL):
     conn = ConnectDatabase(DATABASE_URL)

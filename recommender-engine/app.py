@@ -1,7 +1,7 @@
 import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-from engine.trip_recommender import predict
+from engine.trip_recommender import *
 from dotenv import load_dotenv
 from database.database import *
 
@@ -11,21 +11,20 @@ cors = CORS(app)
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 attractions = GetAttractions(DATABASE_URL)
+attraction_regisType = GetAttractionsRegisType(DATABASE_URL)
+attraction__attractionType = GetAttractionsType(DATABASE_URL)
 accommodations = GetAccommodations(DATABASE_URL)
+
 
 @app.route('/trip-recommender-system', methods=['POST'])
 @cross_origin()
 def trip_recommender():
-
+    
     # Get input from request body
     req_body = request.json
-
-    print(req_body)
-    print(attractions.iloc[0])
-    print(accommodations.iloc[0])
-    result = req_body
-    
-    return jsonify(result)
+    result = createPlan(accommodations, attractions, attraction_regisType, attraction__attractionType, req_body)
+    #print(json.loads(result))
+    return result #jsonify(result)
 
 @app.route('/', methods=['GET'])
 @cross_origin()
