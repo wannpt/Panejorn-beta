@@ -245,23 +245,16 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
             totalTime += int(sum(payload))
 
         totalTime += 90 #eat lunch
-        # print("totalTime is",totalTime)
-        # print("total cost is", totalCost)
-        # print("endTime is", endTime)
-        # print("max bud is", max_budget,'\n')
         if totalTime > endTime or totalCost > max_budget:
-            #print("it too much time/cost, adjusting now....")
             placeIndex = placeIndex[0:len(placeIndex) - 1]
             nodes = traveling_saleMan(placeIndex, attractionData, accom)
         
 
         elif totalTime < 0.8 * endTime:
-            #print("Time less than it should be changing the plan",'\n')
             return 0,0,0
             break
 
         else:
-            #print("Found match plan")
             fitPlan = 1
             new_placeIndex = []
             for node in nodes:
@@ -300,7 +293,6 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
                         foundRes = 1
                         resIndex = s_Time
             if foundRes == 0:
-                #print("Can't match the restaurant")
                 return 0,0,0
 
             for s_Time in range(len(place_startTime) - 1):
@@ -357,18 +349,6 @@ def create_data_model(placeIndex, attractionData, accom):
     data['num_vehicles'] = 1
     data['depot'] = 0
     return data
-
-# def print_solution(manager, routing, solution):
-#     index = routing.Start(0)
-#     plan_output = 'Route for vehicle 0:\n'
-#     route_distance = 0
-#     while not routing.IsEnd(index):
-#         plan_output += ' {} ->'.format(manager.IndexToNode(index))
-#         previous_index = index
-#         index = solution.Value(routing.NextVar(index))
-#         route_distance += routing.GetArcCostForVehicle(previous_index, index, 0)
-#     plan_output += ' {}\n'.format(manager.IndexToNode(index))
-#     plan_output += 'Route distance: {}miles\n'.format(route_distance)
 
 def get_routes(solution, routing, manager):
     """Get vehicle routes from a solution and store them in an array."""
@@ -504,7 +484,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     tmpInput = []
     train_dir = 'engine'
     pop_weights_mat = np.load(train_dir + '/modelWeights.npy', allow_pickle=True)
-    #province = "เชียงราย"
     attractionData = makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province)
     df_tfidfvect = findVarietyMatrix(attractionData)
     startTime = 540
@@ -521,7 +500,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     s_date = req_body['startDate']
     e_date = req_body['endDate']
     days = int(e_date[e_date.find(startText)+len(startText):e_date.rfind(endText)]) - int(s_date[s_date.find(startText)+len(startText):s_date.rfind(endText)]) + 1
-    #days = 3
     for i in range(len(regInput)):
         tmp3 = regInput[i] + advanceInput[i]
         if tmp3 < 0:
@@ -549,7 +527,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
                 fitness.append(engine.findFitness.find_fitness(attractionData, result, userInput, df_tfidfvect, NN))
             fitness = np.array(fitness)
 
-            #print("Average fitness is", fitness)
 
             pair_NN = pair_fitness_weights(fitness, result) #pair the fitness with weights
 
@@ -565,7 +542,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
             if generations == end_generations - 1:
                 break
             result = crossOver(result)
-            #print("cross over", result)
             result = mutate(result, attractionData)
             result = getUnique_index(result, attractionData)
             results_list.append(result)
@@ -573,7 +549,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
         planDaily = []
         startTime_Daily = []
         endTime_Daily = []
-        #print(results_list)
         for day in range(days):
             print("This is day", day)
             planStatus = 0
@@ -587,12 +562,9 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
                         if len(planDaily) != 0:
                             sameIndex = common_data(planDaily[plan], placeIndex)
                             if sameIndex == 0:
-                                #print("The plan is not the same",'\n')
                                 plan += 1
                             elif sameIndex == 1:
                                 plan = 0
-                                #print(placeIndex)
-                                #print("The plan had the same place, Changing the plan....", '\n')
                                 placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.3 * len(result))][0]
                 
                 placeIndex = np.insert(placeIndex,0, accomIndex)
@@ -614,5 +586,4 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     information = arrange_planResult(finalPlan, final_startTime, final_endTime, accom_data, attractionData)
     print(finalPlan)
     information_json = json.dumps(information, cls=NumpyEncoder)
-    #print(information)
     return information_json
