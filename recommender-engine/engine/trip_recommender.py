@@ -504,12 +504,12 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     tmpInput = []
     train_dir = 'engine'
     pop_weights_mat = np.load(train_dir + '/modelWeights.npy', allow_pickle=True)
-    province = "เชียงราย"
+    #province = "เชียงราย"
     attractionData = makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province)
     df_tfidfvect = findVarietyMatrix(attractionData)
     startTime = 540
     endTime = 1050
-    #province = req_body['province']
+    province = req_body['province']
     adult = req_body['numberOfAdult']
     child = req_body['numberOfChildren']
     max_budget = req_body['maxBudget']
@@ -521,7 +521,7 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     s_date = req_body['startDate']
     e_date = req_body['endDate']
     days = int(e_date[e_date.find(startText)+len(startText):e_date.rfind(endText)]) - int(s_date[s_date.find(startText)+len(startText):s_date.rfind(endText)]) + 1
-    days = 3
+    #days = 3
     for i in range(len(regInput)):
         tmp3 = regInput[i] + advanceInput[i]
         if tmp3 < 0:
