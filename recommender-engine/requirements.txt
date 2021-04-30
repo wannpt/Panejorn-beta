@@ -2,4 +2,8 @@ Flask==1.1.2
 Flask-Cors==3.0.10
 python-dotenv==0.17.0
 psycopg2-binary==2.8.6
-pandas==1.2.3
+pandas==1.0.5
+geopy==2.1.0
+sklearn==0.0
+ortools==8.2.8710
+requests==2.24.0
