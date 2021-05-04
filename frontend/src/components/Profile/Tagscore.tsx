@@ -4,7 +4,8 @@ import './Profile.scss';
 import { Icon } from '@iconify/react';
 import emotionHappyLine from '@iconify-icons/ri/emotion-happy-line';
 import emotionUnhappyLine from '@iconify-icons/ri/emotion-unhappy-line';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 const defaultTag = {
 	tag1: 0,
@@ -16,17 +17,48 @@ const defaultTag = {
 
 const Tagscore = () => {
 	const [input, setInput] = useState(defaultTag);
+	const [errorMessage, setErrorMessage] = useState('');
+	const [showErrorModal, setShowErrorModal] = useState(false);
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+	const history = useHistory();
+
+	const CloseHandler = () => {
+		setShowConfirmModal(false);
+		setShowErrorModal(false);
+	};
+
+	const ConfirmHandler = () => {
+		setShowConfirmModal(true);
+	};
 
 	const OnchangeHandler = (e: any) => {
 		const { target } = e;
 		const name = target.id;
-		const value = target.value / 50 - 1;
+		const value = target.value / 100;
 
 		setInput({ ...input, [name]: value });
 	};
 
 	const SubmitHandler = () => {
-		console.log(input);
+		fetch('/user/tagScore', {
+			method: 'PUT',
+			headers: {
+				'Content-type': 'application/json',
+			},
+			body: JSON.stringify(input),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				if (result.success === true) {
+					localStorage.setItem('status', "1");
+					history.push('/profile');
+				} else {
+					setErrorMessage(result.message);
+					setShowErrorModal(true);
+					return true;
+				}
+			});
 	};
 
 	return (
@@ -108,11 +140,46 @@ const Tagscore = () => {
 				</div>
 
 				<div className='col-12 mt-3 mb-4'>
-					<Button className='gradient-background submit-btn btn mb-2' onClick={SubmitHandler}>
+					<Button className='gradient-background submit-btn btn mb-2' onClick={ConfirmHandler}>
 						ยืนยันข้อมูล
 					</Button>
 				</div>
 			</div>
+
+			<Modal show={showConfirmModal} onHide={CloseHandler} centered>
+				{/* <Modal.Header /> */}
+				<Modal.Body className='modal-body-lg'>
+					<div className='row text-center'>
+						<div className='col-12 big-title mb-4'>ยืนยันข้อมูลของคุณ</div>
+						<div className='col-12'>
+							<div className='row justify-content-center'>
+								<div className='col-6 pr-1'>
+									<Button className='gradient-background submit-btn' onClick={SubmitHandler}>
+										ข้อมูลถูกต้อง
+									</Button>
+								</div>
+								<div className='col-6 pl-1'>
+									<Button className='color-text submit-btn' onClick={CloseHandler}>
+										ตรวจสอบอีกครั้ง
+									</Button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</Modal.Body>
+			</Modal>
+
+			<Modal show={showErrorModal} onHide={CloseHandler} centered>
+				<Modal.Header className='big-title' closeButton>
+					{' '}
+					เกิดข้อผิดพลาด ❌
+				</Modal.Header>
+				<Modal.Body className='modal-body-lg'>
+					<div className='row'>
+						<div className='col-12'> {errorMessage}</div>
+					</div>
+				</Modal.Body>
+			</Modal>
 		</>
 	);
 };

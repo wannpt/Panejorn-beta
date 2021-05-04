@@ -12,11 +12,11 @@ const TagscorePage = () => {
 					</span>
 				</div>
 			</div>
-            {/* stepper */}
-            <Stepper title={'ข้อมูลความสนใจ'} step={2} />
+			{/* stepper */}
+			<Stepper title={'ข้อมูลความสนใจ'} step={2} />
 
-            {/* Tagscore */}
-            <Tagscore/>
+			{/* Tagscore */}
+			<Tagscore />
 		</div>
 	);
 };
