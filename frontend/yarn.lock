@@ -9562,6 +9562,13 @@ react-redux@^7.2.2:
     prop-types "^15.7.2"
     react-is "^16.13.1"
 
+react-responsive-select@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/react-responsive-select/-/react-responsive-select-7.0.1.tgz#6e44221757c97d749d0caa4ef83998ea18da2130"
+  integrity sha512-xKIs78dKAVl8x0XBarac3LJriH22OknnuYjmkaaamFYPOAOhBdElUzNA7utJP9DNhgAPNQtIIHS2mvzRTSqQAw==
+  dependencies:
+    singleline "^2.0.0"
+
 react-router-dom@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-5.2.0.tgz"
@@ -10445,6 +10452,11 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+singleline@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/singleline/-/singleline-2.0.0.tgz#38e200abe11a4cfccd4fef9e318305ca97849622"
+  integrity sha512-PJr/kx5KBJEvQ8g7+lO2P1YwCta9yx7h8vot4IcCCZJ96ucNBKJnQZKYxEtamRwmOEUN11fJe5r/3/mNFMyoOQ==
 
 sisteransi@^1.0.5:
   version "1.0.5"
