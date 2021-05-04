@@ -66,8 +66,6 @@ const RegisterPage = () => {
 		} else {
 			setInput({ ...input, [name]: value });
 		}
-
-		console.log(input);
 	};
 
 	const ConfrimPasswordValidation = (e: any) => {
@@ -93,8 +91,6 @@ const RegisterPage = () => {
 			let value = target.value;
 			year = Number(value) - 543;
 		}
-
-		console.log('dob = ' + day + ' : ' + month + ' : ' + String(year));
 
 		if (day !== '' && month !== '' && year !== '')
 			setInput({ ...input, ['dob']: day + '/' + month + '/' + String(year) });
@@ -222,7 +218,6 @@ const RegisterPage = () => {
 								onChange={(newValue) => {
 									DateHandler('month', newValue);
 								}}
-								// onSubmit={() => console.log('onSubmit')}
 							/>
 						</Col>
 						<Col xs={3}>
