@@ -24,6 +24,8 @@ const topbarConstant: TopbarType[] = [
 	{ title: 'รายละเอียดสถานที่', path: '/place', canReturn: true, isEdit: false, isHidden: true },
 	{ title: 'แผนเที่ยว', path: '/plan', canReturn: true, isEdit: false, isHidden: false },
 	{ title: 'เลือกแผนเที่ยว', path: '/planSelection', canReturn: true, isEdit: true, isHidden: true },
+	{ title: 'ย้อนกลับ', path: '/register', canReturn: true, isEdit:false, isHidden: false},
+	{ title: 'ย้อนกลับ', path: '/register/tagscore', canReturn: true, isEdit:false, isHidden: false},
 	{ title: 'โปรไฟล์', path: '/profile', canReturn: false, isEdit: false, isHidden: false, options: [<CreatePlan />] },
 ];
 

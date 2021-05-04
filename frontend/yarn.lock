@@ -9476,6 +9476,11 @@ react-chartjs-2@2.11.1:
     lodash "^4.17.19"
     prop-types "^15.7.2"
 
+react-circular-progressbar@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-circular-progressbar/-/react-circular-progressbar-2.0.4.tgz#5b04a9cf6be8c522c180e4e99ec6db63677335b0"
+  integrity sha512-OfX0ThSxRYEVGaQSt0DlXfyl5w4DbXHsXetyeivmoQrh9xA9bzVPHNf8aAhOIiwiaxX2WYWpLDB3gcpsDJ9oww==
+
 react-dev-utils@^10.2.1:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.2.1.tgz"
@@ -9574,6 +9579,13 @@ react-redux@^7.2.2:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.13.1"
+
+react-responsive-select@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/react-responsive-select/-/react-responsive-select-7.0.1.tgz#6e44221757c97d749d0caa4ef83998ea18da2130"
+  integrity sha512-xKIs78dKAVl8x0XBarac3LJriH22OknnuYjmkaaamFYPOAOhBdElUzNA7utJP9DNhgAPNQtIIHS2mvzRTSqQAw==
+  dependencies:
+    singleline "^2.0.0"
 
 react-router-dom@^5.2.0:
   version "5.2.0"
@@ -10458,6 +10470,11 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+singleline@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/singleline/-/singleline-2.0.0.tgz#38e200abe11a4cfccd4fef9e318305ca97849622"
+  integrity sha512-PJr/kx5KBJEvQ8g7+lO2P1YwCta9yx7h8vot4IcCCZJ96ucNBKJnQZKYxEtamRwmOEUN11fJe5r/3/mNFMyoOQ==
 
 sisteransi@^1.0.5:
   version "1.0.5"

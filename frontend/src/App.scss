@@ -22,7 +22,7 @@ button {
 .App {
 	font-family: 'Kanit', sans-serif;
 	background-color: #fafafa;
-	height: 100vh;
+	// height: 100vh;
 	width: 100vw;
 }
 
@@ -113,6 +113,13 @@ button.btn {
 	border-color: transparent;
 }
 
+.confirm-button{
+	width: 100%;
+	height: 40px;
+	
+	background: fixed;
+}
+
 .modal-body-bg {
 	background-color: #fafafa;
 }
@@ -135,12 +142,27 @@ button.btn {
 .form-control {
 	font-weight: normal;
 	background-color: white;
-	border: 0px;
+	// border: 1px;
 	border-radius: 16px;
-	// padding: 16px 12px;
 	width: 100%;
 	height: calc(1rem + 32px);
 }
+
+.rrs{
+	font-family: 'Kanit', sans-serif !important;
+	color: #495057 !important;
+	.rrs__button{
+		border-radius: 16px;
+		box-shadow: none;
+		border: 1px solid #28a745;
+	}
+
+	.rrs__label{
+		color: #495057 !important;
+	}
+}
+
+
 
 .force-white-bg {
 	background-color: white !important;
