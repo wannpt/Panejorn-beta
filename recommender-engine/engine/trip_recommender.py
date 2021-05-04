@@ -447,7 +447,7 @@ def arrange_planResult(finalPlan, final_startTime, final_endTime, accom, data):
                         "placeType": "ATTRACTION",
                         "startTime": final_startTime[planID][day][countPlace],
                         "endTime": final_endTime[planID][day][countPlace - 1],
-                        "status": "1",
+                        "status": 1,
                         "tag1": data.iloc[placeIndex]["ธรรมชาติ"],
                         "tag2": data.iloc[placeIndex]["นันทนาการ"],
                         "tag3": data.iloc[placeIndex]["ประวัติศาสตร์"],
@@ -469,7 +469,6 @@ def arrange_planResult(finalPlan, final_startTime, final_endTime, accom, data):
                 })
 
         information.append({
-            "planScore": "default",
             "planDetail": planDetail
         })
     return information
@@ -484,11 +483,12 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     tmpInput = []
     train_dir = 'engine'
     pop_weights_mat = np.load(train_dir + '/modelWeights.npy', allow_pickle=True)
+    province = req_body['province']
+    province = "กรุงเทพมหานคร"
     attractionData = makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province)
     df_tfidfvect = findVarietyMatrix(attractionData)
     startTime = 540
     endTime = 1050
-    province = req_body['province']
     adult = req_body['numberOfAdult']
     child = req_body['numberOfChildren']
     max_budget = req_body['maxBudget']
