@@ -88,8 +88,6 @@ def findDistance_OSM(tmpLaLo): #longitude, latitude
         url += "%s" %x[0] + "," + "%s" %x[1]
         if count != len(tmpLaLo) - 1:
             url += ";"
-        elif count == len(tmpLaLo) - 1:
-            url += "?exclude=motorway"
         count = count+1
     response = requests.get(url)
     if(response.status_code != 200):
@@ -242,6 +240,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
         if status == 200:
             totalTime += int(payload['routes'][0]['duration']/60)
         elif status != 200:
+            print("Using geopy instead of OSM")
             totalTime += int(sum(payload))
 
         totalTime += 90 #eat lunch
@@ -251,7 +250,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
         
 
         elif totalTime < 0.8 * endTime:
-            return 0,0,0
+            return 0,0,0,0
             break
 
         else:
@@ -273,7 +272,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
                     if x == 0:
                         durations.append(int(payload[x]))
                     elif x > 0:
-                        durations.append(int(payload[x-1] + payload[x]))
+                        durations.append(int(durations[x-1] + payload[x]))
 
             for s_Time in range(len(place_startTime)):
                 if s_Time != 0 and s_Time <= len(place_startTime) - 1:
@@ -293,7 +292,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
                         foundRes = 1
                         resIndex = s_Time
             if foundRes == 0:
-                return 0,0,0
+                return 0,0,0,0
 
             for s_Time in range(len(place_startTime) - 1):
                 if foundRes == 1 and s_Time < len(place_startTime):
@@ -309,7 +308,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
                         pass
            
             new_placeIndex.insert(resIndex + 1, 9999)
-            return new_placeIndex, place_startTime, place_endTime
+            return new_placeIndex, place_startTime, place_endTime, totalCost
 
 def findDistanceMatrix(tmpLaLo):
     tmp = []
@@ -424,7 +423,7 @@ class NumpyEncoder(json.JSONEncoder):
 
         return json.JSONEncoder.default(self, obj)
 
-def arrange_planResult(finalPlan, final_startTime, final_endTime, accom, data):
+def arrange_planResult(finalPlan, final_startTime, final_endTime, final_cost, accom, data):
     information = []
     for planID in range(len(finalPlan)): 
         planDetail = []
@@ -438,7 +437,8 @@ def arrange_planResult(finalPlan, final_startTime, final_endTime, accom, data):
                         "placeName": accom.iloc[placeIndex]["accommodation_name"],
                         "placeType": "ACCOMMODATION",
                         "startTime": final_startTime[planID][day][countPlace],
-                        "endTime": final_startTime[planID][day][countPlace]
+                        "endTime": final_startTime[planID][day][countPlace],
+                        "day": day+1,
                     },)
                 elif countPlace > 0 and countPlace < len(finalPlan[planID][day]) -1 and placeIndex != 9999:
                     detail.append({
@@ -447,6 +447,7 @@ def arrange_planResult(finalPlan, final_startTime, final_endTime, accom, data):
                         "placeType": "ATTRACTION",
                         "startTime": final_startTime[planID][day][countPlace],
                         "endTime": final_endTime[planID][day][countPlace - 1],
+                        "day": day+1,
                         "status": 1,
                         "tag1": data.iloc[placeIndex]["ธรรมชาติ"],
                         "tag2": data.iloc[placeIndex]["นันทนาการ"],
@@ -458,18 +459,20 @@ def arrange_planResult(finalPlan, final_startTime, final_endTime, accom, data):
                     detail.append({
                         "placeType": "RESTAURANT",
                         "startTime": final_startTime[planID][day][countPlace],
-                        "endTime": final_endTime[planID][day][countPlace - 1]
+                        "endTime": final_endTime[planID][day][countPlace - 1],
+                        "day": day+1,
                     },)
                 
                 countPlace += 1
 
             planDetail.append({
-                "day": day,
+                "day": day+1,
                 "detail": detail
                 })
 
         information.append({
-            "planDetail": planDetail
+            "planDetail": planDetail,
+            "totalCost": final_cost[planID]
         })
     return information
 
@@ -479,6 +482,7 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     finalPlan = []
     final_startTime = []
     final_endTime = []
+    final_cost = []
     userInput = []
     tmpInput = []
     train_dir = 'engine'
@@ -487,12 +491,10 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     province = "กรุงเทพมหานคร"
     attractionData = makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province)
     df_tfidfvect = findVarietyMatrix(attractionData)
-    startTime = 540
-    endTime = 1050
+    startTime = req_body['startTime']
+    endTime = req_body['endTime']
     adult = req_body['numberOfAdult']
     child = req_body['numberOfChildren']
-    max_budget = req_body['maxBudget']
-    min_budget = req_body['minBudget']
     advanceInput = req_body['inputTagScores'] #ธรรมชาติ, นันทนาการ, ประวัติศาสตร์, วัฒนธรรม, ศิลปะ
     regInput = req_body['userTagScores']
     startText = '/'
@@ -500,6 +502,8 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     s_date = req_body['startDate']
     e_date = req_body['endDate']
     days = int(e_date[e_date.find(startText)+len(startText):e_date.rfind(endText)]) - int(s_date[s_date.find(startText)+len(startText):s_date.rfind(endText)]) + 1
+    max_budget = int(req_body['maxBudget'] / days)
+    min_budget = int(req_body['minBudget'] / days)
     for i in range(len(regInput)):
         tmp3 = regInput[i] + advanceInput[i]
         if tmp3 < 0:
@@ -511,7 +515,8 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     userInput = np.array(userInput)
 
     for planID in range(3):
-        print("plan number", planID)  
+        print("plan number", planID)
+        totalCost = 0  
         result = predict_outputs(pop_weights_mat, userInput)
         result = result * len(attractionData)
         result = result.astype(int)
@@ -570,20 +575,21 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
                 placeIndex = np.insert(placeIndex,0, accomIndex)
                 nodes = traveling_saleMan(placeIndex, attractionData, accom_data)
                 
-                planStatus, tmp_startTime, tmp_endTime = check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, max_budget, min_budget, attractionData, accom_data)
+                planStatus, tmp_startTime, tmp_endTime, tmp_cost= check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, max_budget, min_budget, attractionData, accom_data)
      
                 if planStatus != 0:
                     print("Found the match plan for day", day, "!!!")
-                    print(planStatus)
+                    #print(planStatus)
                     planDaily.append(planStatus)
                     startTime_Daily.append(tmp_startTime)
                     endTime_Daily.append(tmp_endTime)
+                    totalCost += tmp_cost
           
         finalPlan.append(planDaily)
         final_startTime.append(startTime_Daily)
         final_endTime.append(endTime_Daily)
-    
-    information = arrange_planResult(finalPlan, final_startTime, final_endTime, accom_data, attractionData)
+        final_cost.append(totalCost)
+    information = arrange_planResult(finalPlan, final_startTime, final_endTime, final_cost, accom_data, attractionData)
     print(finalPlan)
     information_json = json.dumps(information, cls=NumpyEncoder)
     return information_json

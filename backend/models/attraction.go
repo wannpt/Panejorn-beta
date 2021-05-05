@@ -8,10 +8,10 @@ type Attraction struct {
 	Introduction        NullString       `json:"introduction"`
 	Detail              NullString       `json:"detail"`
 	Activities          NullString       `json:"activities"`
-	ThaiChildFee        float64          `json:"thaiChildFee"`
-	ThaiAdultFee        float64          `json:"thaiAdultFee"`
-	ForeignChildFee     float64          `json:"foreignChildFee"`
-	ForeignAdultFee     float64          `json:"foreignAdultFee"`
+	ThaiChildFee        int          `json:"thaiChildFee"`
+	ThaiAdultFee        int          `json:"thaiAdultFee"`
+	ForeignChildFee     int          `json:"foreignChildFee"`
+	ForeignAdultFee     int          `json:"foreignAdultFee"`
 	Targets             NullString       `json:"targets"`
 	AddressDetail       NullString       `json:"addressDetail"`
 	SubDistrict         string           `json:"subDistrict"`
