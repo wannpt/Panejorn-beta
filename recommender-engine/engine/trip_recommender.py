@@ -493,8 +493,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     df_tfidfvect = findVarietyMatrix(attractionData)
     startTime = req_body['startTime']
     endTime = req_body['endTime']
-    startTime = 540
-    endTime = 1050
     adult = req_body['numberOfAdult']
     child = req_body['numberOfChildren']
     advanceInput = req_body['inputTagScores'] #ธรรมชาติ, นันทนาการ, ประวัติศาสตร์, วัฒนธรรม, ศิลปะ
