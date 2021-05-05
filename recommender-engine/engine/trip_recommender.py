@@ -88,8 +88,6 @@ def findDistance_OSM(tmpLaLo): #longitude, latitude
         url += "%s" %x[0] + "," + "%s" %x[1]
         if count != len(tmpLaLo) - 1:
             url += ";"
-        elif count == len(tmpLaLo) - 1:
-            url += "?exclude=motorway"
         count = count+1
     response = requests.get(url)
     if(response.status_code != 200):
@@ -242,6 +240,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
         if status == 200:
             totalTime += int(payload['routes'][0]['duration']/60)
         elif status != 200:
+            print("Using geopy instead of OSM")
             totalTime += int(sum(payload))
 
         totalTime += 90 #eat lunch
@@ -273,7 +272,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
                     if x == 0:
                         durations.append(int(payload[x]))
                     elif x > 0:
-                        durations.append(int(payload[x-1] + payload[x]))
+                        durations.append(int(durations[x-1] + payload[x]))
 
             for s_Time in range(len(place_startTime)):
                 if s_Time != 0 and s_Time <= len(place_startTime) - 1:
@@ -492,12 +491,12 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     province = "กรุงเทพมหานคร"
     attractionData = makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province)
     df_tfidfvect = findVarietyMatrix(attractionData)
+    startTime = req_body['startTime']
+    endTime = req_body['endTime']
     startTime = 540
     endTime = 1050
     adult = req_body['numberOfAdult']
     child = req_body['numberOfChildren']
-    max_budget = req_body['maxBudget']
-    min_budget = req_body['minBudget']
     advanceInput = req_body['inputTagScores'] #ธรรมชาติ, นันทนาการ, ประวัติศาสตร์, วัฒนธรรม, ศิลปะ
     regInput = req_body['userTagScores']
     startText = '/'
@@ -505,6 +504,8 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     s_date = req_body['startDate']
     e_date = req_body['endDate']
     days = int(e_date[e_date.find(startText)+len(startText):e_date.rfind(endText)]) - int(s_date[s_date.find(startText)+len(startText):s_date.rfind(endText)]) + 1
+    max_budget = int(req_body['maxBudget'] / days)
+    min_budget = int(req_body['minBudget'] / days)
     for i in range(len(regInput)):
         tmp3 = regInput[i] + advanceInput[i]
         if tmp3 < 0:
@@ -580,7 +581,7 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
      
                 if planStatus != 0:
                     print("Found the match plan for day", day, "!!!")
-                    print(planStatus)
+                    #print(planStatus)
                     planDaily.append(planStatus)
                     startTime_Daily.append(tmp_startTime)
                     endTime_Daily.append(tmp_endTime)
@@ -590,7 +591,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
         final_startTime.append(startTime_Daily)
         final_endTime.append(endTime_Daily)
         final_cost.append(totalCost)
-    
     information = arrange_planResult(finalPlan, final_startTime, final_endTime, final_cost, accom_data, attractionData)
     print(finalPlan)
     information_json = json.dumps(information, cls=NumpyEncoder)
