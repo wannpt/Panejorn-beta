@@ -3,7 +3,7 @@ import geopy.distance
 from sklearn.metrics.pairwise import manhattan_distances
 
 
-def find_fitness(place_data, predict_results, makeUp_data, df_tfidfvect, NN):
+def find_fitness(place_data, predict_results, makeUp_data, df_tfidfvect, diversity, distance, NN):
     max_similarity = 3
     min_similarity = 0
     max_distance = 250
@@ -44,7 +44,7 @@ def find_fitness(place_data, predict_results, makeUp_data, df_tfidfvect, NN):
         distance_planScores = normalization(distance_planScores, max_distance, min_distance)
         variety_planScores = findVariety(listPlace_Index, df_tfidfvect)
         variety_planScores = normalization(variety_planScores, max_variety, min_variety)
-        fitness_planScores.append((variety_planScores - similarity_planScores - distance_planScores))
+        fitness_planScores.append((((diversity + variety_planScores) - similarity_planScores - (distance + distance_planScores))))
     return Average(fitness_planScores)
 
 def findDistance(tmpLaLo):

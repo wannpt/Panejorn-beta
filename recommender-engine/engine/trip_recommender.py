@@ -243,13 +243,14 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
             print("Using geopy instead of OSM")
             totalTime += int(sum(payload))
 
-        totalTime += 90 #eat lunch
+        if totalTime > 720:
+            totalTime += 90 #eat lunch
         if totalTime > endTime or totalCost > max_budget:
             placeIndex = placeIndex[0:len(placeIndex) - 1]
             nodes = traveling_saleMan(placeIndex, attractionData, accom)
         
 
-        elif totalTime < 0.8 * endTime:
+        elif totalTime < 0.7 * endTime:
             return 0,0,0,0
             break
 
@@ -282,32 +283,33 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
 
             foundRes = 0
             resIndex = 0
-            for s_Time in range(len(place_startTime)):   
-                if s_Time > 0 and s_Time < len(place_startTime) - 2:
-                    if place_endTime[s_Time - 1] >= 690 and place_endTime[s_Time - 1] <= 870 and foundRes == 0:
-                        place_startTime.insert(s_Time + 1, 9999)
-                        place_endTime.insert(s_Time, 9999)
-                        place_startTime[s_Time + 1] = place_endTime[s_Time - 1] + 30
-                        place_endTime[s_Time] =  place_startTime[s_Time + 1] + 60
-                        foundRes = 1
-                        resIndex = s_Time
-            if foundRes == 0:
-                return 0,0,0,0
+            if totalTime > 720:
+                for s_Time in range(len(place_startTime)):   
+                    if s_Time > 0 and s_Time < len(place_startTime) - 2:
+                        if place_endTime[s_Time - 1] >= 720 and place_endTime[s_Time - 1] <= 870 and foundRes == 0:
+                            place_startTime.insert(s_Time + 1, 9999)
+                            place_endTime.insert(s_Time, 9999)
+                            place_startTime[s_Time + 1] = place_endTime[s_Time - 1] + 30
+                            place_endTime[s_Time] =  place_startTime[s_Time + 1] + 60
+                            foundRes = 1
+                            resIndex = s_Time
+                if foundRes == 0:
+                    return 0,0,0,0
 
-            for s_Time in range(len(place_startTime) - 1):
-                if foundRes == 1 and s_Time < len(place_startTime):
-                    try:
-                        place_startTime[(resIndex + 2) + s_Time] = place_startTime[(resIndex + 2) + s_Time] + 90
-                    except:
-                        pass
+                for s_Time in range(len(place_startTime) - 1):
+                    if foundRes == 1 and s_Time < len(place_startTime):
+                        try:
+                            place_startTime[(resIndex + 2) + s_Time] = place_startTime[(resIndex + 2) + s_Time] + 90
+                        except:
+                            pass
 
-                if foundRes == 1 and s_Time < len(place_startTime) - 1:
-                    try:
-                        place_endTime[(resIndex + 1) + s_Time] = place_endTime[(resIndex + 1) + s_Time] + 90
-                    except:
-                        pass
-           
-            new_placeIndex.insert(resIndex + 1, 9999)
+                    if foundRes == 1 and s_Time < len(place_startTime) - 1:
+                        try:
+                            place_endTime[(resIndex + 1) + s_Time] = place_endTime[(resIndex + 1) + s_Time] + 90
+                        except:
+                            pass
+            
+                new_placeIndex.insert(resIndex + 1, 9999)
             return new_placeIndex, place_startTime, place_endTime, totalCost
 
 def findDistanceMatrix(tmpLaLo):
@@ -488,7 +490,8 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     train_dir = 'engine'
     pop_weights_mat = np.load(train_dir + '/modelWeights.npy', allow_pickle=True)
     province = req_body['province']
-    province = "กรุงเทพมหานคร"
+    diversity = req_body['diversity']
+    distance = req_body['distance']
     attractionData = makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province)
     df_tfidfvect = findVarietyMatrix(attractionData)
     startTime = req_body['startTime']
@@ -529,7 +532,7 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
         for generations in range(end_generations):
             fitness = []
             for NN in range(len(result)):
-                fitness.append(engine.findFitness.find_fitness(attractionData, result, userInput, df_tfidfvect, NN))
+                fitness.append(engine.findFitness.find_fitness(attractionData, result, userInput, df_tfidfvect, diversity, distance, NN))
             fitness = np.array(fitness)
 
 
