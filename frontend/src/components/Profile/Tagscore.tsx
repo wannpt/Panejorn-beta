@@ -6,6 +6,7 @@ import emotionHappyLine from '@iconify-icons/ri/emotion-happy-line';
 import emotionUnhappyLine from '@iconify-icons/ri/emotion-unhappy-line';
 import { Button, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 
 const defaultTag = {
 	tag1: 0,
@@ -20,6 +21,7 @@ const Tagscore = () => {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [showErrorModal, setShowErrorModal] = useState(false);
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const history = useHistory();
 
@@ -41,6 +43,7 @@ const Tagscore = () => {
 	};
 
 	const SubmitHandler = () => {
+		setIsLoading(true);
 		fetch('/user/tagScore', {
 			method: 'PUT',
 			headers: {
@@ -50,8 +53,9 @@ const Tagscore = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
+				setIsLoading(false);
 				if (result.success === true) {
-					localStorage.setItem('status', "1");
+					localStorage.setItem('status', '1');
 					history.push('/profile');
 				} else {
 					setErrorMessage(result.message);
@@ -63,6 +67,8 @@ const Tagscore = () => {
 
 	return (
 		<>
+			<Loading isLoading={isLoading} />
+
 			<div className='row'>
 				<div className='col-12 text-center align-items-center mb-4'>
 					<p className='small-title'> ธรรมชาติ </p>

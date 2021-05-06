@@ -28,7 +28,7 @@ const RegisterPage = () => {
 	const [input, setInput] = useState<any>();
 	const [valid, setValid] = useState<boolean>(false);
 	const [confirmPasswordStatus, setConfirmPasswordStatus] = useState<boolean>(false);
-	const [errorMessage, setErrorMessage] = useState<String>('None');
+	const [errorMessage, setErrorMessage] = useState<String>('');
 	const [showError, setShowError] = useState<boolean>(false);
 	const [confirm, setConfirm] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,6 +36,7 @@ const RegisterPage = () => {
 	const CloseHandler = () => {
 		setConfirm(false);
 		setShowError(false);
+		setErrorMessage('');
 	};
 	const history = useHistory();
 	let day = '';
@@ -78,29 +79,35 @@ const RegisterPage = () => {
 		let i = 0;
 
 		while (i < password.length) {
-			console.log('bro');
 			let char = password[i];
 
 			if (char === password[i].toUpperCase()) {
-				console.log('c2');
 				isUpper = true;
 			}
 			if (char === password[i].toLowerCase()) {
-				console.log('c3');
 				isLower = true;
 			}
 			if (!isNaN(Number(char) * 1)) {
-				console.log('c1');
 				isNum = true;
 			}
 			i++;
 		}
-		console.log('password? = ' + password + '|' + isNum + '|' + isUpper + '|' + isLower);
-		if (isNum && isUpper && isLower) return true;
+
+		if (isNum && isUpper && isLower && password.length >= 8 && password.length <= 32) return true;
 		else {
-			setErrorMessage(
-				'ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร'
-			);
+			if (!confirmPasswordStatus) {
+				setErrorMessage(
+					errorMessage +
+						'⛔ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร \n' +
+						'⛔กรุณายืนยันรหัสผ่านให้ตรงกัน'
+				);
+			} else {
+				setErrorMessage(
+					errorMessage +
+						'⛔ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร \n'
+				);
+			}
+
 			return false;
 		}
 	};
@@ -112,7 +119,6 @@ const RegisterPage = () => {
 		if (confirmPassword === input.password) setConfirmPasswordStatus(true);
 		else {
 			setConfirmPasswordStatus(false);
-			setErrorMessage('กรุณายืนยันรหัสผ่านให้ตรงกัน');
 		}
 	};
 
@@ -121,6 +127,9 @@ const RegisterPage = () => {
 			let { target } = el;
 			let value = target.value;
 			day = value;
+			if (day[0] !== '0') {
+				day = '0' + day;
+			}
 		}
 		if (type === 'month') month = el.value;
 		if (type === 'year') {
@@ -149,7 +158,7 @@ const RegisterPage = () => {
 					if (result.success === true) {
 						return history.push('/register/tagscore');
 					} else {
-						setErrorMessage(result.message);
+						setErrorMessage(errorMessage + '\n ⛔' + result.message);
 						setShowError(true);
 						return true;
 					}
@@ -309,7 +318,7 @@ const RegisterPage = () => {
 					</Modal.Header>
 					<Modal.Body className='modal-body-lg'>
 						<div className='row'>
-							<div className='col-12'> {errorMessage}</div>
+							<div className='col-12' style={{whiteSpace:'pre-wrap'}}> {errorMessage}</div>
 						</div>
 					</Modal.Body>
 				</Modal>
