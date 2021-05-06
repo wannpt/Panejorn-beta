@@ -92,7 +92,7 @@ const RegisterPage = () => {
 			}
 			i++;
 		}
-
+		console.log('password is : ' + password + ' || ' + isNum + ' || ' + isUpper + ' || ' + isLower + ' || ' + password.length)
 		if (isNum && isUpper && isLower && password.length >= 8 && password.length <= 32) return true;
 		else {
 			if (!confirmPasswordStatus) {
@@ -127,7 +127,7 @@ const RegisterPage = () => {
 			let { target } = el;
 			let value = target.value;
 			day = value;
-			if (day[0] !== '0') {
+			if (day.length < 2) {
 				day = '0' + day;
 			}
 		}
@@ -143,7 +143,7 @@ const RegisterPage = () => {
 	};
 
 	const SubmitHandler = () => {
-		if (valid && PasswordHandler(input.password) && confirmPasswordStatus) {
+		if (valid && PasswordHandler(input.password)) {
 			setIsLoading(true);
 			const response = fetch('/user/registration', {
 				method: 'POST',
