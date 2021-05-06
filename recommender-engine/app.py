@@ -122,6 +122,7 @@ def arrange_planResult(finalPlan, final_startTime, final_endTime, final_cost, ac
                     },)
                 elif countPlace > 0 and countPlace < len(finalPlan[planID][day]) -1 and placeIndex == 9999:
                     detail.append({
+                        "placeID": "P08",
                         "placeType": "RESTAURANT",
                         "startTime": final_startTime[planID][day][countPlace],
                         "endTime": final_endTime[planID][day][countPlace - 1],
