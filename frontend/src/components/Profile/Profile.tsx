@@ -5,6 +5,7 @@ import './Profile.scss';
 import { User, UserStats } from '../../constant/Types/UserTypes';
 import { UserConst, UserStatsConst } from '../../constant/constantVar/UserConst';
 import { Doughnut } from 'react-chartjs-2';
+import Loading from '../Loading/Loading';
 
 const Profile = () => {
 	const history = useHistory();
@@ -14,29 +15,24 @@ const Profile = () => {
 	const [data, setData] = useState<any>();
 
 	useEffect(() => {
+		setIsLoading(true);
 		fetch('/user/profile', {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin' : '*',
+				'Access-Control-Allow-Origin': '*',
 			},
 			credentials: 'include',
 		})
 			.then((res) => res.json())
 			.then((result) => {
 				setUser(result);
-				setData(result.image)
+				setData(result.image);
 				setChartData({
 					datasets: [
 						{
-							data: [
-								result.tag1,
-								result.tag2,
-								result.tag3,
-								result.tag4,
-								result.tag5,
-							],
+							data: [result.tag1, result.tag2, result.tag3, result.tag4, result.tag5],
 							backgroundColor: ['#E8B6A3', '#00F0CC', '#FF5C4A', '#6F35E0', '#00A7FF'],
 						},
 					],
@@ -54,6 +50,9 @@ const Profile = () => {
 			history.push('/profile');
 		});
 	};
+	if (isLoading) {
+		return <Loading isLoading={isLoading} />;
+	}
 
 	if (!isLoading) {
 		return (
@@ -85,7 +84,7 @@ const Profile = () => {
 						</div>
 					</div>
 
-					<Button className='gradient-background submit-btn btn' style={{marginBottom:60}} onClick={LogOutHandler}>
+					<Button className='gradient-background submit-btn btn' style={{ marginBottom: 60 }} onClick={LogOutHandler}>
 						ลงชื่อออก
 					</Button>
 				</div>
