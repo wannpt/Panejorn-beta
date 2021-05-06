@@ -115,7 +115,7 @@ const LoginPage = () => {
 					<div className='col-12 text-center my-4'>
 						<a>ลืมรหัสผ่าน?</a>
 					</div>
-					<div className='col-12 text-center'>
+					<div className='col-12 text-center' style={{paddingBottom:'32px'}}>
 						<a onClick={() => history.push('/register')}>ยังไม่เป็นสมาชิก?</a>
 					</div>
 				</div>
