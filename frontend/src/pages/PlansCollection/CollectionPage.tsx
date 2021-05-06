@@ -27,6 +27,8 @@ function PlansCollectionPage() {
 				viewBox='0 0 500 676'
 				height={676}
 				width={380}
+				backgroundColor='#f5f5f5'
+				foregroundColor='#dbdbdb'
 			>
 				<circle cx='70.2' cy='73.2' r='41.3' />
 				<rect x='129.9' y='29.5' width='125.5' height='17' />
