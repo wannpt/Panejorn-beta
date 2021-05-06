@@ -11,6 +11,7 @@ import requests
 import geopy.distance
 import json
 from flask import jsonify
+from datetime import datetime
 
 
 def makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province):
@@ -209,9 +210,10 @@ def common_data(list1, list2):
                 return result               
     return result
 
-def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, max_budget, min_budget, attractionData, accom):
+def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, max_budget, min_budget, attractionData, accom, day_in_week):
   
     fitPlan = 0
+    weekDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     while fitPlan != 1: #loop until it match time and cost conditions
         tmpLaLo = []
         countNode = 0
@@ -232,6 +234,9 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
                     totalCost = totalCost + (adult * (attractionData.iloc[placeIndex[node]]["thai_adult_fee"]))
                 if child != 0:
                     totalCost = totalCost + (child * (attractionData.iloc[placeIndex[node]]["thai_child_fee"]))
+                if attractionData.iloc[placeIndex[node]][weekDays[day_in_week]] == "ปิด":
+                    print("Place is closed chaning plan now")
+                    return 0,0,0,0
             elif countNode == len(nodes) - 1:
                 tmpLaLo.append(accom.iloc[placeIndex[0]][["longitude", "latitude"]].values)
                 place_startTime.append(totalTime)
@@ -289,10 +294,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
             resIndex = 0
             if totalTime > 690:
                 for s_Time in range(len(place_startTime)):  
-                    #print("s_Time is", s_Time) 
-                    #print("len(place_startTime) - 2 is", len(place_startTime) - 2)
                     if s_Time > 0 and s_Time <= len(place_startTime) - 2:
-                        print(place_endTime[s_Time - 1])
                         if place_endTime[s_Time - 1] >= 690 and place_endTime[s_Time - 1] <= 870 and foundRes == 0:
                             place_startTime.insert(s_Time + 1, 9999)
                             place_endTime.insert(s_Time, 9999)
@@ -512,6 +514,9 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     endText = '/'
     s_date = req_body['startDate']
     e_date = req_body['endDate']
+    tmp_s_date = datetime.strptime(s_date, '%m/%d/%Y').strftime('%m/%d/%y')
+    datetime_object = datetime.strptime(tmp_s_date, '%m/%d/%y')
+    day_in_week = datetime_object.weekday()
     days = int(e_date[e_date.find(startText)+len(startText):e_date.rfind(endText)]) - int(s_date[s_date.find(startText)+len(startText):s_date.rfind(endText)]) + 1
     max_budget = int(req_body['maxBudget'] / days)
     min_budget = int(req_body['minBudget'] / days)
@@ -532,7 +537,7 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     result = result * len(attractionData)
     result = result.astype(int)
     result = getUnique_index(result, attractionData)
-    end_generations = 10
+    end_generations = 9
     accom_data = accommodations.query('province == @province')
     accom_data = accom_data.reset_index(drop=True)
     accomIndex = accom_data.sample().index[0]
@@ -588,7 +593,11 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
             placeIndex = np.insert(placeIndex,0, accomIndex)
             nodes = traveling_saleMan(placeIndex, attractionData, accom_data)
             
-            planStatus, tmp_startTime, tmp_endTime, tmp_cost= check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, max_budget, min_budget, attractionData, accom_data)
+            planStatus, tmp_startTime, tmp_endTime, tmp_cost= check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, max_budget, min_budget, attractionData, accom_data, day_in_week)
+            if day_in_week == 6:
+                day_in_week = 0
+            elif day_in_week < 6:
+                day_in_week += 1
     
             if planStatus != 0:
                 print("Found the match plan for day", day, "!!!")
