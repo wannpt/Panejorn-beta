@@ -2,8 +2,10 @@ package db
 
 import (
 	"log"
+	"time"
 
 	"backend/models"
+	res "backend/resources"
 )
 
 func InsertPlan(plan models.Plan) int {
@@ -17,6 +19,9 @@ func InsertPlan(plan models.Plan) int {
 	`
 
 	var planId int
+
+	plan.CreationTime = res.TimeZone(time.Now()).Unix()
+
 	err := database.QueryRow(sqlStatement, plan.PlanName, plan.StartDate, plan.EndDate,
 		plan.MinBudget, plan.MaxBudget, plan.NumberOfChildren, plan.NumberOfAdults,
 		plan.PlanScore, plan.MainLocation, plan.Distance, plan.Diversity,
@@ -25,7 +30,7 @@ func InsertPlan(plan models.Plan) int {
 		plan.CreationTime,
 	).Scan(&planId)
 	if err != nil {
-		log.Panic("unable to scan the row. ", err)
+		log.Printf("unable to scan the row. ", err)
 	}
 	return planId
 }

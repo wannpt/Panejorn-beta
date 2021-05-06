@@ -78,6 +78,10 @@ func CreatePlan(c echo.Context) error {
 		result["message"] = "กรุณาเลือกจังหวัดที่ท่านต้องการไป"
 		return c.JSON(http.StatusInternalServerError, result)
 	}
+	distance := requestBody["distance"].(float64)
+	diversity := requestBody["diversity"].(float64)
+	inputTagScores := requestBody["inputTagScores"].([]interface{})
+
 
     sess := res.GetSession(c)
     userId := sess.Values["userId"].(int)
@@ -97,8 +101,14 @@ func CreatePlan(c echo.Context) error {
         MainLocation:     mainLocation,
         Status:           1,
         Pinned:           false,
-        CreationTime:     res.TimeZone(time.Now()).Unix(),
-        UserId:           userId,
+		UserId:           userId,
+		Distance:		distance,
+		Diversity:		diversity,
+		Tag1:			inputTagScores[0].(float64),
+		Tag2:			inputTagScores[1].(float64),
+		Tag3:			inputTagScores[2].(float64),
+		Tag4:			inputTagScores[3].(float64),
+		Tag5:			inputTagScores[4].(float64),
     }
 
     // Create plan using the Trip Recommender system

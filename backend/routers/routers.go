@@ -35,6 +35,7 @@ func SetUpRouter() *echo.Echo {
 	e.POST("/user/login", handlers.Login)
 	e.POST("/planCollection/plans", handlers.CreatePlan)
 	e.POST("/user/registration", handlers.CreateUser)
+	e.POST("/planCollection/plans/selected", handlers.SelectPlan)
 
 	e.PUT("/user/tagScore", handlers.UpdateUserTagScore)
 
