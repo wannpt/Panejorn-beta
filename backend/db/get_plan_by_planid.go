@@ -46,7 +46,7 @@ func GetPlanByPlanId(planId int) (models.Plan, error) {
 		return models.Plan{}, err
 	}
 
-	sqlStatement = `SELECT * FROM plan__planDetail WHERE plan_id=$1`
+	sqlStatement = `SELECT * FROM plan__planDetail WHERE plan_id=$1 ORDER BY day, start_time`
 
 	rows, err := database.Query(sqlStatement, plan.PlanId)
 	defer rows.Close()
