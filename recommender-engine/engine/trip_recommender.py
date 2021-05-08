@@ -235,7 +235,6 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
                 if child != 0:
                     totalCost = totalCost + (child * (attractionData.iloc[placeIndex[node]]["thai_child_fee"]))
                 if attractionData.iloc[placeIndex[node]][weekDays[day_in_week]] == "ปิด":
-                    print("Place is closed chaning plan now")
                     return 0,0,0,0
             elif countNode == len(nodes) - 1:
                 tmpLaLo.append(accom.iloc[placeIndex[0]][["longitude", "latitude"]].values)
@@ -245,21 +244,16 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
         if status == 200:
             totalTime += int(payload['routes'][0]['duration']/60)
         elif status != 200:
-            print("Using geopy instead of OSM")
             totalTime += int(sum(payload))
 
         if totalTime > 690:
             totalTime += 90 #eat lunch
         if totalTime > endTime or totalCost > max_budget:
-            print("total time is", totalTime)
-            print("total cost is", totalCost)
-            print("Too much time/cost")
             placeIndex = placeIndex[0:len(placeIndex) - 1]
             nodes = traveling_saleMan(placeIndex, attractionData, accom)
         
 
         elif totalTime < 0.7 * endTime:
-            print("Not enough place total time is", totalTime)
             return 0,0,0,0
             break
 
@@ -303,7 +297,6 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
                             foundRes = 1
                             resIndex = s_Time
                 if foundRes == 0:
-                    print("Can't find res")
                     return 0,0,0,0
 
                 for s_Time in range(len(place_startTime) - 1):
@@ -409,85 +402,6 @@ def traveling_saleMan(placeIndex, attractionData, accom):
     routes = routes[0]
     return routes
 
-# class NumpyEncoder(json.JSONEncoder):
-#     """ Custom encoder for numpy data types """
-#     def default(self, obj):
-#         if isinstance(obj, (np.int_, np.intc, np.intp, np.int8,
-#                             np.int16, np.int32, np.int64, np.uint8,
-#                             np.uint16, np.uint32, np.uint64)):
-
-#             return int(obj)
-
-#         elif isinstance(obj, (np.float_, np.float16, np.float32, np.float64)):
-#             return float(obj)
-
-#         elif isinstance(obj, (np.complex_, np.complex64, np.complex128)):
-#             return {'real': obj.real, 'imag': obj.imag}
-
-#         elif isinstance(obj, (np.ndarray,)):
-#             return obj.tolist()
-
-#         elif isinstance(obj, (np.bool_)):
-#             return bool(obj)
-
-#         elif isinstance(obj, (np.void)): 
-#             return None
-
-#         return json.JSONEncoder.default(self, obj)
-
-# def arrange_planResult(finalPlan, final_startTime, final_endTime, final_cost, accom, data):
-#     information = []
-#     for planID in range(len(finalPlan)): 
-#         planDetail = []
-#         for day in range(len(finalPlan[planID])):
-#             countPlace = 0
-#             detail = []
-#             for placeIndex in finalPlan[planID][day]:
-#                 if countPlace == 0 or countPlace == len(finalPlan[planID][day]) - 1:
-#                     detail.append({
-#                         "placeID": accom.iloc[placeIndex]["accommodation_id"],
-#                         "placeName": accom.iloc[placeIndex]["accommodation_name"],
-#                         "placeType": "ACCOMMODATION",
-#                         "startTime": final_startTime[planID][day][countPlace],
-#                         "endTime": final_startTime[planID][day][countPlace],
-#                         "day": day+1,
-#                     },)
-#                 elif countPlace > 0 and countPlace < len(finalPlan[planID][day]) -1 and placeIndex != 9999:
-#                     detail.append({
-#                         "placeId": data.iloc[placeIndex]["attraction_id"],
-#                         "placeName": data.iloc[placeIndex]["attraction_name"],
-#                         "placeType": "ATTRACTION",
-#                         "startTime": final_startTime[planID][day][countPlace],
-#                         "endTime": final_endTime[planID][day][countPlace - 1],
-#                         "day": day+1,
-#                         "status": 1,
-#                         "tag1": data.iloc[placeIndex]["ธรรมชาติ"],
-#                         "tag2": data.iloc[placeIndex]["นันทนาการ"],
-#                         "tag3": data.iloc[placeIndex]["ประวัติศาสตร์"],
-#                         "tag4": data.iloc[placeIndex]["วัฒนธรรม"],
-#                         "tag5": data.iloc[placeIndex]["ศิลปะ"]  
-#                     },)
-#                 elif countPlace > 0 and countPlace < len(finalPlan[planID][day]) -1 and placeIndex == 9999:
-#                     detail.append({
-#                         "placeType": "RESTAURANT",
-#                         "startTime": final_startTime[planID][day][countPlace],
-#                         "endTime": final_endTime[planID][day][countPlace - 1],
-#                         "day": day+1,
-#                     },)
-                
-#                 countPlace += 1
-
-#             planDetail.append({
-#                 "day": day+1,
-#                 "detail": detail
-#                 })
-
-#         information.append({
-#             "planDetail": planDetail,
-#             "totalCost": final_cost[planID]
-#         })
-#     return information
-
 def createPlan(accommodations, attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, req_body, planID):
     np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning) 
     np.random.seed()
@@ -504,11 +418,10 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
         'ภูเก็ต':'modelWeights_Phuket.npy',
         'ชลบุรี':'modelWeights_Chonburi.npy',
         'นครราชสีมา':'modelWeights_Nakhon_Ratchasima.npy',
-        'ตาก':'modelWeights_Tak2.npy',
+        'ตาก':'modelWeights_Tak.npy',
         'เชียงราย':'modelWeights_Chiangrai.npy'
     }
     model = selectModel[province]
-    print(model)
     pop_weights_mat = np.load(train_dir + "/" + model, allow_pickle=True)
     diversity = req_body['diversity']
     distance = req_body['distance']
@@ -530,7 +443,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     days = int(e_date[e_date.find(startText)+len(startText):e_date.rfind(endText)]) - int(s_date[s_date.find(startText)+len(startText):s_date.rfind(endText)]) + 1
     max_budget = int(req_body['maxBudget'] / days)
     min_budget = int(req_body['minBudget'] / days)
-    print(max_budget)
     for i in range(len(regInput)):
         tmp3 = regInput[i] + advanceInput[i]
         if tmp3 < 0:
@@ -541,7 +453,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     userInput.append(tmpInput)
     userInput = np.array(userInput)
 
-    print("plan number", planID)
     totalCost = 0  
     result = predict_outputs(pop_weights_mat, userInput)
     result = result * len(attractionData)
@@ -551,7 +462,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     accom_data = accommodations.query('province == @province')
     accom_data = accom_data.reset_index(drop=True)
     accomIndex = accom_data.sample().index[0]
-    print("Index accom is", accomIndex)
     results_list = []
     for generations in range(end_generations):
         fitness = []
@@ -582,11 +492,9 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     startTime_Daily = []
     endTime_Daily = []
     for day in range(days):
-        print("This is day", day)
         planStatus = 0
         while planStatus == 0:
             placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.35 * len(result))][0]
-            print("Finding new plan")
             plan = 0
             while plan != len(planDaily):
                 sameIndex = 1
@@ -597,7 +505,6 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
                             plan += 1
                         elif sameIndex == 1:
                             plan = 0
-                            print("Same Place")
                             placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.35 * len(result))][0]
             
             placeIndex = np.insert(placeIndex,0, accomIndex)
@@ -611,135 +518,13 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     
             if planStatus != 0:
                 print("Found the match plan for day", day, "!!!")
-                #print(planStatus)
                 planDaily.append(planStatus)
                 startTime_Daily.append(tmp_startTime)
                 endTime_Daily.append(tmp_endTime)
                 totalCost += tmp_cost
 
     finalPlan.append(planDaily)
-    #print("final plan for", planID, "is", finalPlan)
     final_startTime.append(startTime_Daily)
     final_endTime.append(endTime_Daily)
     final_cost.append(totalCost)
     return finalPlan, final_startTime, final_endTime, final_cost, accom_data, attractionData
-
-# def createPlan(accommodations, attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, req_body, planID):
-#     np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning) 
-#     finalPlan = []
-#     final_startTime = []
-#     final_endTime = []
-#     final_cost = []
-#     userInput = []
-#     tmpInput = []
-#     train_dir = 'engine'
-#     pop_weights_mat = np.load(train_dir + '/modelWeights_Changrai.npy', allow_pickle=True)
-#     province = req_body['province']
-#     diversity = req_body['diversity']
-#     distance = req_body['distance']
-#     attractionData = makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province)
-#     df_tfidfvect = findVarietyMatrix(attractionData)
-#     startTime = req_body['startTime']
-#     endTime = req_body['endTime']
-#     adult = req_body['numberOfAdult']
-#     child = req_body['numberOfChildren']
-#     advanceInput = req_body['inputTagScores'] #ธรรมชาติ, นันทนาการ, ประวัติศาสตร์, วัฒนธรรม, ศิลปะ
-#     regInput = req_body['userTagScores']
-#     startText = '/'
-#     endText = '/'
-#     s_date = req_body['startDate']
-#     e_date = req_body['endDate']
-#     days = int(e_date[e_date.find(startText)+len(startText):e_date.rfind(endText)]) - int(s_date[s_date.find(startText)+len(startText):s_date.rfind(endText)]) + 1
-#     max_budget = int(req_body['maxBudget'] / days)
-#     min_budget = int(req_body['minBudget'] / days)
-#     print(max_budget)
-#     for i in range(len(regInput)):
-#         tmp3 = regInput[i] + advanceInput[i]
-#         if tmp3 < 0:
-#             tmp3 = 0.0
-#         elif tmp3 > 1:
-#             tmp3 = 1.0
-#         tmpInput.append(tmp3)
-#     userInput.append(tmpInput)
-#     userInput = np.array(userInput)
-
-#     for planID in range(3):
-#         print("plan number", planID)
-#         totalCost = 0  
-#         result = predict_outputs(pop_weights_mat, userInput)
-#         result = result * len(attractionData)
-#         result = result.astype(int)
-#         result = getUnique_index(result, attractionData)
-#         end_generations = 7
-#         accom_data = accommodations.query('province == @province')
-#         accom_data = accom_data.reset_index(drop=True)
-#         accomIndex = accom_data.sample().index[0]
-#         results_list = []
-#         for generations in range(end_generations):
-#             fitness = []
-#             for NN in range(len(result)):
-#                 fitness.append(engine.findFitness.find_fitness(attractionData, result, userInput, df_tfidfvect, diversity, distance, NN))
-#             fitness = np.array(fitness)
-
-
-#             pair_NN = pair_fitness_weights(fitness, result) #pair the fitness with weights
-
-
-#             pair_NN = sorted(pair_NN, key=element_1, reverse = True) #sort order of fitness from high to low
-#             pair_NN = np.array(pair_NN) #100 * 2 first array is NN, second is select the avg fitness values or weights of NN and weight can be devide to 4 layers --> 5*20 20*20 20*20 20*9
-
-#             if generations == 0:
-#                 bestGen0 = pair_NN[0][0]
-
-#             result = removeFitness(pair_NN)
-
-#             if generations == end_generations - 1:
-#                 break
-#             result = crossOver(result)
-#             result = mutate(result, attractionData)
-#             result = getUnique_index(result, attractionData)
-#             results_list.append(result)
-
-#         planDaily = []
-#         startTime_Daily = []
-#         endTime_Daily = []
-#         for day in range(days):
-#             print("This is day", day)
-#             planStatus = 0
-#             while planStatus == 0:
-#                 placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.3 * len(result))][0]
-#                 print("Finding new plan")
-#                 plan = 0
-#                 while plan != len(planDaily):
-#                     sameIndex = 1
-#                     while sameIndex == 1:
-#                         if len(planDaily) != 0:
-#                             sameIndex = common_data(planDaily[plan], placeIndex)
-#                             if sameIndex == 0:
-#                                 plan += 1
-#                             elif sameIndex == 1:
-#                                 plan = 0
-#                                 print("Same Place")
-#                                 placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.3 * len(result))][0]
-                
-#                 placeIndex = np.insert(placeIndex,0, accomIndex)
-#                 nodes = traveling_saleMan(placeIndex, attractionData, accom_data)
-                
-#                 planStatus, tmp_startTime, tmp_endTime, tmp_cost= check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, max_budget, min_budget, attractionData, accom_data)
-     
-#                 if planStatus != 0:
-#                     print("Found the match plan for day", day, "!!!")
-#                     #print(planStatus)
-#                     planDaily.append(planStatus)
-#                     startTime_Daily.append(tmp_startTime)
-#                     endTime_Daily.append(tmp_endTime)
-#                     totalCost += tmp_cost
-          
-#         finalPlan.append(planDaily)
-#         final_startTime.append(startTime_Daily)
-#         final_endTime.append(endTime_Daily)
-#         final_cost.append(totalCost)
-#     information = arrange_planResult(finalPlan, final_startTime, final_endTime, final_cost, accom_data, attractionData)
-#     print(finalPlan)
-#     information_json = json.dumps(information, cls=NumpyEncoder)
-#     return information_json
