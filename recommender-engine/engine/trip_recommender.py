@@ -498,8 +498,18 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     userInput = []
     tmpInput = []
     train_dir = 'engine'
-    pop_weights_mat = np.load(train_dir + '/modelWeights_Chonburi.npy', allow_pickle=True)
     province = req_body['province']
+    selectModel = {
+        'กรุงเทพมหานคร':'modelWeights_Bangkok.npy',
+        'ภูเก็ต':'modelWeights_Phuket.npy',
+        'ชลบุรี':'modelWeights_Chonburi.npy',
+        'นครราชสีมา':'modelWeights_Nakhon_Ratchasima.npy',
+        'ตาก':'modelWeights_Tak2.npy',
+        'เชียงราย':'modelWeights_Chiangrai.npy'
+    }
+    model = selectModel[province]
+    print(model)
+    pop_weights_mat = np.load(train_dir + "/" + model, allow_pickle=True)
     diversity = req_body['diversity']
     distance = req_body['distance']
     attractionData = makeData(attraction_detailsTags, attraction__regis_attractionType, attraction__attractionType, province)
