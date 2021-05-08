@@ -57,9 +57,6 @@ def trip_recommender():
     print("Final plan is", finalPlan)
     return information_json
 
-    #result = createPlan(accommodations, attractions, attraction_regisType, attraction__attractionType, req_body)
-    #print(json.loads(result))
-    #return result #jsonify(result)
 
 
 class NumpyEncoder(json.JSONEncoder):
