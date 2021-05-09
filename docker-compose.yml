@@ -30,7 +30,7 @@ services:
     container_name: reng-container
     build:
       context: .
-      dockerfile: python.Dockerfile
+      dockerfile: Dockerfile.python
     volumes:
       - './recommender-engine:/opt/app'
     ports:

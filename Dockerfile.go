@@ -9,6 +9,7 @@ WORKDIR $PROJECT_ROOT
 COPY ./backend .
 RUN go clean --modcache
 RUN go mod download
+RUN go mod verify
 
 EXPOSE 8000
 

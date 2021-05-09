@@ -7,3 +7,6 @@ geopy==2.1.0
 sklearn==0.0
 ortools==8.2.8710
 requests==2.24.0
+gunicorn
+Jinja2
+Werkzeug
