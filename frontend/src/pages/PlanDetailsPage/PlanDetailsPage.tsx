@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ContentLoader from 'react-content-loader';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import PlaceCard from '../../components/Card/PlaceCard';
 import { PlanType } from '../../constant/Types/PlanTypes';
 import './PlanDetails.scss';
+import ContentLoader from 'react-content-loader';
 
 const PlanDetailConstant = {
 	planId: 2,

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Card from '../../components/Card/Card';
 import News from '../../components/News/News';
 import Logo from '../../Images/Group 23.svg';
 import { StatusCard } from '../../constant/Types/CardTypes';
-import { useParams } from 'react-router';
+import Loading from '../../components/Loading/Loading';
+
 
 const cardDefault: StatusCard = {
 	planName: 'เที่ยวหนึ่งวันกับคนอย่างเธอ',
@@ -16,22 +17,10 @@ const cardDefault: StatusCard = {
 };
 
 function Homepage() {
-	const [data, setData] = useState(cardDefault);
-	// const params = useParams();
-	// console.log(params);
-	// useEffect(() => {
-	// 	fetch('/currentLocation', {
-	// 		method: 'GET',
-	// 	})
-	// 		.then((res) => res.json())
-	// 		.then((result) => {
-	// 			setData(result);
-	// 			console.log(result);
-	// 		});
-	// }, []);
 
 	return (
 		<div>
+			{/* <Loading/> */}
 			<div className='gradient-background default-padding'>
 				<img src={Logo} className='app-logo' alt='app logo' />
 				<div className='pb-4'>

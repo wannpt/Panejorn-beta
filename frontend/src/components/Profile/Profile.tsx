@@ -5,8 +5,9 @@ import './Profile.scss';
 import { User, UserStats } from '../../constant/Types/UserTypes';
 import { UserConst, UserStatsConst } from '../../constant/constantVar/UserConst';
 import { Doughnut } from 'react-chartjs-2';
-import Loading from '../Loading/Loading';
+// import ContentLoader from 'react-content-loader/dist/web/ContentLoader';
 import ContentLoader from 'react-content-loader';
+
 
 const Profile = () => {
 	const history = useHistory();
