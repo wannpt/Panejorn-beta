@@ -18,7 +18,7 @@ COPY ./frontend/src ./src
 RUN yarn -g --silence
 
 #Expose port to make sure that port is free
-EXPOSE 8080
+EXPOSE 80
 
 #Build the app
 CMD ["yarn", "start"]
