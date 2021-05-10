@@ -7,6 +7,7 @@ import { Select, CaretIcon, ModalCloseButton } from 'react-responsive-select';
 import 'react-responsive-select/dist/react-responsive-select.css';
 
 import './register.scss';
+import Loading from '../../components/Loading/Loading';
 
 const monthOptions = [
 	{ value: '01', text: 'มกราคม' },
@@ -27,12 +28,15 @@ const RegisterPage = () => {
 	const [input, setInput] = useState<any>();
 	const [valid, setValid] = useState<boolean>(false);
 	const [confirmPasswordStatus, setConfirmPasswordStatus] = useState<boolean>(false);
-	const [errorMessage, setErrorMessage] = useState<String>('None');
+	const [errorMessage, setErrorMessage] = useState<String>('');
 	const [showError, setShowError] = useState<boolean>(false);
 	const [confirm, setConfirm] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const CloseHandler = () => {
 		setConfirm(false);
 		setShowError(false);
+		setErrorMessage('');
 	};
 	const history = useHistory();
 	let day = '';
@@ -68,6 +72,46 @@ const RegisterPage = () => {
 		}
 	};
 
+	const PasswordHandler = (password: string) => {
+		let isNum = false;
+		let isUpper = false;
+		let isLower = false;
+		let i = 0;
+
+		while (i < password.length) {
+			let char = password[i];
+
+			if (char === password[i].toUpperCase()) {
+				isUpper = true;
+			}
+			if (char === password[i].toLowerCase()) {
+				isLower = true;
+			}
+			if (!isNaN(Number(char) * 1)) {
+				isNum = true;
+			}
+			i++;
+		}
+		console.log('password is : ' + password + ' || ' + isNum + ' || ' + isUpper + ' || ' + isLower + ' || ' + password.length)
+		if (isNum && isUpper && isLower && password.length >= 8 && password.length <= 32) return true;
+		else {
+			if (!confirmPasswordStatus) {
+				setErrorMessage(
+					errorMessage +
+						'⛔ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร \n' +
+						'⛔กรุณายืนยันรหัสผ่านให้ตรงกัน'
+				);
+			} else {
+				setErrorMessage(
+					errorMessage +
+						'⛔ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร \n'
+				);
+			}
+
+			return false;
+		}
+	};
+
 	const ConfrimPasswordValidation = (e: any) => {
 		const { target } = e;
 		let confirmPassword = target.value;
@@ -75,7 +119,6 @@ const RegisterPage = () => {
 		if (confirmPassword === input.password) setConfirmPasswordStatus(true);
 		else {
 			setConfirmPasswordStatus(false);
-			setErrorMessage('กรุณายืนยันรหัสผ่านให้ตรงกัน');
 		}
 	};
 
@@ -84,6 +127,9 @@ const RegisterPage = () => {
 			let { target } = el;
 			let value = target.value;
 			day = value;
+			if (day.length < 2) {
+				day = '0' + day;
+			}
 		}
 		if (type === 'month') month = el.value;
 		if (type === 'year') {
@@ -97,7 +143,8 @@ const RegisterPage = () => {
 	};
 
 	const SubmitHandler = () => {
-		if (valid) {
+		if (valid && PasswordHandler(input.password)) {
+			setIsLoading(true);
 			const response = fetch('/user/registration', {
 				method: 'POST',
 				headers: {
@@ -107,171 +154,176 @@ const RegisterPage = () => {
 			})
 				.then((res) => res.json())
 				.then((result) => {
-					if (result.success === true) return history.push('/register/tagscore');
-					else {
-						setErrorMessage(result.message);
+					setIsLoading(false);
+					if (result.success === true) {
+						return history.push('/register/tagscore');
+					} else {
+						setErrorMessage(errorMessage + '\n ⛔' + result.message);
 						setShowError(true);
 						return true;
 					}
 				});
 		} else {
-			setErrorMessage('กรุณากรอกข้อมูลให้ครบ');
+			setShowError(true);
 		}
 	};
 
 	return (
-		<div className='default-padding'>
-			<div className='row'>
-				<div className='col text-center'>
-					<span className='color-text' style={{ fontSize: 24, fontWeight: 600 }}>
-						สมัครใช้บริการ
-					</span>
+		<>
+			<Loading isLoading={isLoading} />
+			<div className='default-padding'>
+				<div className='row'>
+					<div className='col text-center'>
+						<span className='color-text' style={{ fontSize: 24, fontWeight: 600 }}>
+							สมัครใช้บริการ
+						</span>
+					</div>
 				</div>
-			</div>
 
-			{/* stepper */}
-			<Stepper title={'ข้อมูลส่วนตัว'} step={1} />
+				{/* stepper */}
+				<Stepper title={'ข้อมูลส่วนตัว'} step={1} />
 
-			{/* form */}
-			<Form onSubmit={ConfirmHandler} validated={valid} noValidate>
-				<Form.Group controlId='username'>
-					<Form.Label>
-						ชื่อผู้ใช้งาน <span style={{ color: 'red' }}>*</span>
-					</Form.Label>
-					<Form.Control
-						required
-						name='username'
-						type='text'
-						placeholder='ชื่อผู้ใช้งาน'
-						className='input-textbox'
-						onChange={OnChangeHandler}
-					/>
-				</Form.Group>
-				<Form.Group controlId='email'>
-					<Form.Label>
-						อีเมลล์ <span style={{ color: 'red' }}>*</span>
-					</Form.Label>
-					<Form.Control
-						required
-						name='email'
-						type='text'
-						placeholder='อีเมลล์'
-						className='input-textbox'
-						onChange={OnChangeHandler}
-					/>
-				</Form.Group>
-				<Form.Group controlId='password'>
-					<Form.Label>
-						รหัสผ่าน <span style={{ color: 'red' }}>*</span>
-					</Form.Label>
-					<Form.Control
-						required
-						name='password'
-						type='password'
-						placeholder='รหัสผ่าน'
-						className='input-textbox'
-						onChange={OnChangeHandler}
-					/>
-					<Form.Text className='pl-2' id='passwordHelpBlock' muted>
-						ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร
-					</Form.Text>
-				</Form.Group>
-				<Form.Group controlId='password'>
-					<Form.Label>
-						ยืนยันรหัสผ่าน <span style={{ color: 'red' }}>*</span>
-					</Form.Label>
-					<Form.Control
-						required
-						name='confirmPassword'
-						type='password'
-						placeholder='ยืนยันรหัสผ่าน'
-						className='input-textbox'
-						onChange={ConfrimPasswordValidation}
-					/>
-					<Form.Control.Feedback className='pl-2' type='invalid'>
-						{' '}
-						กรุณาตรวจสอบอีกครั้ง{' '}
-					</Form.Control.Feedback>
-				</Form.Group>
+				{/* form */}
+				<Form onSubmit={ConfirmHandler} validated={valid} noValidate>
+					<Form.Group controlId='username'>
+						<Form.Label>
+							ชื่อผู้ใช้งาน <span style={{ color: 'red' }}>*</span>
+						</Form.Label>
+						<Form.Control
+							required
+							name='username'
+							type='text'
+							placeholder='ชื่อผู้ใช้งาน'
+							className='input-textbox'
+							onChange={OnChangeHandler}
+						/>
+					</Form.Group>
+					<Form.Group controlId='email'>
+						<Form.Label>
+							อีเมลล์ <span style={{ color: 'red' }}>*</span>
+						</Form.Label>
+						<Form.Control
+							required
+							name='email'
+							type='text'
+							placeholder='อีเมลล์'
+							className='input-textbox'
+							onChange={OnChangeHandler}
+						/>
+					</Form.Group>
+					<Form.Group controlId='password'>
+						<Form.Label>
+							รหัสผ่าน <span style={{ color: 'red' }}>*</span>
+						</Form.Label>
+						<Form.Control
+							required
+							name='password'
+							type='password'
+							placeholder='รหัสผ่าน'
+							className='input-textbox'
+							onChange={OnChangeHandler}
+						/>
+						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
+							ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร
+						</Form.Text>
+					</Form.Group>
+					<Form.Group controlId='password'>
+						<Form.Label>
+							ยืนยันรหัสผ่าน <span style={{ color: 'red' }}>*</span>
+						</Form.Label>
+						<Form.Control
+							required
+							name='confirmPassword'
+							type='password'
+							placeholder='ยืนยันรหัสผ่าน'
+							className='input-textbox'
+							onChange={ConfrimPasswordValidation}
+						/>
+						<Form.Control.Feedback className='pl-2' type='invalid'>
+							{' '}
+							กรุณาตรวจสอบอีกครั้ง{' '}
+						</Form.Control.Feedback>
+					</Form.Group>
 
-				<Form.Group controlId='dob'>
-					<Form.Label>
-						วัน/เดือน/ปี (พุทธศักราช) เกิด <span style={{ color: 'red' }}>*</span>
-					</Form.Label>
-					<Form.Row>
-						<Col xs={3}>
-							<Form.Control
-								required
-								name='day'
-								type='text'
-								placeholder='วัน'
-								className='input-textbox'
-								onChange={(e) => DateHandler('day', e)}
-							/>
-						</Col>
-						<Col xs={6}>
-							<Select
-								name='month'
-								modalCloseButton={<ModalCloseButton />}
-								options={monthOptions}
-								caretIcon={<CaretIcon />}
-								onChange={(newValue) => {
-									DateHandler('month', newValue);
-								}}
-							/>
-						</Col>
-						<Col xs={3}>
-							<Form.Control
-								required
-								name='confirmPassword'
-								type='year'
-								placeholder='ปี'
-								className='input-textbox'
-								onChange={(e) => DateHandler('year', e)}
-							/>
-						</Col>
-					</Form.Row>
-				</Form.Group>
-				<Button type='submit' className='gradient-background submit-btn btn mb-2'>
-					สมัคร
-				</Button>
-			</Form>
+					<Form.Group controlId='dob'>
+						<Form.Label>
+							วัน/เดือน/ปี (พุทธศักราช) เกิด <span style={{ color: 'red' }}>*</span>
+						</Form.Label>
+						<Form.Row>
+							<Col xs={3}>
+								<Form.Control
+									required
+									name='day'
+									type='text'
+									placeholder='วัน'
+									className='input-textbox'
+									onChange={(e) => DateHandler('day', e)}
+								/>
+							</Col>
+							<Col xs={6}>
+								<Select
+									name='month'
+									modalCloseButton={<ModalCloseButton />}
+									options={monthOptions}
+									caretIcon={<CaretIcon />}
+									onChange={(newValue) => {
+										DateHandler('month', newValue);
+									}}
+								/>
+							</Col>
+							<Col xs={3}>
+								<Form.Control
+									required
+									name='confirmPassword'
+									type='year'
+									placeholder='ปี'
+									className='input-textbox'
+									onChange={(e) => DateHandler('year', e)}
+								/>
+							</Col>
+						</Form.Row>
+					</Form.Group>
+					<Button type='submit' className='gradient-background submit-btn btn mb-2'>
+						สมัคร
+					</Button>
+				</Form>
 
-			<Modal show={confirm} onHide={CloseHandler} centered>
-				{/* <Modal.Header /> */}
-				<Modal.Body className='modal-body-lg'>
-					<div className='row text-center'>
-						<div className='col-12 big-title mb-4'>ยืนยันข้อมูลของคุณ</div>
-						<div className='col-12'>
-							<div className='row justify-content-center'>
-								<div className='col-6 pr-1'>
-									<Button className='gradient-background submit-btn' onClick={SubmitHandler}>
-										ข้อมูลถูกต้อง
-									</Button>
-								</div>
-								<div className='col-6 pl-1'>
-									<Button className='color-text submit-btn' onClick={CloseHandler}>
-										ตรวจสอบอีกครั้ง
-									</Button>
+				<Modal show={confirm} onHide={CloseHandler} centered>
+					{/* <Modal.Header /> */}
+					<Modal.Body className='modal-body-lg'>
+						<div className='row text-center'>
+							<div className='col-12 big-title mb-4'>ยืนยันข้อมูลของคุณ</div>
+							<div className='col-12'>
+								<div className='row justify-content-center'>
+									<div className='col-6 pr-1'>
+										<Button className='gradient-background submit-btn' onClick={SubmitHandler}>
+											ข้อมูลถูกต้อง
+										</Button>
+									</div>
+									<div className='col-6 pl-1'>
+										<Button className='color-text submit-btn' onClick={CloseHandler}>
+											ตรวจสอบอีกครั้ง
+										</Button>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</Modal.Body>
-			</Modal>
+					</Modal.Body>
+				</Modal>
 
-			<Modal show={showError} onHide={CloseHandler} centered>
-				<Modal.Header className='big-title' closeButton>
-					{' '}
-					เกิดข้อผิดพลาด ❌
-				</Modal.Header>
-				<Modal.Body className='modal-body-lg'>
-					<div className='row'>
-						<div className='col-12'> {errorMessage}</div>
-					</div>
-				</Modal.Body>
-			</Modal>
-		</div>
+				<Modal show={showError} onHide={CloseHandler} centered>
+					<Modal.Header className='big-title' closeButton>
+						{' '}
+						เกิดข้อผิดพลาด ❌
+					</Modal.Header>
+					<Modal.Body className='modal-body-lg'>
+						<div className='row'>
+							<div className='col-12' style={{whiteSpace:'pre-wrap'}}> {errorMessage}</div>
+						</div>
+					</Modal.Body>
+				</Modal>
+			</div>
+		</>
 	);
 };
 

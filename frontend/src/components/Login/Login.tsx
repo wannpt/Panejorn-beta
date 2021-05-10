@@ -1,13 +1,15 @@
-import { SSL_OP_COOKIE_EXCHANGE } from 'constants';
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import Loading from '../Loading/Loading';
+
 
 const LoginPage = () => {
 	const [input, setInput] = useState<any>();
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const handleClose = () => setShowModal(false);
 	const [message, setMessage] = useState<string>('temp');
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	let history = useHistory();
 	let resp: any;
 
@@ -34,8 +36,8 @@ const LoginPage = () => {
 
 	//Click to login
 	const SubmitHandler = async () => {
-
-		const response = await fetch('/user/login', {
+		setIsLoading(true);
+		fetch('/user/login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -45,22 +47,25 @@ const LoginPage = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
-				resp = result;
-				localStorage.setItem('status', "1");
+				resp = result
 				setMessage(result.message);
+
+				if (result.success) {
+					setIsLoading(false);
+					localStorage.setItem('status', '1');
+					history.push('/profile');
+				}
+		
+				if (result.success === false) {
+					setIsLoading(false);
+					return setShowModal(true);
+				}
 			});
-
-		if (!resp.success) {
-			return setShowModal(true);
-		}
-
-		if (resp.success) {
-			history.push('/profile');
-		}
 	};
 
 	return (
 		<>
+			<Loading isLoading={isLoading} />
 			<div className='default-padding container-fluid'>
 				<div className='row'>
 					<div className='col-12 text-center color-text big-title py-4'> เข้าสู่ระบบ </div>
@@ -110,8 +115,8 @@ const LoginPage = () => {
 					<div className='col-12 text-center my-4'>
 						<a>ลืมรหัสผ่าน?</a>
 					</div>
-					<div className='col-12 text-center'>
-						<a>ยังไม่เป็นสมาชิก?</a>
+					<div className='col-12 text-center' style={{paddingBottom:'32px'}}>
+						<a onClick={() => history.push('/register')}>ยังไม่เป็นสมาชิก?</a>
 					</div>
 				</div>
 

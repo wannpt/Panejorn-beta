@@ -243,3 +243,15 @@ option {
 		rgba(66, 133, 244, 1) 100%
 	);
 }
+
+.loading-screen{
+	height: 100vh;
+	width: 100vw;
+	z-index: 99999;
+	color: #f3bb80;
+	background-color: rgba(0, 0, 0, 0.75);
+	position: fixed;
+	top: 0px;
+	left: 0px;
+
+}
