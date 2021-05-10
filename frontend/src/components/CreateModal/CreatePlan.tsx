@@ -5,27 +5,25 @@ import addLine from '@iconify-icons/ri/add-line';
 import {
 	BudgetOptionsConst,
 	InputConst,
-	PeopleOptionsConst,
+	AdultOptionsConst,
+	ChildrenOptionsConst,
 	ProvinceOptionsConst,
 } from '../../constant/constantVar/CreatePlanOptions';
 import { th } from 'date-fns/locale';
 import { DateRangePicker } from 'react-nice-dates';
 import 'react-nice-dates/build/style.css';
 import { useHistory } from 'react-router';
-
-
+import Loading from '../Loading/Loading';
 
 const CreatePlan = (props: any) => {
 	const [show, setShow] = useState(props.show);
 	const [input, setInput] = useState<any>(InputConst);
-	const [provinceOptions, setProvinceOptions] = useState<string[]>(ProvinceOptionsConst);
-	const [budgetOptions, setBudgetOptions] = useState(BudgetOptionsConst);
-	const [numberOfPeopleOptions, setNumberOfPeopleOptions] = useState(PeopleOptionsConst);
 	const [startDate, setStartDate] = useState<any>();
 	const [endDate, setEndDate] = useState<any>();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const handleOpen = () => setShow(true);
 	const handleClose = () => setShow(false);
-	const history = useHistory()
+	const history = useHistory();
 
 	const onChangeHandler = (e: any) => {
 		const { target } = e;
@@ -34,21 +32,33 @@ const CreatePlan = (props: any) => {
 
 		// Budget
 		if (name === 'budget') {
-			budgetOptions.map((el) => {
+			BudgetOptionsConst.map((el) => {
 				if (value === el.key)
 					return setInput({
 						...input,
 						maxBudget: el.value.max,
 						minBudget: el.value.min,
 					});
+				return true;
 			});
-		} else if (name === 'numberOfAdult' || name === 'numberOfChildren') {
-			numberOfPeopleOptions.map((el) => {
+		} else if (name === 'numberOfAdult') {
+			AdultOptionsConst.map((el) => {
 				if (value === el.key)
 					return setInput({
 						...input,
 						[name]: el.value,
 					});
+				return true;
+			});
+		} else if (name === 'numberOfChildren') {
+			ChildrenOptionsConst.map((el) => {
+				if (value === el.key)
+					return setInput({
+						...input,
+						[name]: el.value,
+					});
+
+				return true;
 			});
 		} else {
 			setInput({
@@ -59,30 +69,59 @@ const CreatePlan = (props: any) => {
 	};
 
 	const DateFormatter = (date: Date) => {
-		let res = date.toLocaleDateString();
-		return res
-	}
+		let tempdate = date.toLocaleDateString();
+		let temp = tempdate.split('/');
+		if (temp[0].length === 1) {
+			temp[0] = '0' + temp[0];
+		}
+		let res = temp[0] + '/' + temp[1] + '/' + temp[2];
+		return res;
+	};
 
 	const SubmitHandler = () => {
+		setShow(false);
+		setIsLoading(true);
 
-		setShow(false)
+		let tempMin = input.minBudget * input.numberOfAdult;
+		let tempMax = input.maxBudget * input.numberOfAdult;
 		const payload = {
 			...input,
+			minBudget: tempMin,
+			maxBudget: tempMax,
 			startDate: DateFormatter(startDate),
 			endDate: DateFormatter(endDate),
 			type: 'auto',
-		}
+			inputTagScores: [0.5, 0.5, 0.5, 0.5, 0.5],
+			distance: 0.5,
+			diversity: 0.5,
+			startTime: 540,
+			endTime: 1020,
+		};
 		console.log('submit value => ', payload);
-		
-	
-		history.push({
-			pathname:'/planSelection',
-			state: payload
+
+		fetch('/planCollection/plans', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			credentials: 'include',
+			body: JSON.stringify(payload),
 		})
+			.then((res) => res.json())
+			.then((result) => {
+				setIsLoading(false);
+				if(result.success){
+					history.push({
+						pathname: '/planSelection',
+						state: result,
+					});
+				}
+			});
 	};
 
 	return (
 		<>
+			<Loading isLoading={isLoading} creating={true} />
 			<Button className='option-button' onClick={handleOpen}>
 				<Icon icon={addLine} width='32' />
 			</Button>
@@ -108,7 +147,7 @@ const CreatePlan = (props: any) => {
 						<Form.Group controlId='place'>
 							<Form.Label>จุดหมายปลายทาง</Form.Label>
 							<Form.Control as='select' onChange={onChangeHandler} name='province' defaultValue={'กรุงเทพมหานคร'}>
-								{provinceOptions.map((el) => {
+								{ProvinceOptionsConst.map((el) => {
 									return <option>{el}</option>;
 								})}
 							</Form.Control>
@@ -121,6 +160,7 @@ const CreatePlan = (props: any) => {
 							onEndDateChange={setEndDate}
 							minimumDate={new Date()}
 							minimumLength={1}
+							maximumLength={2}
 							format='dd MMM yyyy'
 							locale={th}
 						>
@@ -153,7 +193,7 @@ const CreatePlan = (props: any) => {
 						<Form.Group controlId='budget' className='mt-3'>
 							<Form.Label>งบประมาน (ต่อคน)</Form.Label>
 							<Form.Control as='select' name='budget' onChange={onChangeHandler}>
-								{budgetOptions.map((el) => {
+								{BudgetOptionsConst.map((el) => {
 									return <option>{el.key}</option>;
 								})}
 							</Form.Control>
@@ -165,7 +205,7 @@ const CreatePlan = (props: any) => {
 								<Form.Group controlId='numberOfAdult'>
 									<Form.Label>ผู้ใหญ่ (คน)</Form.Label>
 									<Form.Control as='select' name='numberOfAdult' onChange={onChangeHandler}>
-										{numberOfPeopleOptions.map((el) => {
+										{AdultOptionsConst.map((el) => {
 											return <option>{el.key}</option>;
 										})}
 									</Form.Control>
@@ -175,7 +215,7 @@ const CreatePlan = (props: any) => {
 								<Form.Group controlId='numberOfChildren'>
 									<Form.Label>เด็ก (คน)</Form.Label>
 									<Form.Control as='select' name='numberOfChildren' onChange={onChangeHandler}>
-										{numberOfPeopleOptions.map((el) => {
+										{ChildrenOptionsConst.map((el) => {
 											return <option>{el.key}</option>;
 										})}
 									</Form.Control>

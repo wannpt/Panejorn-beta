@@ -17,6 +17,7 @@ const Loading = (props: any) => {
 						className='pb-1 pr-2'
 					/>
 					กรุณารอสักครู่...
+					{props.creating? 'การสร้างแผนอาจใช้เวลาประมาณ 1 นาที' : ''}
 				</div>
 			</>
 		);

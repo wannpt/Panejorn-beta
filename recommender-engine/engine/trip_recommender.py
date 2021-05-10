@@ -253,7 +253,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
             nodes = traveling_saleMan(placeIndex, attractionData, accom)
         
 
-        elif totalTime < 0.7 * endTime:
+        elif totalTime < 0.9 * endTime:
             return 0,0,0,0
             break
 
