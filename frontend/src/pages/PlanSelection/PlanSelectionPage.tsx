@@ -7,7 +7,9 @@ import refreshLine from '@iconify-icons/ri/refresh-line';
 import closeFill from '@iconify-icons/ri/close-fill';
 import Slider from 'react-slick';
 import PlaceCard from '../../components/Card/PlaceCard';
-import { PlaceType } from '../../constant/Types/PlanTypes';
+import { PlaceType, PlanChoices, PlanDetailType, PlanType } from '../../constant/Types/PlanTypes';
+import { Button, Modal } from 'react-bootstrap';
+import Loading from '../../components/Loading/Loading';
 
 const defaultPlace: PlaceType = {
 	placeId: '1',
@@ -21,10 +23,14 @@ const PlanSelectionPage = (props: any) => {
 	const history = useHistory();
 	const payload = location.state;
 
-	const [data, setData] = useState<any>(payload);
+	// const [data, setData] = useState<any>(payload);
+	const [data, setData] = useState<PlanChoices | any>(payload);
 	const [selectIndex, setSelectIndex] = useState<number>(0);
-	const [planDetail, setPlanDetail] = useState<any>();
+	const [planDetail, setPlanDetail] = useState<PlanDetailType[] | any>(data.planDetail.display[0].planDetail);
+	const [planInfo, setPlanInfo] = useState<any>(data.plan.information);
+	const [planDetailInfo, setPlanDetailInfo] = useState<any>(data.planDetail.information[0]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [showModal, setShowModal] = useState<boolean>(false);
 
 	const settings = {
 		dots: false,
@@ -35,22 +41,43 @@ const PlanSelectionPage = (props: any) => {
 		arrows: false,
 	};
 
-	// useEffect(() => {
-	// 	console.log('getting...');
-	// 	fetch('http://localhost:8000/planCollection/plans?planId=1', {
-	// 		method: 'GET',
-	// 	})
-	// 		.then((res) => res.json())
-	// 		.then((result) => {
-	// 			console.log(result);
-	// 			setPlanDetail(result);
-	// 			setIsLoading(false);
-	// 		});
-	// }, []);
+	const ChangeIndexHandler = (index: number) => {
+		setSelectIndex(index);
+		setPlanDetail(data.planDetail.display[index].planDetail);
+		setPlanInfo(data.plan.information);
+		setPlanDetailInfo(data.planDetail.information[index]);
+	};
 
-	console.log(data);
+	const SubmitHandler = () => {
+		setIsLoading(true);
+		setShowModal(false);
+
+		let payload = {
+			plan: planInfo,
+			planDetail: planDetailInfo.planDetail,
+		};
+
+		fetch('/planCollection/plans/selected', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			credentials: 'include',
+			body: JSON.stringify(payload),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setIsLoading(false);
+				if (result.status) {
+					history.push('/plan?planId=' + result.planId);
+				}
+			});
+	};
+
+	// console.log(data);
 	return (
 		<div>
+			<Loading isLoading={isLoading} />
 			<div className='row mx-0'>
 				<div className='selectplan-topbar'>
 					<div className='row align-items-center'>
@@ -77,9 +104,9 @@ const PlanSelectionPage = (props: any) => {
 				<>
 					<div className='row mx-0 justify-content-center text-center'>
 						<div className='col-12 title-container'>
-							<span className='plan-title color-text'> {data.planName} </span>
-							<div className='plan-subtitle'>{data.dateRange}</div>
-							<div className='plan-subtitle'>{data.province}</div>
+							<span className='plan-title color-text'> {data.plan.display.planName} </span>
+							<div className='plan-subtitle'>{data.plan.display.dateRange}</div>
+							<div className='plan-subtitle'>{data.plan.display.province}</div>
 							<div className='col-12'>
 								<div className='row big-title pt-4'>
 									<div className='col d-flex justify-content-center'>
@@ -95,33 +122,77 @@ const PlanSelectionPage = (props: any) => {
 							</div>
 						</div>
 					</div>
-					<Slider {...settings} afterChange={(index) => setSelectIndex(index)}>
-						<div className='px-2'>
-							<div className='my-2'>
-								<PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
-							</div>
-							<div className='my-2'>
-								<PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
-							</div>
-							<div className='my-2'>
-								<PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
-							</div>
-							<div className='my-2'>
-								<PlaceCard type={'ATTRACTION'} data={defaultPlace} province={data.province} />
-							</div>
-						</div>
-						<div>
-							<h1>2</h1>
-						</div>
-						<div>
-							<h1>3</h1>
-						</div>
+					<Slider {...settings} afterChange={(index) => ChangeIndexHandler(index)}>
+						{data.planDetail.display.map(() => {
+							return (
+								<div className='px-2 mb-4'>
+									{planDetail.map((el: any) => {
+										return (
+											<div className='row pt-2'>
+												<div className='col-12 d-flex align-items-end mb-2'>
+													<span className='date-index mr-2'>วันที่ {el.day}</span>
+													<span className='date-title'> {el.date} </span>
+												</div>
+
+												{/* PlaceCard Mapping */}
+												{el.detail.map((place: any) => {
+													return (
+														<div className='col-12'>
+															<PlaceCard type={place.placeType} data={place} province={data.plan.display.province} />
+														</div>
+													);
+												})}
+												<hr
+													style={{
+														color: '#F5F2F2',
+														backgroundColor: '#F5F2F2',
+														height: 0.5,
+														borderColor: '#F5F2F2',
+														width: '90%',
+													}}
+												/>
+											</div>
+										);
+									})}
+								</div>
+							);
+						})}
 					</Slider>
 					<div className='container-fluid px-2 '>
-						<button className='submit-btn select-this-plan-btn gradient-background text-white'>เลือกแผนนี้</button>
+						<Button
+							className='submit-btn select-this-plan-btn gradient-background text-white'
+							onClick={() => {
+								setShowModal(true);
+							}}
+						>
+							เลือกแผนนี้
+						</Button>
 					</div>
 				</>
 			)}
+
+			<Modal show={showModal} onHide={() => setShowModal(false)} centered>
+				{/* <Modal.Header /> */}
+				<Modal.Body className='modal-body-lg'>
+					<div className='row text-center'>
+						<div className='col-12 big-title mb-4'>ยืนยันแผนเที่ยว</div>
+						<div className='col-12'>
+							<div className='row justify-content-center'>
+								<div className='col-6 pr-1'>
+									<Button className='gradient-background submit-btn' onClick={SubmitHandler}>
+										ยืนยัน
+									</Button>
+								</div>
+								<div className='col-6 pl-1'>
+									<Button className='color-text submit-btn' onClick={() => setShowModal(false)}>
+										ยกเลิก
+									</Button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</Modal.Body>
+			</Modal>
 		</div>
 	);
 };

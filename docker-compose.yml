@@ -11,7 +11,7 @@ services:
       - '/opt/app/node_modules'
       - './frontend:/opt/app'
     ports:
-      - '8080:8080'
+      - '80:80'
 
   be-container:
     tty: true
