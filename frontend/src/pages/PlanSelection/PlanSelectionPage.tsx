@@ -18,6 +18,47 @@ const defaultPlace: PlaceType = {
 	timeRange: '10.00-12.00',
 };
 
+type planDetail = {
+	day: number,
+	detail: {
+		Id: number,
+        planId: number,
+        placeId: string,
+        placeName: string,
+        day: number,
+        startTime: number,
+        endTime: number,
+        status: number,
+        tag1: number,
+        tag2: number,
+        tag3: number,
+        tag4: number,
+        tag5: number,
+        creationTime: number,
+        deletionTime: number,
+        updatedTime: number
+	}[]
+}
+
+type planDetailNeeded = {
+		Id: number,
+        planId: number,
+        placeId: string,
+        placeName: string,
+        day: number,
+        startTime: number,
+        endTime: number,
+        status: number,
+        tag1: number,
+        tag2: number,
+        tag3: number,
+        tag4: number,
+        tag5: number,
+        creationTime: number,
+        deletionTime: number,
+        updatedTime: number
+}[]
+
 const PlanSelectionPage = (props: any) => {
 	const location = useLocation();
 	const history = useHistory();
@@ -52,10 +93,21 @@ const PlanSelectionPage = (props: any) => {
 		setIsLoading(true);
 		setShowModal(false);
 
+		let planDetailInfoTemp: any[] = [];
+
+		// Convert planDetail format to BE
+		planDetailInfo.planDetail.map((el: planDetail)=>{
+			el.detail.map((dayDetail)=>{
+				planDetailInfoTemp.push(dayDetail);
+			})
+		})
+
 		let payload = {
 			plan: planInfo,
-			planDetail: planDetailInfo.planDetail,
+			planDetail: planDetailInfoTemp,
 		};
+
+		// console.log(payload)
 
 		fetch('/planCollection/plans/selected', {
 			method: 'POST',
