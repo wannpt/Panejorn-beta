@@ -32,16 +32,16 @@ const RegisterPage = () => {
 	const [showError, setShowError] = useState<boolean>(false);
 	const [confirm, setConfirm] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-
+	const [day, setDay] = useState<String>();
+	const [month, setMonth] = useState<String>('01');
+	const [year, setYear] = useState<String | number>();
 	const CloseHandler = () => {
 		setConfirm(false);
 		setShowError(false);
 		setErrorMessage('');
 	};
 	const history = useHistory();
-	let day = '';
-	let month = '01';
-	let year: number | string = '';
+	// let day = '';
 
 	const ConfirmHandler = (event: any) => {
 		const form = event.currentTarget;
@@ -59,17 +59,9 @@ const RegisterPage = () => {
 	const OnChangeHandler = (e: any) => {
 		const { target } = e;
 		const { name } = target;
-		let temp, year;
 		let value = target.value;
 
-		if (name === 'dob') {
-			temp = value.split('/');
-			year = Number(temp[2]) - 543;
-			value = temp[0] + '/' + temp[1] + '/' + String(year);
-			setInput({ ...input, [name]: value });
-		} else {
-			setInput({ ...input, [name]: value });
-		}
+		setInput({ ...input, [name]: value });
 	};
 
 	const PasswordHandler = (password: string) => {
@@ -92,7 +84,6 @@ const RegisterPage = () => {
 			}
 			i++;
 		}
-		console.log('password is : ' + password + ' || ' + isNum + ' || ' + isUpper + ' || ' + isLower + ' || ' + password.length)
 		if (isNum && isUpper && isLower && password.length >= 8 && password.length <= 32) return true;
 		else {
 			if (!confirmPasswordStatus) {
@@ -123,26 +114,31 @@ const RegisterPage = () => {
 	};
 
 	const DateHandler = (type: string, el: any) => {
+		let temp;
 		if (type === 'day') {
 			let { target } = el;
 			let value = target.value;
-			day = value;
-			if (day.length < 2) {
-				day = '0' + day;
+			let temp = value;
+			if (temp.length < 2) {
+				setDay('0' + temp);
 			}
+			else
+				setDay(temp)
 		}
-		if (type === 'month') month = el.value;
+		if (type === 'month') setMonth(el.value);
 		if (type === 'year') {
 			let { target } = el;
 			let value = target.value;
-			year = Number(value) - 543;
+			temp = Number(value) - 543;
+			setYear(temp)
 		}
-
-		if (day !== '' && month !== '' && year !== '')
-			setInput({ ...input, ['dob']: day + '/' + month + '/' + String(year) });
 	};
 
 	const SubmitHandler = () => {
+		let payload = {
+			...input,
+			['dob'] : month + '/' + day + '/' + year
+		}
 		if (valid && PasswordHandler(input.password)) {
 			setIsLoading(true);
 			const response = fetch('/user/registration', {
@@ -150,7 +146,7 @@ const RegisterPage = () => {
 				headers: {
 					'Content-type': 'application/json',
 				},
-				body: JSON.stringify(input),
+				body: JSON.stringify(payload),
 			})
 				.then((res) => res.json())
 				.then((result) => {
@@ -318,7 +314,10 @@ const RegisterPage = () => {
 					</Modal.Header>
 					<Modal.Body className='modal-body-lg'>
 						<div className='row'>
-							<div className='col-12' style={{whiteSpace:'pre-wrap'}}> {errorMessage}</div>
+							<div className='col-12' style={{ whiteSpace: 'pre-wrap' }}>
+								{' '}
+								{errorMessage}
+							</div>
 						</div>
 					</Modal.Body>
 				</Modal>

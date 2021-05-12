@@ -21,6 +21,8 @@ const CreatePlan = (props: any) => {
 	const [startDate, setStartDate] = useState<any>();
 	const [endDate, setEndDate] = useState<any>();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [errorMessage, setErrorMessage] = useState<String>();
+	const [showError, setShowError] = useState<boolean>(false);
 	const handleOpen = () => setShow(true);
 	const handleClose = () => setShow(false);
 	const history = useHistory();
@@ -29,6 +31,18 @@ const CreatePlan = (props: any) => {
 		const { target } = e;
 		const { name } = target;
 		const value = target.value;
+
+		if (!startDate) {
+			let today = new Date();
+			setStartDate(today);
+		}
+
+		if (!endDate) {
+			let today = new Date();
+			let tomorrow = new Date(today);
+			tomorrow.setDate(tomorrow.getDate() + 1);
+			setEndDate(tomorrow);
+		}
 
 		// Budget
 		if (name === 'budget') {
@@ -69,7 +83,7 @@ const CreatePlan = (props: any) => {
 	};
 
 	const DateFormatter = (date: Date) => {
-		let tempdate = date.toLocaleDateString();
+		let tempdate = date.toLocaleDateString('en-US');
 		let temp = tempdate.split('/');
 		if (temp[0].length === 1) {
 			temp[0] = '0' + temp[0];
@@ -84,7 +98,7 @@ const CreatePlan = (props: any) => {
 
 		let tempMin = input.minBudget * input.numberOfAdult;
 		let tempMax = input.maxBudget * input.numberOfAdult;
-		const payload = {
+		let payload = {
 			...input,
 			minBudget: tempMin,
 			maxBudget: tempMax,
@@ -97,7 +111,6 @@ const CreatePlan = (props: any) => {
 			startTime: 540,
 			endTime: 1020,
 		};
-		console.log('submit value => ', payload);
 
 		fetch('/planCollection/plans', {
 			method: 'POST',
@@ -110,11 +123,15 @@ const CreatePlan = (props: any) => {
 			.then((res) => res.json())
 			.then((result) => {
 				setIsLoading(false);
-				if(result.success){
+				if (result.success) {
 					history.push({
 						pathname: '/planSelection',
 						state: result,
 					});
+				} else {
+					setErrorMessage(result.message);
+					setShowError(true);
+					setIsLoading(false);
 				}
 			});
 	};
@@ -159,7 +176,7 @@ const CreatePlan = (props: any) => {
 							onStartDateChange={setStartDate}
 							onEndDateChange={setEndDate}
 							minimumDate={new Date()}
-							minimumLength={1}
+							minimumLength={0}
 							maximumLength={2}
 							format='dd MMM yyyy'
 							locale={th}
@@ -228,6 +245,20 @@ const CreatePlan = (props: any) => {
 							สร้างแผนอัตโนมัติ
 						</Button>
 					</Form>
+				</Modal.Body>
+			</Modal>
+			<Modal show={showError} onHide={() => setShowError(false)} centered>
+				<Modal.Header className='big-title' closeButton>
+					{' '}
+					เกิดข้อผิดพลาด ❌
+				</Modal.Header>
+				<Modal.Body className='modal-body-lg'>
+					<div className='row'>
+						<div className='col-12' style={{ whiteSpace: 'pre-wrap' }}>
+							{' '}
+							{errorMessage}
+						</div>
+					</div>
 				</Modal.Body>
 			</Modal>
 		</>
