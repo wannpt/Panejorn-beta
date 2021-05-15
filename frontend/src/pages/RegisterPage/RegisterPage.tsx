@@ -206,6 +206,9 @@ const RegisterPage = () => {
 							className='input-textbox'
 							onChange={OnChangeHandler}
 						/>
+						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
+							ตัวอย่าง: testuser@panejorn.com
+						</Form.Text>
 					</Form.Group>
 					<Form.Group controlId='password'>
 						<Form.Label>
@@ -297,7 +300,7 @@ const RegisterPage = () => {
 										</Button>
 									</div>
 									<div className='col-6 pl-1'>
-										<Button className='color-text submit-btn' onClick={CloseHandler}>
+										<Button style={{color:'black'}} className='submit-btn' onClick={CloseHandler}>
 											ตรวจสอบอีกครั้ง
 										</Button>
 									</div>

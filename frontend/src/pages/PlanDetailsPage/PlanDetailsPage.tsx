@@ -54,39 +54,15 @@ export const PlanDetailsPage = (props: any) => {
 	if (isLoading) {
 		return (
 			<ContentLoader
-				width={376}
-				height={667}
-				viewBox='0 0 350 1000'
-				backgroundColor='#f5f5f5'
-				foregroundColor='#dbdbdb'
-			>
-				<rect x='4' y='258' rx='3' ry='3' width='8' height='570' />
-				<rect x='5' y='823' rx='3' ry='3' width='331' height='7' />
-				<rect x='329' y='259' rx='3' ry='3' width='8' height='570' />
-				<rect x='102' y='319' rx='3' ry='3' width='102' height='7' />
-				<rect x='92' y='297' rx='3' ry='3' width='178' height='6' />
-				<circle cx='48' cy='313' r='18' />
-				<rect x='95' y='445' rx='3' ry='3' width='178' height='6' />
-				<rect x='105' y='419' rx='3' ry='3' width='102' height='7' />
-				<rect x='95' y='397' rx='3' ry='3' width='178' height='6' />
-				<circle cx='51' cy='413' r='18' />
-				<rect x='98' y='445' rx='3' ry='3' width='178' height='6' />
-				<rect x='107' y='515' rx='3' ry='3' width='102' height='7' />
-				<rect x='97' y='493' rx='3' ry='3' width='178' height='6' />
-				<circle cx='53' cy='509' r='18' />
-				<rect x='100' y='541' rx='3' ry='3' width='178' height='6' />
-				<rect x='108' y='615' rx='3' ry='3' width='102' height='7' />
-				<rect x='98' y='593' rx='3' ry='3' width='178' height='6' />
-				<circle cx='54' cy='609' r='18' />
-				<rect x='101' y='641' rx='3' ry='3' width='178' height='6' />
-				<rect x='110' y='708' rx='3' ry='3' width='102' height='7' />
-				<rect x='100' y='686' rx='3' ry='3' width='178' height='6' />
-				<circle cx='56' cy='702' r='18' />
-				<rect x='103' y='734' rx='3' ry='3' width='178' height='6' />
-				<rect x='114' y='757' rx='3' ry='3' width='102' height='7' />
-				<rect x='103' y='784' rx='3' ry='3' width='178' height='6' />
-				<rect x='5' y='258' rx='3' ry='3' width='331' height='7' />
-			</ContentLoader>
+			viewBox="0 0 400 160"
+			height={'100vh'}
+			width={'100vw'}
+			backgroundColor="transparent"
+		  >
+			<circle cx="150" cy="86" r="8" />
+			<circle cx="194" cy="86" r="8" />
+			<circle cx="238" cy="86" r="8" />
+		  </ContentLoader>
 		);
 	} else {
 		return (
@@ -101,7 +77,7 @@ export const PlanDetailsPage = (props: any) => {
 								<div className='plan-subtitle'>{planDetail.province}</div>
 
 								{/* slider ที่ยังไม่มี */}
-								<div className='slider-container'></div>
+								{/* <div className='slider-container'></div> */}
 							</div>
 						</div>
 

@@ -6,9 +6,6 @@ import { TopbarType } from '../../constant/Types/TopbarOptionsTypes';
 import CreatePlan from '../CreateModal/CreatePlan';
 import './Topbar.scss';
 
-import { Icon } from '@iconify/react';
-import { Button } from 'react-bootstrap';
-
 const topbarConstant: TopbarType[] = [
 	{ title: 'หน้าแรก', path: '/', canReturn: false, isEdit: false, isHidden: true },
 	{
@@ -19,20 +16,18 @@ const topbarConstant: TopbarType[] = [
 		isHidden: false,
 		options: [<CreatePlan />],
 	},
-	{ title: 'สำรวจ', path: '/explore', canReturn: false, isEdit: false, isHidden: false },
-	{ title: 'ตั้งค่า', path: '/setting', canReturn: false, isEdit: false, isHidden: false },
-	{ title: 'รายละเอียดสถานที่', path: '/place', canReturn: true, isEdit: false, isHidden: true },
-	{ title: 'แผนเที่ยว', path: '/plan', canReturn: true, isEdit: false, isHidden: false },
-	{ title: 'เลือกแผนเที่ยว', path: '/planSelection', canReturn: true, isEdit: true, isHidden: true },
-	{ title: 'ย้อนกลับ', path: '/register', canReturn: true, isEdit:false, isHidden: false},
-	{ title: 'ย้อนกลับ', path: '/register/tagscore', canReturn: true, isEdit:false, isHidden: false},
-	{ title: 'โปรไฟล์', path: '/profile', canReturn: false, isEdit: false, isHidden: false, options: [<CreatePlan />] },
+	{ title: 'สำรวจ', path: '/explore', canReturn: false, isEdit: false, isHidden: false, options:[<div style={{width:32, height:46}} />] },
+	{ title: 'ตั้งค่า', path: '/setting', canReturn: false, isEdit: false, isHidden: false, options:[<div style={{width:32, height:46}} />] },
+	{ title: 'รายละเอียดสถานที่', path: '/place', canReturn: true, isEdit: false, isHidden: true, options:[<div style={{width:32, height:46}} />] },
+	{ title: 'แผนเที่ยว', path: '/plan', canReturn: true, isEdit: false, isHidden: false, options:[<div style={{width:32, height:46}} />] },
+	{ title: 'เลือกแผนเที่ยว', path: '/planSelection', canReturn: true, isEdit: true, isHidden: true, options:[<div style={{width:32, height:46}} />] },
+	{ title: 'ย้อนกลับ', path: '/register', canReturn: true, isEdit:false, isHidden: false, options:[<div style={{width:32, height:46}} />]},
+	{ title: 'ย้อนกลับ', path: '/register/tagscore', canReturn: true, isEdit:false, isHidden: false, options:[<div style={{width:32, height:46}} />]},
+	{ title: 'โปรไฟล์', path: '/profile', canReturn: false, isEdit: false, isHidden: false, options:[<div style={{width:32, height:46}} />]},
 ];
 
 function Topbar() {
 	let [topBar, setTopbar] = useState<TopbarType>(topbarConstant[0]);
-	let [showModal, setShowModal] = useState('optionname');
-	let selectedModal: any;
 	const location = useLocation();
 
 	useEffect(() => {
@@ -65,7 +60,9 @@ function Topbar() {
 				</div>
 				<div className='col text-right d-flex justify-content-end'>
 					{topBar.options?.map((el) => {
-						return el;
+						if(localStorage.status)
+							return el;
+						else return <div style={{width:32, height:46}} />;
 					})}
 				</div>
 			</div>
