@@ -43,7 +43,7 @@ function PlansCollectionPage() {
 			<circle cx="150" cy="86" r="8" />
 			<circle cx="194" cy="86" r="8" />
 			<circle cx="238" cy="86" r="8" />
-		  </ContentLoader>
+		  </ContentLoader>	
 		);
 	}
 
@@ -52,7 +52,7 @@ function PlansCollectionPage() {
 			return (
 				<>
 					{!isLoading && (
-						<div className='default-padding mb-4 pb-4 full-heigth'>
+						<div className='default-padding mb-4 pb-4 full-height'>
 							<p className='big-title mb-2'>ที่ปักหมุดไว้ ({cardList.pinnedPlans.length})</p>
 							{cardList.pinnedPlans.map((el) => {
 								return <Card data={el} isPinned={true} isStatus={false} />;
