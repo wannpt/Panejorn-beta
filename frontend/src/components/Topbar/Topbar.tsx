@@ -28,8 +28,6 @@ const topbarConstant: TopbarType[] = [
 
 function Topbar() {
 	let [topBar, setTopbar] = useState<TopbarType>(topbarConstant[0]);
-	let [showModal, setShowModal] = useState('optionname');
-	let selectedModal: any;
 	const location = useLocation();
 
 	useEffect(() => {
@@ -62,7 +60,7 @@ function Topbar() {
 				</div>
 				<div className='col text-right d-flex justify-content-end'>
 					{topBar.options?.map((el) => {
-						if(localStorage.userid)
+						if(localStorage.status)
 							return el;
 						else return null;
 					})}
