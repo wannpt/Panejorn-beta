@@ -121,6 +121,7 @@ const PlanSelectionPage = (props: any) => {
 			.then((result) => {
 				setIsLoading(false);
 				if (result.status) {
+					history.push('collections');
 					history.push('/plan?planId=' + result.planId);
 				}
 			});
