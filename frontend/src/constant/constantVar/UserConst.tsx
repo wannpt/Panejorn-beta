@@ -10,8 +10,11 @@ export const UserConst = {
 export const UserStatsConst = {
     datasets: [
 		{
+            label: 'ความสนใจ',
 			data: [0.2, 0.2, 0.2, 0.2, 0.2],
-            backgroundColor: ['#E8B6A3', '#00F0CC', '#FF5C4A', '#6F35E0', '#00A7FF']
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
 		}
 	],
 	labels: ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'],

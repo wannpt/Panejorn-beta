@@ -10,8 +10,11 @@ export type User = {
 
 export type UserStats = {
 	datasets: {
+		label: string,
 		data: number[],
-		backgroundColor: string[],
+		backgroundColor: String,
+		borderColor: string,
+		borderWidth: number
 	}[];
 	labels: string[];
 };

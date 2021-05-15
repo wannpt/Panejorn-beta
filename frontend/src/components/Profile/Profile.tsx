@@ -4,10 +4,9 @@ import { useHistory } from 'react-router';
 import './Profile.scss';
 import { User, UserStats } from '../../constant/Types/UserTypes';
 import { UserConst, UserStatsConst } from '../../constant/constantVar/UserConst';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Radar } from 'react-chartjs-2';
 // import ContentLoader from 'react-content-loader/dist/web/ContentLoader';
 import ContentLoader from 'react-content-loader';
-
 
 const Profile = () => {
 	const history = useHistory();
@@ -34,8 +33,11 @@ const Profile = () => {
 				setChartData({
 					datasets: [
 						{
+							label: 'ความสนใจ',
 							data: [result.tag1, result.tag2, result.tag3, result.tag4, result.tag5],
-							backgroundColor: ['#E8B6A3', '#00F0CC', '#FF5C4A', '#6F35E0', '#00A7FF'],
+							backgroundColor: 'rgba(255, 99, 132, 0.2)',
+							borderColor: 'rgba(255, 99, 132, 1)',
+							borderWidth: 1,
 						},
 					],
 					labels: ['ธรรมชาติ', 'วัฒนธรรม', 'นันทนาการ', 'ศิลปะวิทยาการ', 'ประวัติศาตร์'],
@@ -54,21 +56,10 @@ const Profile = () => {
 	};
 	if (isLoading) {
 		return (
-			<ContentLoader
-				speed={1}
-				width={300}
-				height={667}
-				viewBox='0 0 400 170'
-				backgroundColor='#f3bb80'
-				foregroundColor='#eb8778'
-			>
-				<circle cx='248' cy='59' r='49' />
-				<circle cx='263' cy='66' r='8' />
-				<rect x='175' y='120' rx='0' ry='0' width='156' height='8' />
-				<rect x='204' y='137' rx='0' ry='0' width='100' height='8' />
-				<rect x='248' y='128' rx='0' ry='0' width='0' height='1' />
-				<rect x='247' y='126' rx='0' ry='0' width='1' height='8' />
-				<rect x='252' y='166' rx='0' ry='0' width='1' height='0' />
+			<ContentLoader viewBox='0 0 400 160' height={'100vh'} width={'100vw'} backgroundColor='transparent'>
+				<circle cx='150' cy='86' r='8' />
+				<circle cx='194' cy='86' r='8' />
+				<circle cx='238' cy='86' r='8' />
 			</ContentLoader>
 		);
 	}
@@ -96,14 +87,18 @@ const Profile = () => {
 							<span className='small-title'>ประเภทความสนใจ</span>
 						</div>
 						<div className='col-12'>
-							<Doughnut data={chartData} height={175} />
+							<Radar data={chartData} height={175} />
 						</div>
-						<div className='col-12 py-4'>
+						{/* <div className='col-12 py-4'>
 							<Button className='black-text submit-btn'> สรุปการเดินทาง </Button>
-						</div>
+						</div> */}
 					</div>
 
-					<Button className='gradient-background submit-btn btn' style={{ marginBottom: 60 }} onClick={LogOutHandler}>
+					<Button
+						className='gradient-background submit-btn btn mt-4'
+						style={{ marginBottom: 60 }}
+						onClick={LogOutHandler}
+					>
 						ลงชื่อออก
 					</Button>
 				</div>
