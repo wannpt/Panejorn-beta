@@ -297,7 +297,7 @@ const RegisterPage = () => {
 										</Button>
 									</div>
 									<div className='col-6 pl-1'>
-										<Button className='color-text submit-btn' onClick={CloseHandler}>
+										<Button style={{color:'black'}} className='submit-btn' onClick={CloseHandler}>
 											ตรวจสอบอีกครั้ง
 										</Button>
 									</div>

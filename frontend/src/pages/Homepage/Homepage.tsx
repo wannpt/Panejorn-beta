@@ -5,7 +5,6 @@ import Logo from '../../Images/Group 23.svg';
 import { StatusCard } from '../../constant/Types/CardTypes';
 import Loading from '../../components/Loading/Loading';
 
-
 const cardDefault: StatusCard = {
 	planName: 'เที่ยวหนึ่งวันกับคนอย่างเธอ',
 	dateRange: '18 ม.ค. 64',
@@ -17,12 +16,11 @@ const cardDefault: StatusCard = {
 };
 
 function Homepage() {
-
 	return (
 		<div>
 			{/* <Loading/> */}
+			<img src={Logo} className=' px-3 app-logo' alt='app logo' />
 			<div className='gradient-background default-padding'>
-				<img src={Logo} className='app-logo' alt='app logo' />
 				<div className='pb-4'>
 					<p className='small-title white-text mb-2'>แผนเที่ยวปัจจุบัน</p>
 					<Card data={cardDefault} isPinned={false} isStatus={true} />
