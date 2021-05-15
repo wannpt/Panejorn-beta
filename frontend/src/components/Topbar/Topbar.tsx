@@ -6,9 +6,6 @@ import { TopbarType } from '../../constant/Types/TopbarOptionsTypes';
 import CreatePlan from '../CreateModal/CreatePlan';
 import './Topbar.scss';
 
-import { Icon } from '@iconify/react';
-import { Button } from 'react-bootstrap';
-
 const topbarConstant: TopbarType[] = [
 	{ title: 'หน้าแรก', path: '/', canReturn: false, isEdit: false, isHidden: true },
 	{
@@ -26,7 +23,7 @@ const topbarConstant: TopbarType[] = [
 	{ title: 'เลือกแผนเที่ยว', path: '/planSelection', canReturn: true, isEdit: true, isHidden: true },
 	{ title: 'ย้อนกลับ', path: '/register', canReturn: true, isEdit:false, isHidden: false},
 	{ title: 'ย้อนกลับ', path: '/register/tagscore', canReturn: true, isEdit:false, isHidden: false},
-	{ title: 'โปรไฟล์', path: '/profile', canReturn: false, isEdit: false, isHidden: false, options: [<CreatePlan />] },
+	{ title: 'โปรไฟล์', path: '/profile', canReturn: false, isEdit: false, isHidden: false},
 ];
 
 function Topbar() {
@@ -65,7 +62,9 @@ function Topbar() {
 				</div>
 				<div className='col text-right d-flex justify-content-end'>
 					{topBar.options?.map((el) => {
-						return el;
+						if(localStorage.userid)
+							return el;
+						else return null;
 					})}
 				</div>
 			</div>

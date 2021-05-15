@@ -3,7 +3,6 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 
-
 const LoginPage = () => {
 	const [input, setInput] = useState<any>();
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -12,19 +11,6 @@ const LoginPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	let history = useHistory();
 	let resp: any;
-
-	useEffect(() => {
-		const script = document.createElement('script');
-
-		script.src = 'https://apis.google.com/js/platform.js';
-		script.async = true;
-
-		document.body.appendChild(script);
-
-		return () => {
-			document.body.removeChild(script);
-		};
-	}, []);
 
 	const onChangeHandler = (e: any) => {
 		const { target } = e;
@@ -47,7 +33,7 @@ const LoginPage = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
-				resp = result
+				resp = result;
 				setMessage(result.message);
 
 				if (result.success) {
@@ -55,7 +41,7 @@ const LoginPage = () => {
 					localStorage.setItem('status', '1');
 					history.push('/profile');
 				}
-		
+
 				if (result.success === false) {
 					setIsLoading(false);
 					return setShowModal(true);
@@ -66,7 +52,7 @@ const LoginPage = () => {
 	return (
 		<>
 			<Loading isLoading={isLoading} />
-			<div className='default-padding container-fluid'>
+			<div className='default-padding container-fluid full-height'>
 				<div className='row'>
 					<div className='col-12 text-center color-text big-title py-4'> เข้าสู่ระบบ </div>
 				</div>
@@ -76,6 +62,7 @@ const LoginPage = () => {
 							{/* Email */}
 
 							<Form.Control
+								required
 								name='email'
 								type='email'
 								placeholder='ชื่อผู้ใช้'
@@ -85,6 +72,7 @@ const LoginPage = () => {
 
 							{/* Password */}
 							<Form.Control
+								required
 								name='password'
 								type='password'
 								placeholder='รหัสผ่าน'
@@ -97,26 +85,10 @@ const LoginPage = () => {
 						</Button>
 					</div>
 				</div>
-				<div className='row'>
-					<div className='col-12 text-center'>
-						<span> หรือ </span>
-						<div className='g-signin2' data-onsuccess='onSignIn'></div>
-						<Button className='gradient-background submit-btn btn my-2' onClick={SubmitHandler}>
-							Google
-						</Button>
-					</div>
-					<div className='col-12'>
-						<Button className='gradient-background submit-btn btn mb-2' onClick={SubmitHandler}>
-							Facebook
-						</Button>
-					</div>
-				</div>
-				<div className='row'>
-					<div className='col-12 text-center my-4'>
-						<a>ลืมรหัสผ่าน?</a>
-					</div>
-					<div className='col-12 text-center' style={{paddingBottom:'32px'}}>
-						<a onClick={() => history.push('/register')}>ยังไม่เป็นสมาชิก?</a>
+
+				<div className='row pt-4'>
+					<div className='col-12 text-center' style={{ paddingBottom: '32px' }}>
+						<Button onClick={() => history.push('/register')} style={{textDecoration:'underline', color:'black'}} >สมัครสมาชิก</Button>
 					</div>
 				</div>
 
