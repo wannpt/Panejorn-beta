@@ -64,7 +64,7 @@ const LoginPage = () => {
 			<Loading isLoading={isLoading} />
 			<div className='default-padding container-fluid full-height'>
 				<div className='row'>
-					<div className='col-12 text-center color-text big-title py-4'> เข้าสู่ระบบ </div>
+					<div className='col-12 text-center color-text py-4' style={{fontSize:'2em', fontWeight:600}}> เข้าสู่ระบบ </div>
 				</div>
 				<div className='row'>
 					<div className='col-12'>

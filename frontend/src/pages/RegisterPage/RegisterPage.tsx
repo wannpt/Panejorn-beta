@@ -206,6 +206,9 @@ const RegisterPage = () => {
 							className='input-textbox'
 							onChange={OnChangeHandler}
 						/>
+						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
+							ตัวอย่าง: testuser@panejorn.com
+						</Form.Text>
 					</Form.Group>
 					<Form.Group controlId='password'>
 						<Form.Label>
