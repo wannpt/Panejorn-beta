@@ -8,8 +8,8 @@ type Accommodation struct {
 	Introduction        NullString `json:"introduction"`
 	Detail              NullString `json:"detail"`
 	HotelStar           NullString `json:"hotelStar"`
-	DisplayCheckinTime  NullString `json:"checkinTime"`
-	DisplayCheckoutTime NullString `json:"checkoutTime"`
+	DisplayCheckinTime  NullInt64 `json:"checkinTime"`
+	DisplayCheckoutTime NullInt64 `json:"checkoutTime"`
 	NumberOfRooms       NullString `json:"numberOfRooms"`
 	PriceRange          NullString `json:"priceRange"`
 	AddressDetail       NullString `json:"addressDetail"`
@@ -17,10 +17,10 @@ type Accommodation struct {
 	District            string     `json:"district"`
 	Province            string     `json:"province"`
 	Postcode            string     `json:"postcode"`
-	TelPhones           NullString `json:telPhones`
+	TelPhones           NullString `json:"telPhones"`
 	MobilePhones        NullString `json:"mobilePhones"`
 	FaxNumber           NullString `json:"faxNumber"`
-	Emails              NullString `json:emails`
+	Emails              NullString `json:"emails"`
 	Urls                NullString `json:"urls"`
 	ThumbnailUrl        string     `json:"thumbnalUrl"`
 	Standard            NullString `json:"standard"`

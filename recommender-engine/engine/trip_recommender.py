@@ -160,8 +160,8 @@ def crossOver(result):
     return np.array(new_weights)
 
 def mutate(result, data):
-    for x in range(15):
-        plan = random.randint(0, int(len(result) * 0.6))
+    for x in range(24):
+        plan = random.randint(0, int(len(result) * 0.50))
     for y in range(1):
         value = np.random.randint(low = 0, high = len(data))
         location = random.randint(0, len(result[x]))
@@ -248,12 +248,11 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
 
         if totalTime > 690:
             totalTime += 90 #eat lunch
-        if totalTime > endTime or totalCost > max_budget:
+        if totalTime > (endTime*1.05) or totalCost > max_budget:
             placeIndex = placeIndex[0:len(placeIndex) - 1]
             nodes = traveling_saleMan(placeIndex, attractionData, accom)
-        
 
-        elif totalTime < int(0.85 * endTime):
+        elif totalTime < (0.85 * endTime):
             return 0,0,0,0
             break
 
@@ -289,7 +288,7 @@ def check_planConditions(placeIndex, nodes, startTime, endTime, adult, child, ma
             if totalTime > 690:
                 for s_Time in range(len(place_startTime)):  
                     if s_Time > 0 and s_Time <= len(place_startTime) - 2:
-                        if place_endTime[s_Time - 1] >= 690 and place_endTime[s_Time - 1] <= 870 and foundRes == 0:
+                        if place_endTime[s_Time - 1] >= 660 and place_endTime[s_Time - 1] <= 840 and foundRes == 0:
                             place_startTime.insert(s_Time + 1, 9999)
                             place_endTime.insert(s_Time, 9999)
                             place_startTime[s_Time + 1] = place_endTime[s_Time - 1] + 30
@@ -458,7 +457,7 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     result = result * len(attractionData)
     result = result.astype(int)
     result = getUnique_index(result, attractionData)
-    end_generations = 9
+    end_generations = 4
     accom_data = accommodations.query('province == @province')
     accom_data = accom_data.reset_index(drop=True)
     accomIndex = accom_data.sample().index[0]
@@ -480,21 +479,19 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
             bestGen0 = pair_NN[0][0]
 
         result = removeFitness(pair_NN)
-
         if generations == end_generations - 1:
             break
         result = crossOver(result)
         result = mutate(result, attractionData)
         result = getUnique_index(result, attractionData)
         results_list.append(result)
-
     planDaily = []
     startTime_Daily = []
     endTime_Daily = []
     for day in range(days):
         planStatus = 0
         while planStatus == 0:
-            placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.35 * len(result))][0]
+            placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.50 * len(result))][0]
             plan = 0
             while plan != len(planDaily):
                 sameIndex = 1
@@ -505,7 +502,7 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
                             plan += 1
                         elif sameIndex == 1:
                             plan = 0
-                            placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.35 * len(result))][0]
+                            placeIndex = results_list[np.random.randint(end_generations - 1)][np.random.randint(0.50 * len(result))][0]
             
             placeIndex = np.insert(placeIndex,0, accomIndex)
             nodes = traveling_saleMan(placeIndex, attractionData, accom_data)
