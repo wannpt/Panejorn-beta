@@ -35,13 +35,16 @@ const RegisterPage = () => {
 	const [day, setDay] = useState<String>();
 	const [month, setMonth] = useState<String>('01');
 	const [year, setYear] = useState<String | number>();
+	const [passwordError, setPasswordError] = useState<String>('');
 	const CloseHandler = () => {
 		setConfirm(false);
 		setShowError(false);
 		setErrorMessage('');
 	};
+
 	const history = useHistory();
-	// let day = '';
+
+	
 
 	const ConfirmHandler = (event: any) => {
 		const form = event.currentTarget;
@@ -68,13 +71,16 @@ const RegisterPage = () => {
 		let isNum = false;
 		let isUpper = false;
 		let isLower = false;
+
 		let i = 0;
 
 		while (i < password.length) {
+		
 			let char = password[i];
 
 			if (char === password[i].toUpperCase()) {
 				isUpper = true;
+		
 			}
 			if (char === password[i].toLowerCase()) {
 				isLower = true;
@@ -87,21 +93,15 @@ const RegisterPage = () => {
 		if (isNum && isUpper && isLower && password.length >= 8 && password.length <= 32) return true;
 		else {
 			if (!confirmPasswordStatus) {
-				setErrorMessage(
-					errorMessage +
-						'⛔ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร \n' +
-						'⛔กรุณายืนยันรหัสผ่านให้ตรงกัน'
-				);
+				setErrorMessage(errorMessage + 'ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร \n กรุณายืนยันรหัสผ่านให้ตรงกัน'
+				)
 			} else {
-				setErrorMessage(
-					errorMessage +
-						'⛔ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร \n'
-				);
 			}
 
 			return false;
 		}
 	};
+
 
 	const ConfrimPasswordValidation = (e: any) => {
 		const { target } = e;
@@ -121,24 +121,22 @@ const RegisterPage = () => {
 			let temp = value;
 			if (temp.length < 2) {
 				setDay('0' + temp);
-			}
-			else
-				setDay(temp)
+			} else setDay(temp);
 		}
 		if (type === 'month') setMonth(el.value);
 		if (type === 'year') {
 			let { target } = el;
 			let value = target.value;
 			temp = Number(value) - 543;
-			setYear(temp)
+			setYear(temp);
 		}
 	};
 
 	const SubmitHandler = () => {
 		let payload = {
 			...input,
-			['dob'] : month + '/' + day + '/' + year
-		}
+			['dob']: month + '/' + day + '/' + year,
+		};
 		if (valid && PasswordHandler(input.password)) {
 			setIsLoading(true);
 			const response = fetch('/user/registration', {
@@ -204,7 +202,7 @@ const RegisterPage = () => {
 							type='text'
 							placeholder='อีเมลล์'
 							className='input-textbox'
-							pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+							pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
 							onChange={OnChangeHandler}
 						/>
 						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
@@ -221,12 +219,16 @@ const RegisterPage = () => {
 							type='password'
 							placeholder='รหัสผ่าน'
 							className='input-textbox'
-							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+							pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
 							onChange={OnChangeHandler}
 						/>
 						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
-							ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี a-z, A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร
+							ความยาวของรหัสผ่านต้องมีจำนวน 8 - 32 ตัวอักษร และรหัสผ่านต้องมี ตัวอักษรพิมพ์เล็ก a-z, และตัวอักษรพิมพ์ใหญ่ A-Z, และ 0-9 อย่างน้อย 1 ตัวอักษร
 						</Form.Text>
+						<Form.Control.Feedback className='pl-2' type='invalid'>
+						{' '}
+							กรุณาตรวจสอบอีกครั้ง{' '}
+						</Form.Control.Feedback>
 					</Form.Group>
 					<Form.Group controlId='password'>
 						<Form.Label>
@@ -238,7 +240,7 @@ const RegisterPage = () => {
 							type='password'
 							placeholder='ยืนยันรหัสผ่าน'
 							className='input-textbox'
-							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+							pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
 							onChange={ConfrimPasswordValidation}
 						/>
 						<Form.Control.Feedback className='pl-2' type='invalid'>
@@ -259,8 +261,8 @@ const RegisterPage = () => {
 									type='number'
 									placeholder='วัน'
 									className='input-textbox'
-									min="1"
-									max="31"
+									min='1'
+									max='31'
 									onChange={(e) => DateHandler('day', e)}
 								/>
 							</Col>
@@ -282,7 +284,7 @@ const RegisterPage = () => {
 									type='number'
 									placeholder='ปี'
 									className='input-textbox'
-									min="2500"
+									min='2500'
 									onChange={(e) => DateHandler('year', e)}
 								/>
 							</Col>
@@ -306,7 +308,7 @@ const RegisterPage = () => {
 										</Button>
 									</div>
 									<div className='col-6 pl-1'>
-										<Button style={{color:'black'}} className='submit-btn' onClick={CloseHandler}>
+										<Button style={{ color: 'black' }} className='submit-btn' onClick={CloseHandler}>
 											ตรวจสอบอีกครั้ง
 										</Button>
 									</div>
