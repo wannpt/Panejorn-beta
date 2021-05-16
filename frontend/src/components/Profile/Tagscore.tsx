@@ -235,7 +235,7 @@ const Tagscore = () => {
 									</Button>
 								</div>
 								<div className='col-6 pl-1'>
-									<Button className='color-text submit-btn' onClick={CloseHandler}>
+									<Button className='submit-btn' style={{color:"black"}} onClick={CloseHandler}>
 										ตรวจสอบอีกครั้ง
 									</Button>
 								</div>
