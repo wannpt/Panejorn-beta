@@ -6,6 +6,7 @@ import closeLine from '@iconify/icons-ri/close-line';
 import { Place } from '../../constant/Types/PlaceTypes';
 
 import './PlaceDetail.scss';
+import defaultPic from '../../Images/nologo.png';
 import ContentLoader from 'react-content-loader';
 
 const PlacePage = () => {
@@ -53,7 +54,8 @@ const PlacePage = () => {
 
 				<Carousel>
 					<Carousel.Item>
-						<img src={data?.thumbnalUrl} alt='img' />
+						{data?.thumbnalUrl === "" ? <img src={defaultPic} alt='img' /> : <img src={data?.thumbnalUrl} alt='img' />}
+						
 					</Carousel.Item>
 				</Carousel>
 				<div className='p-3 py-4'>

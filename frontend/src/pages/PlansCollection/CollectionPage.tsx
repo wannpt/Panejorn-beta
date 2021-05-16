@@ -52,7 +52,7 @@ function PlansCollectionPage() {
 			return (
 				<>
 					{!isLoading && (
-						<div className='default-padding mb-4 pb-4 full-height'>
+						<div className='default-padding mb-4 pb-4'>
 							<p className='big-title mb-2'>ที่ปักหมุดไว้ ({cardList.pinnedPlans.length})</p>
 							{cardList.pinnedPlans.map((el) => {
 								return <Card data={el} isPinned={true} isStatus={false} />;
