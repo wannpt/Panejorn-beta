@@ -26,10 +26,8 @@ const PlacePage = () => {
 					setData(result);
 
 					if (result.activities !== undefined) {
-						console.log(result.activities);
 						setType('attraction');
 					} else if (result.hotelStar !== undefined) {
-						console.log(result.hotelStar);
 						setType('accommodation');
 					}
 					setIsLoading(false);
@@ -40,7 +38,6 @@ const PlacePage = () => {
 
 	const goBackHandler = () => {
 		history.goBack();
-		console.log(history);
 	};
 
 	if (isLoading) {
