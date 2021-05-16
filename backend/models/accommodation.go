@@ -22,7 +22,7 @@ type Accommodation struct {
 	FaxNumber           NullString `json:"faxNumber"`
 	Emails              NullString `json:"emails"`
 	Urls                NullString `json:"urls"`
-	ThumbnailUrl        string     `json:"thumbnalUrl"`
+	ThumbnailUrl        NullString `json:"thumbnalUrl"`
 	Standard            NullString `json:"standard"`
 	CreationTime        int64      `json:"creationTime"`
 	DeletionTime        NullInt64  `json:"deletionTime"`
