@@ -78,6 +78,10 @@ const CreatePlan = (props: any) => {
 		if (temp[0].length === 1) {
 			temp[0] = '0' + temp[0];
 		}
+
+		if (temp[1].length === 1){
+			temp[1] = '0' + temp[1]
+		}
 		let res = temp[0] + '/' + temp[1] + '/' + temp[2];
 		return res;
 	};
