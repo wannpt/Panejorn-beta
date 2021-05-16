@@ -10,6 +10,8 @@ export type AttractionPlace = {
 	thaiAdultFee: number;
 	foreignChildFee: number;
 	foreignAdultFee: number;
+	facilities: {typeId: string, description: string}[];
+	types: {typeId: number, description: string}[];
 	targets: any;
 	addressDetail: string;
 	subDistrict: string;
@@ -42,7 +44,7 @@ export type AccommodationPlace = {
 	placeName: string;
 	hotelStar: string;
 	detail: string;
-	facility: string[];
+	facility: {typeId: string, description: string};
 	service: string[];
 	priceRange: string;
 	numberOfRooms: string;

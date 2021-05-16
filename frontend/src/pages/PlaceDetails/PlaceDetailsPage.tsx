@@ -25,8 +25,13 @@ const PlacePage = () => {
 				if (result !== null) {
 					setData(result);
 
-					if (result.activities) setType('attraction');
-					else if (result.hotelStar) setType('accommodation');
+					if (result.activities !== undefined) {
+						console.log(result.activities);
+						setType('attraction');
+					} else if (result.hotelStar !== undefined) {
+						console.log(result.hotelStar);
+						setType('accommodation');
+					}
 					setIsLoading(false);
 				} else {
 				}
@@ -96,6 +101,23 @@ const PlacePage = () => {
 							<span className='d-block'> วันอาทิตย์ : {data?.sunday ? data?.sunday : 'ไม่มีข้อมูล'} </span>
 						</div>
 						<hr />
+						<div id='facility' className='pt-2'>
+							<span className='big-title' role='img' aria-label='facility'>
+								{' '}
+								🏠 สิ่งอำนวยความสะดวก{' '}
+							</span>
+							{data?.facilities.map((el: any) => {
+								return (
+									<span className='d-block' role='img' aria-label='facility-items'>
+										{' '}
+										✅ {el.description}
+									</span>
+								);
+							})}
+							{data?.facilities.length === 0 ? <span className='d-block'> ไม่มีข้อมูล </span> : ''}
+						</div>
+						<hr />
+
 						<div id='telephone' className='pt-2'>
 							<span className='big-title' role='img' aria-label='contacts'>
 								📞 ช่องทางติดต่อ{' '}
@@ -147,7 +169,7 @@ const PlacePage = () => {
 								return (
 									<span className='d-block' role='img' aria-label='facility-items'>
 										{' '}
-										✅ {el}
+										✅ {el.description}
 									</span>
 								);
 							})}
