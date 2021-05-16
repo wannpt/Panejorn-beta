@@ -82,7 +82,6 @@ func CreatePlan(c echo.Context) error {
 	diversity := requestBody["diversity"].(float64)
 	inputTagScores := requestBody["inputTagScores"].([]interface{})
 
-
     sess := res.GetSession(c)
     userId := sess.Values["userId"].(int)
 	user, err := db.GetUserByUserId(userId)
@@ -109,10 +108,11 @@ func CreatePlan(c echo.Context) error {
 		Tag3:			inputTagScores[2].(float64),
 		Tag4:			inputTagScores[3].(float64),
 		Tag5:			inputTagScores[4].(float64),
-    }
+	}
 
     // Create plan using the Trip Recommender system
     if requestBody["type"] == "auto" {
+		payload := requestBody
         requestBody["userTagScores"] = user.GetTagScores()
         requestBody, err := json.Marshal(requestBody)
         resp, err := http.Post("http://reng-container:8040/trip-recommender-system", "application/json", bytes.NewBuffer(requestBody))
@@ -200,6 +200,8 @@ func CreatePlan(c echo.Context) error {
 			"information": respBody,
 		}
 		result["success"] = true
+		delete(payload, "userTagScores")
+		result["payload"] = payload
 
     } else { // Create plan manually
         result["planId"] = db.InsertPlan(plan)
