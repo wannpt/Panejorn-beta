@@ -106,5 +106,9 @@ func GetAccommodationById(accomId string) (models.Accommodation, error) {
 		accom.Services = append(accom.Services, service)
 	}
 
+	if accom.Services == nil {
+		accom.Services = make([]models.Service, 0)
+	}
+	
 	return accom, err
 }

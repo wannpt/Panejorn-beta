@@ -30,7 +30,7 @@ func InsertPlan(plan models.Plan) int {
 		plan.CreationTime,
 	).Scan(&planId)
 	if err != nil {
-		log.Printf("unable to scan the row. ", err)
+		log.Println("unable to scan the row.", err)
 	}
 	return planId
 }
