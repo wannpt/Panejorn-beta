@@ -24,6 +24,8 @@ const topbarConstant: TopbarType[] = [
 	{ title: 'ย้อนกลับ', path: '/register', canReturn: true, isEdit:false, isHidden: false, options:[<div style={{width:32, height:46}} />]},
 	{ title: 'ย้อนกลับ', path: '/register/tagscore', canReturn: true, isEdit:false, isHidden: false, options:[<div style={{width:32, height:46}} />]},
 	{ title: 'โปรไฟล์', path: '/profile', canReturn: false, isEdit: false, isHidden: false, options:[<div style={{width:32, height:46}} />]},
+	{ title: 'โปรไฟล์', path: '/profile/tagscore', canReturn: true, isEdit: false, isHidden: false, options:[<div style={{width:32, height:46}} />]},
+
 ];
 
 function Topbar() {

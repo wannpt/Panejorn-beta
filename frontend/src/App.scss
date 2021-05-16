@@ -273,11 +273,10 @@ option {
     .title{
         font-weight: 600;
     }
+}
 
-    .subtitle{
-        display: flex;
-        font-size: 12px;
-        align-items: center;
-        margin-top: 0.25rem;
-    }
+.subtitle{
+	font-size: 12px;
+	align-items: center;
+	margin-top: 0.25rem;
 }

@@ -70,16 +70,16 @@ const Profile = () => {
 			<>
 				<div className='default-padding container-fluid'>
 					{/* Profile */}
-					<div className='row justify-content-center text-center'>
+					<div className='row justify-content-center text-center my-3'>
 						<div className='col-12'>
 							{data === null? (<img className='profile-img' src={defaultProfilePics} alt=''></img>) : (<img className='profile-img' src={`data:image/jpeg;base64,${data}`} alt=''></img>)}
 						</div>
 						<div className='col-12'>
 							<span className='big-title'> {user.username} </span>
 						</div>
-						<div className='col-12 py-4'>
+						{/* <div className='col-12 py-4'>
 							<Button className='black-text submit-btn'> แก้ไขโปรไฟล์ </Button>
-						</div>
+						</div> */}
 					</div>
 
 					{/* Stats */}
@@ -90,13 +90,16 @@ const Profile = () => {
 						<div className='col-12'>
 							<Radar data={chartData} height={175} />
 						</div>
+							<div className='col-12 pt-4 pb-3'>
+							<Button className='black-text submit-btn' onClick={()=>{history.push('/profile/tagscore')}}> แก้ไขความสนใจ </Button>
+						</div>
 						{/* <div className='col-12 py-4'>
 							<Button className='black-text submit-btn'> สรุปการเดินทาง </Button>
 						</div> */}
 					</div>
 
 					<Button
-						className='gradient-background submit-btn btn mt-4'
+						className='gradient-background submit-btn btn mt-0'
 						style={{ marginBottom: 60 }}
 						onClick={LogOutHandler}
 					>
