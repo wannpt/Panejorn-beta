@@ -63,7 +63,7 @@ const PlanSelectionPage = (props: any) => {
 	const location = useLocation();
 	const history = useHistory();
 	const result = location.state;
-	console.log(result);
+	// console.log(result);
 
 	// const [data, setData] = useState<any>(payload);
 	const [data, setData] = useState<PlanChoices | any>(result);
@@ -128,6 +128,30 @@ const PlanSelectionPage = (props: any) => {
 			});
 	};
 
+	const RefreshHandler = () => {
+		setIsLoading(true)
+
+		fetch('/planCollection/plans', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			credentials: 'include',
+			body: JSON.stringify(data.payload),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setIsLoading(false);
+				if (result.success) {
+					setData(result)
+					setIsLoading(false);
+				} else {
+					
+					setIsLoading(false);
+				}
+			});
+	}
+
 	// console.log(data);
 	return (
 		<div>
@@ -144,7 +168,7 @@ const PlanSelectionPage = (props: any) => {
 						<div className='col-8 color-text text-center'> เลือกแผนเที่ยว </div>
 						<div className='col-2 btn refresh-btn'>
 							{' '}
-							<button className='black' onClick={() => window.location.reload()}>
+							<button className='black' onClick={RefreshHandler}>
 								{' '}
 								<Icon icon={refreshLine} width='24' height='24' />
 							</button>

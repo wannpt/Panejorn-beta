@@ -64,8 +64,18 @@
     color: white !important;
 }
 
+.selected:hover{
+    border-color: rgba(243, 187, 128, 1) !important;
+}
+
+.selected:focus{
+    border-color: rgba(243, 187, 128, 1) !important;
+	box-shadow: 0 0 0 0.2rem #f3bb80;
+}
+
 .select-this-plan-btn{
     position:fixed;
     width: calc(100vw - 16px);
     bottom: 16px;
 }
+

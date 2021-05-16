@@ -118,19 +118,15 @@ button.btn {
 }
 
 .btn-primary{
-	border-color: transparent;
-	border:transparent;
-}
-
-.btn-primary:hover {
-	border-color: transparent;
-	color:black;
+	border-color: rgba(243, 187, 128, 1);
+	// border:rgba(243, 187, 128, 1);
+	border-width: 1px;
 }
 
 .btn-primary:focus{
-	border-color: transparent;
-	color:black;
-	box-shadow: none;
+	border-color: rgba(243, 187, 128, 1);
+	// border:rgba(243, 187, 128, 1);
+	border-width: 1px;
 }
 
 .confirm-button{
