@@ -185,7 +185,7 @@ const PlacePage = () => {
 								return (
 									<span className='d-block' role='img' aria-label='service-items'>
 										{' '}
-										✅ {el}
+										✅ {el.description}
 									</span>
 								);
 							})}

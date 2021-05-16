@@ -44,8 +44,8 @@ export type AccommodationPlace = {
 	placeName: string;
 	hotelStar: string;
 	detail: string;
-	facility: {typeId: string, description: string};
-	service: string[];
+	facility: {typeId: string, description: string}[];
+	service: {typeId: string, description: string}[];
 	priceRange: string;
 	numberOfRooms: string;
 
