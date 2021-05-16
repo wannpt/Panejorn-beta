@@ -19,45 +19,45 @@ const defaultPlace: PlaceType = {
 };
 
 type planDetail = {
-	day: number,
+	day: number;
 	detail: {
-		Id: number,
-        planId: number,
-        placeId: string,
-        placeName: string,
-        day: number,
-        startTime: number,
-        endTime: number,
-        status: number,
-        tag1: number,
-        tag2: number,
-        tag3: number,
-        tag4: number,
-        tag5: number,
-        creationTime: number,
-        deletionTime: number,
-        updatedTime: number
-	}[]
-}
+		Id: number;
+		planId: number;
+		placeId: string;
+		placeName: string;
+		day: number;
+		startTime: number;
+		endTime: number;
+		status: number;
+		tag1: number;
+		tag2: number;
+		tag3: number;
+		tag4: number;
+		tag5: number;
+		creationTime: number;
+		deletionTime: number;
+		updatedTime: number;
+	}[];
+};
 
 type planDetailNeeded = {
-		Id: number,
-        planId: number,
-        placeId: string,
-        placeName: string,
-        day: number,
-        startTime: number,
-        endTime: number,
-        status: number,
-        tag1: number,
-        tag2: number,
-        tag3: number,
-        tag4: number,
-        tag5: number,
-        creationTime: number,
-        deletionTime: number,
-        updatedTime: number
-}[]
+	Id: number;
+	planId: number;
+	placeId: string;
+	placeName: string;
+	day: number;
+	startTime: number;
+	endTime: number;
+	status: number;
+	tag1: number;
+	tag2: number;
+	tag3: number;
+	tag4: number;
+	tag5: number;
+	creationTime: number;
+	deletionTime: number;
+	updatedTime: number;
+}[];
 
 const PlanSelectionPage = (props: any) => {
 	const location = useLocation();
@@ -96,11 +96,11 @@ const PlanSelectionPage = (props: any) => {
 		let planDetailInfoTemp: any[] = [];
 
 		// Convert planDetail format to BE
-		planDetailInfo.planDetail.map((el: planDetail)=>{
-			el.detail.map((dayDetail)=>{
+		planDetailInfo.planDetail.map((el: planDetail) => {
+			el.detail.map((dayDetail) => {
 				planDetailInfoTemp.push(dayDetail);
-			})
-		})
+			});
+		});
 
 		let payload = {
 			plan: planInfo,
@@ -170,6 +170,13 @@ const PlanSelectionPage = (props: any) => {
 									</div>
 									<div className='col d-flex justify-content-center'>
 										<div className={'plan-index' + (selectIndex === 2 ? ' selected' : '')}>3</div>
+									</div>
+								</div>
+								<div className='row big-title text-center pt-4'>
+									<div className='col-12'>
+										<span className='color-text'> ค่าใช้จ่าย :</span>
+										<span> {planDetailInfo.totalCost} บาท</span>
+										<span className='d-block plan-subtitle'>* ค่าใช้จ่ายนี้ไม่รวมค่าที่พัก, ค่าเดินทาง, และค่าอาหาร</span>
 									</div>
 								</div>
 							</div>
