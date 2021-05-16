@@ -17,7 +17,7 @@ const Stepper = (props: any) => {
 				</div>
 				<div className='col-6'>
 					<span style={{fontWeight:600}}> {props.title} </span>
-					<p className='mb-0' style={{fontSize:14}}>กรุณากรอกข้อมูลให้ครบ</p>
+					<p className='mb-0' style={{fontSize:14}}> {props.subtitle} </p>
 				</div>
 			</div>
         </>

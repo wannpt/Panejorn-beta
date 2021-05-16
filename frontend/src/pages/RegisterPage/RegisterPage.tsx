@@ -177,7 +177,7 @@ const RegisterPage = () => {
 				</div>
 
 				{/* stepper */}
-				<Stepper title={'ข้อมูลส่วนตัว'} step={1} />
+				<Stepper title={'ข้อมูลส่วนตัว'} subtitle={'กรุณากรอกข้อมูลให้ครบ'} step={1} />
 
 				{/* form */}
 				<Form onSubmit={ConfirmHandler} validated={valid} noValidate>

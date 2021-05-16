@@ -13,7 +13,7 @@ const TagscorePage = () => {
 				</div>
 			</div>
 			{/* stepper */}
-			<Stepper title={'ข้อมูลความสนใจ'} step={2} />
+			<Stepper title={'ข้อมูลความสนใจ'} subtitle={'เลือกความสนใจของคุณ ความชอบเหล่านี้จะมีผลต่อการนำเสนอแผน'} step={2} />
 
 			{/* Tagscore */}
 			<Tagscore />

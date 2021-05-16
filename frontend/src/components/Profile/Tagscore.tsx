@@ -70,81 +70,151 @@ const Tagscore = () => {
 			<Loading isLoading={isLoading} />
 
 			<div className='row'>
+				<hr
+					style={{
+						color: '#F5F2F2',
+						backgroundColor: '#F5F2F2',
+						height: 1,
+						borderWidth: 1,
+						borderColor: '#F5F2F2',
+						width: '90%',
+					}}
+				/>
 				<div className='col-12 text-center align-items-center mb-4'>
-					<p className='small-title'> ธรรมชาติ </p>
-					<div className='row'>
+					<p className='small-title mb-0 '> ธรรมชาติ </p>
+					<span className='subtitle'> ตัวอย่าง: น้ำตก / ทะเล</span>
+					<div className='row  pt-4'>
 						<div className='col-2 text-center pr-0'>
 							<Icon icon={emotionUnhappyLine} color='#FF0000' width='32' height='32' />
+							<span> ไม่ชอบ </span>
 						</div>
 						<div className='col-8 px-0'>
 							<input type='range' className='form-range' id='tag1' onChange={OnchangeHandler} />
 						</div>
 						<div className='col-2 text-center pl-0'>
 							<Icon icon={emotionHappyLine} color='#17BA09' width='32' height='32' />
+							<span> ชอบ </span>
 						</div>
 					</div>
 				</div>
-
+				<hr
+					style={{
+						color: '#F5F2F2',
+						backgroundColor: '#F5F2F2',
+						height: 1,
+						borderWidth: 1,
+						borderColor: '#F5F2F2',
+						width: '90%',
+					}}
+				/>
 				<div className='col-12 text-center align-items-center mb-4'>
-					<p className='small-title'> วัฒนธรรม </p>
-					<div className='row'>
+					<p className='small-title mb-0'> วัฒนธรรม </p>
+					<span className='subtitle'> ตัวอย่าง: วัด / ชุมชน</span>
+					<div className='row pt-4'>
 						<div className='col-2 text-center pr-0'>
 							<Icon icon={emotionUnhappyLine} color='#FF0000' width='32' height='32' />
+							<span> ไม่ชอบ </span>
 						</div>
 						<div className='col-8 px-0'>
 							<input type='range' className='form-range' id='tag2' onChange={OnchangeHandler} />
 						</div>
 						<div className='col-2 text-center pl-0'>
 							<Icon icon={emotionHappyLine} color='#17BA09' width='32' height='32' />
+							<span> ชอบ </span>
 						</div>
 					</div>
 				</div>
-
+				<hr
+					style={{
+						color: '#F5F2F2',
+						backgroundColor: '#F5F2F2',
+						height: 1,
+						borderWidth: 1,
+						borderColor: '#F5F2F2',
+						width: '90%',
+					}}
+				/>
 				<div className='col-12 text-center align-items-center mb-4'>
-					<p className='small-title'> นันทนาการ </p>
-					<div className='row'>
+					<p className='small-title mb-0'> นันทนาการ </p>
+					<span className='subtitle'> ตัวอย่าง: สวนสนุก / สวนสัตว์ </span>
+					<div className='row pt-4'>
 						<div className='col-2 text-center pr-0'>
 							<Icon icon={emotionUnhappyLine} color='#FF0000' width='32' height='32' />
+							<span> ไม่ชอบ </span>
 						</div>
 						<div className='col-8 px-0'>
 							<input type='range' className='form-range' id='tag3' onChange={OnchangeHandler} />
 						</div>
 						<div className='col-2 text-center pl-0'>
 							<Icon icon={emotionHappyLine} color='#17BA09' width='32' height='32' />
+							<span> ชอบ </span>
 						</div>
 					</div>
 				</div>
-
+				<hr
+					style={{
+						color: '#F5F2F2',
+						backgroundColor: '#F5F2F2',
+						height: 1,
+						borderWidth: 1,
+						borderColor: '#F5F2F2',
+						width: '90%',
+					}}
+				/>
 				<div className='col-12 text-center align-items-center mb-4'>
-					<p className='small-title'> ศิลปะวิทยาการ </p>
-					<div className='row'>
+					<p className='small-title mb-0'> ศิลปะวิทยาการ </p>
+					<span className='subtitle'> ตัวอย่าง: พิพิธภัณฑ์ / หอศิลป์ </span>
+					<div className='row pt-4'>
 						<div className='col-2 text-center pr-0'>
 							<Icon icon={emotionUnhappyLine} color='#FF0000' width='32' height='32' />
+							<span> ไม่ชอบ </span>
 						</div>
 						<div className='col-8 px-0'>
 							<input type='range' className='form-range' id='tag4' onChange={OnchangeHandler} />
 						</div>
 						<div className='col-2 text-center pl-0'>
 							<Icon icon={emotionHappyLine} color='#17BA09' width='32' height='32' />
+							<span> ชอบ </span>
 						</div>
 					</div>
 				</div>
-
+				<hr
+					style={{
+						color: '#F5F2F2',
+						backgroundColor: '#F5F2F2',
+						height: 1,
+						borderWidth: 1,
+						borderColor: '#F5F2F2',
+						width: '90%',
+					}}
+				/>
 				<div className='col-12 text-center align-items-center mb-4'>
-					<p className='small-title'> ประวัติศาสตร์ </p>
-					<div className='row'>
+					<p className='small-title mb-0'> ประวัติศาสตร์ </p>
+					<span className='subtitle'> ตัวอย่าง: อนุสรณ์สถาน / อุทยานประวัติศาสตร์ </span>
+					<div className='row pt-4'>
 						<div className='col-2 text-center pr-0'>
 							<Icon icon={emotionUnhappyLine} color='#FF0000' width='32' height='32' />
+							<span> ไม่ชอบ </span>
 						</div>
 						<div className='col-8 px-0'>
 							<input type='range' className='form-range' id='tag5' onChange={OnchangeHandler} />
 						</div>
 						<div className='col-2 text-center pl-0'>
 							<Icon icon={emotionHappyLine} color='#17BA09' width='32' height='32' />
+							<span> ชอบ </span>
 						</div>
 					</div>
 				</div>
-
+				<hr
+					style={{
+						color: '#F5F2F2',
+						backgroundColor: '#F5F2F2',
+						height: 1,
+						borderWidth: 1,
+						borderColor: '#F5F2F2',
+						width: '90%',
+					}}
+				/>
 				<div className='col-12 mt-3 mb-4'>
 					<Button className='gradient-background submit-btn btn mb-2' onClick={ConfirmHandler}>
 						ยืนยันข้อมูล
