@@ -9,6 +9,17 @@ import { Radar } from 'react-chartjs-2';
 import ContentLoader from 'react-content-loader';
 import defaultProfilePics from '../../Images/ClipartKey_1520367.png';
 
+const chartOptions = {
+	scale: {
+		ticks: {
+			beginAtZero: true,
+			max: 1,
+			min: 0,
+			stepSize: 1,
+		}
+	},
+};
+
 const Profile = () => {
 	const history = useHistory();
 	const [user, setUser] = useState<User>(UserConst);
@@ -72,14 +83,15 @@ const Profile = () => {
 					{/* Profile */}
 					<div className='row justify-content-center text-center my-3'>
 						<div className='col-12'>
-							{data === null? (<img className='profile-img' src={defaultProfilePics} alt=''></img>) : (<img className='profile-img' src={`data:image/jpeg;base64,${data}`} alt=''></img>)}
+							{data === null ? (
+								<img className='profile-img' src={defaultProfilePics} alt=''></img>
+							) : (
+								<img className='profile-img' src={`data:image/jpeg;base64,${data}`} alt=''></img>
+							)}
 						</div>
 						<div className='col-12'>
 							<span className='big-title'> {user.username} </span>
 						</div>
-						{/* <div className='col-12 py-4'>
-							<Button className='black-text submit-btn'> แก้ไขโปรไฟล์ </Button>
-						</div> */}
 					</div>
 
 					{/* Stats */}
@@ -88,14 +100,19 @@ const Profile = () => {
 							<span className='small-title'>ประเภทความสนใจ</span>
 						</div>
 						<div className='col-12'>
-							<Radar data={chartData} height={175} />
+							<Radar data={chartData} height={175} options={chartOptions} />
 						</div>
-							<div className='col-12 pt-4 pb-3'>
-							<Button className='black-text submit-btn' onClick={()=>{history.push('/profile/tagscore')}}> แก้ไขความสนใจ </Button>
+						<div className='col-12 pt-4 pb-3'>
+							<Button
+								className='black-text submit-btn'
+								onClick={() => {
+									history.push('/profile/tagscore');
+								}}
+							>
+								{' '}
+								แก้ไขความสนใจ{' '}
+							</Button>
 						</div>
-						{/* <div className='col-12 py-4'>
-							<Button className='black-text submit-btn'> สรุปการเดินทาง </Button>
-						</div> */}
 					</div>
 
 					<Button
