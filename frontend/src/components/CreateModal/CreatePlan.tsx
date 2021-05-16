@@ -23,6 +23,8 @@ const CreatePlan = (props: any) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [errorMessage, setErrorMessage] = useState<String>();
 	const [showError, setShowError] = useState<boolean>(false);
+	const [valid, setValid] = useState<boolean>(false);
+	const [dateValid, setDateValid] = useState<boolean>(false);
 	const handleOpen = () => setShow(true);
 	const handleClose = () => setShow(false);
 	const history = useHistory();
@@ -31,18 +33,6 @@ const CreatePlan = (props: any) => {
 		const { target } = e;
 		const { name } = target;
 		const value = target.value;
-
-		if (!startDate) {
-			let today = new Date();
-			setStartDate(today);
-		}
-
-		if (!endDate) {
-			let today = new Date();
-			let tomorrow = new Date(today);
-			tomorrow.setDate(tomorrow.getDate() + 1);
-			setEndDate(tomorrow);
-		}
 
 		// Budget
 		if (name === 'budget') {
@@ -92,48 +82,57 @@ const CreatePlan = (props: any) => {
 		return res;
 	};
 
-	const SubmitHandler = () => {
-		setShow(false);
-		setIsLoading(true);
+	const SubmitHandler = (event: any) => {
+		const form = event.currentTarget;
+		event.preventDefault();
+		if (form.checkValidity() === false || startDate === null || endDate === null) {
+			event.stopPropagation();
+			setValid(false);
+			setDateValid(false);
+		} else {
+			setShow(false);
+			setIsLoading(true);
+			let tempMin = input.minBudget * input.numberOfAdult;
+			let tempMax = input.maxBudget * input.numberOfAdult;
+			let payload = {
+				...input,
+				minBudget: tempMin,
+				maxBudget: tempMax,
+				startDate: DateFormatter(startDate),
+				endDate: DateFormatter(endDate),
+				type: 'auto',
+				inputTagScores: [0.0, 0.0, 0.0, 0.0, 0.0],
+				distance: 0.5,
+				diversity: 0.5,
+				startTime: 540,
+				endTime: 1080,
+			};
 
-		let tempMin = input.minBudget * input.numberOfAdult;
-		let tempMax = input.maxBudget * input.numberOfAdult;
-		let payload = {
-			...input,
-			minBudget: tempMin,
-			maxBudget: tempMax,
-			startDate: DateFormatter(startDate),
-			endDate: DateFormatter(endDate),
-			type: 'auto',
-			inputTagScores: [0.5, 0.5, 0.5, 0.5, 0.5],
-			distance: 0.5,
-			diversity: 0.5,
-			startTime: 540,
-			endTime: 1020,
-		};
-
-		fetch('/planCollection/plans', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			credentials: 'include',
-			body: JSON.stringify(payload),
-		})
-			.then((res) => res.json())
-			.then((result) => {
-				setIsLoading(false);
-				if (result.success) {
-					history.push({
-						pathname: '/planSelection',
-						state: result,
-					});
-				} else {
-					setErrorMessage(result.message);
-					setShowError(true);
+			fetch('/planCollection/plans', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				credentials: 'include',
+				body: JSON.stringify(payload),
+			})
+				.then((res) => res.json())
+				.then((result) => {
 					setIsLoading(false);
-				}
-			});
+					if (result.success) {
+						history.push({
+							pathname: '/planSelection',
+							state: result,
+						});
+					} else {
+						setErrorMessage(result.message);
+						setShowError(true);
+						setIsLoading(false);
+					}
+				});
+		}
+		setValid(true);
+		setDateValid(true);
 	};
 
 	return (
@@ -148,11 +147,12 @@ const CreatePlan = (props: any) => {
 					<Modal.Title className='col text-center color-text big-title'> สร้างแผนใหม่ </Modal.Title>
 				</Modal.Header>
 				<Modal.Body className='modal-body-bg'>
-					<Form>
+					<Form onSubmit={SubmitHandler} validated={valid} noValidate>
 						{/* PlanName */}
 						<Form.Group controlId='planName'>
 							<Form.Label>ชื่อแผน</Form.Label>
 							<Form.Control
+								required
 								name='planName'
 								type='text'
 								placeholder='ชื่อแผนเที่ยวของคุณ'
@@ -163,7 +163,13 @@ const CreatePlan = (props: any) => {
 						{/* Place Selection */}
 						<Form.Group controlId='place'>
 							<Form.Label>จุดหมายปลายทาง</Form.Label>
-							<Form.Control as='select' onChange={onChangeHandler} name='province' defaultValue={'กรุงเทพมหานคร'}>
+							<Form.Control
+								as='select'
+								onChange={onChangeHandler}
+								name='province'
+								defaultValue={'กรุงเทพมหานคร'}
+								required
+							>
 								{ProvinceOptionsConst.map((el) => {
 									return <option>{el}</option>;
 								})}
@@ -191,7 +197,16 @@ const CreatePlan = (props: any) => {
 											placeholder='วันที่ไป'
 											name='startDate'
 											onChange={onChangeHandler}
+											required
 										/>
+										{dateValid && (
+											<span
+												className='pl-2'
+												style={{ width: '100%', marginTop: '0.25rem', fontSize: '80%', color: '#dc3545' }}
+											>
+												กรุณากำหนดวันที่
+											</span>
+										)}
 									</div>
 									<div className='col-6 pl-1'>
 										<span className='form-label mt-1 pb-2'>วันที่กลับ</span>
@@ -201,15 +216,19 @@ const CreatePlan = (props: any) => {
 											placeholder='วันที่กลับ'
 											name='endDate'
 											onChange={onChangeHandler}
+											required
 										/>
 									</div>
 								</div>
 							)}
 						</DateRangePicker>
+						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
+							ด้วยข้อจำกัดทางด้านข้อมูลในขณะนี้ ขอความกรุณากำหนดแผนเที่ยวไม่เกิน 3 วัน
+						</Form.Text>
 						{/* Budget */}
 						<Form.Group controlId='budget' className='mt-3'>
 							<Form.Label>งบประมาน (ต่อคน)</Form.Label>
-							<Form.Control as='select' name='budget' onChange={onChangeHandler}>
+							<Form.Control as='select' name='budget' onChange={onChangeHandler} required>
 								{BudgetOptionsConst.map((el) => {
 									return <option>{el.key}</option>;
 								})}
@@ -241,7 +260,7 @@ const CreatePlan = (props: any) => {
 						</div>
 
 						{/* Submit */}
-						<Button className='gradient-background submit-btn btn' onClick={SubmitHandler}>
+						<Button className='gradient-background submit-btn btn' type='submit'>
 							สร้างแผนอัตโนมัติ
 						</Button>
 					</Form>
