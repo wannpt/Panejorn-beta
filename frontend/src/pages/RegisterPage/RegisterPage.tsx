@@ -46,7 +46,7 @@ const RegisterPage = () => {
 	const ConfirmHandler = (event: any) => {
 		const form = event.currentTarget;
 		event.preventDefault();
-		if (form.checkValidity() === false && confirmPasswordStatus === true) {
+		if (form.checkValidity() === false && confirmPasswordStatus === false) {
 			event.stopPropagation();
 			setValid(false);
 		} else {
@@ -204,6 +204,7 @@ const RegisterPage = () => {
 							type='text'
 							placeholder='อีเมลล์'
 							className='input-textbox'
+							pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
 							onChange={OnChangeHandler}
 						/>
 						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
@@ -220,6 +221,7 @@ const RegisterPage = () => {
 							type='password'
 							placeholder='รหัสผ่าน'
 							className='input-textbox'
+							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
 							onChange={OnChangeHandler}
 						/>
 						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
@@ -236,6 +238,7 @@ const RegisterPage = () => {
 							type='password'
 							placeholder='ยืนยันรหัสผ่าน'
 							className='input-textbox'
+							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
 							onChange={ConfrimPasswordValidation}
 						/>
 						<Form.Control.Feedback className='pl-2' type='invalid'>
@@ -253,9 +256,11 @@ const RegisterPage = () => {
 								<Form.Control
 									required
 									name='day'
-									type='text'
+									type='number'
 									placeholder='วัน'
 									className='input-textbox'
+									min="1"
+									max="31"
 									onChange={(e) => DateHandler('day', e)}
 								/>
 							</Col>
@@ -273,10 +278,11 @@ const RegisterPage = () => {
 							<Col xs={3}>
 								<Form.Control
 									required
-									name='confirmPassword'
-									type='year'
+									name='year'
+									type='number'
 									placeholder='ปี'
 									className='input-textbox'
+									min="2500"
 									onChange={(e) => DateHandler('year', e)}
 								/>
 							</Col>
