@@ -55,8 +55,12 @@ const Tagscore = () => {
 			.then((result) => {
 				setIsLoading(false);
 				if (result.success === true) {
-					localStorage.setItem('status', '1');
-					history.push('/profile');
+					if (localStorage.status) {
+						history.push('/profile');
+					} else {
+						localStorage.setItem('status', '1');
+						history.push('/collections');
+					}
 				} else {
 					setErrorMessage(result.message);
 					setShowErrorModal(true);
@@ -235,7 +239,7 @@ const Tagscore = () => {
 									</Button>
 								</div>
 								<div className='col-6 pl-1'>
-									<Button className='submit-btn' style={{color:"black"}} onClick={CloseHandler}>
+									<Button className='submit-btn' style={{ color: 'black' }} onClick={CloseHandler}>
 										ตรวจสอบอีกครั้ง
 									</Button>
 								</div>
