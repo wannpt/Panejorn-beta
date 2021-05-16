@@ -52,12 +52,12 @@ function PlansCollectionPage() {
 			return (
 				<>
 					{!isLoading && (
-						<div className='default-padding mb-4 pb-4'>
+						<div className='default-padding pb-4 full-height'>
 							{/* <p className='big-title mb-2'>ที่ปักหมุดไว้ ({cardList.pinnedPlans.length})</p>
 							{cardList.pinnedPlans.map((el) => {
 								return <Card data={el} isPinned={true} isStatus={false} />;
 							})} */}
-							<p className='big-title mb-2 mt-4'>แผนทั้งหมด ({cardList.plans.length})</p>
+							<p className='big-title my-2'>แผนทั้งหมด ({cardList.plans.length})</p>
 							{cardList.plans.map((el) => {
 								return <Card data={el} isPinned={false} isStatus={false} />;
 							})}
