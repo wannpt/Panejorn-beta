@@ -14,6 +14,7 @@ import { DateRangePicker } from 'react-nice-dates';
 import 'react-nice-dates/build/style.css';
 import { useHistory } from 'react-router';
 import Loading from '../Loading/Loading';
+import { format } from 'date-fns';
 
 const CreatePlan = (props: any) => {
 	const [show, setShow] = useState(props.show);
@@ -25,6 +26,7 @@ const CreatePlan = (props: any) => {
 	const [showError, setShowError] = useState<boolean>(false);
 	const [valid, setValid] = useState<boolean>(false);
 	const [dateValid, setDateValid] = useState<boolean>(false);
+	const [startTime, setStartTime] = useState<number>(540);
 	const handleOpen = () => setShow(true);
 	const handleClose = () => setShow(false);
 	const history = useHistory();
@@ -79,12 +81,23 @@ const CreatePlan = (props: any) => {
 			temp[0] = '0' + temp[0];
 		}
 
-		if (temp[1].length === 1){
-			temp[1] = '0' + temp[1]
+		if (temp[1].length === 1) {
+			temp[1] = '0' + temp[1];
 		}
 		let res = temp[0] + '/' + temp[1] + '/' + temp[2];
 		return res;
 	};
+
+	const TimeHandler = (e: any) => {
+		const { target } = e;
+		const value = target.value;
+
+		let temp = value.split(':');
+		let hour = Number(temp[0]) * 60;
+		let minute = Number(temp[1])
+		
+		setStartTime(hour+minute);
+	}
 
 	const SubmitHandler = (event: any) => {
 		const form = event.currentTarget;
@@ -108,7 +121,7 @@ const CreatePlan = (props: any) => {
 				inputTagScores: [0.0, 0.0, 0.0, 0.0, 0.0],
 				distance: 0.5,
 				diversity: 0.5,
-				startTime: 540,
+				startTime: startTime,
 				endTime: 1080,
 			};
 
@@ -191,17 +204,26 @@ const CreatePlan = (props: any) => {
 							format='dd MMM yyyy'
 							locale={th}
 						>
-							{({ startDateInputProps, endDateInputProps }) => (
+							{({ startDateInputProps }) => (
 								<div className='row no-gutter'>
-									<div className='col-6 pr-1'>
-										<span className='form-label mt-1 pb-2'>วันที่ไป</span>
+									<div className='col-12'>
+										<span className='form-label mt-1 pb-2'>วันเที่ยว</span>
 										<input
 											className={'form-control force-white-bg'}
-											{...startDateInputProps}
-											placeholder='วันที่ไป'
+											onBlur={startDateInputProps.onBlur}
+											onFocus={startDateInputProps.onFocus}
+											ref={startDateInputProps.ref}
+											type={startDateInputProps.type}
+											placeholder={
+												startDate
+													? format(startDate, 'dd MMM yyyy', { locale: th }) +
+													  (endDate ? ' - ' + format(endDate, 'dd MMM yyyy', { locale: th }) : '')
+													: 'วันเดินทาง วันแรก - วันสุดท้าย'
+											}
 											name='startDate'
 											onChange={onChangeHandler}
 											required
+											readOnly
 										/>
 										{dateValid && (
 											<span
@@ -212,23 +234,21 @@ const CreatePlan = (props: any) => {
 											</span>
 										)}
 									</div>
-									<div className='col-6 pl-1'>
-										<span className='form-label mt-1 pb-2'>วันที่กลับ</span>
-										<input
-											className={'form-control force-white-bg'}
-											{...endDateInputProps}
-											placeholder='วันที่กลับ'
-											name='endDate'
-											onChange={onChangeHandler}
-											required
-										/>
-									</div>
 								</div>
 							)}
 						</DateRangePicker>
 						<Form.Text className='pl-2' id='passwordHelpBlock' muted>
 							ด้วยข้อจำกัดทางด้านข้อมูลในขณะนี้ ขอความกรุณากำหนดแผนเที่ยวไม่เกิน 3 วัน
+							<span className='d-block' style={{ fontWeight: 600 }}>
+								วันที่นี้ยังไม่ได้คำนึงถึงและรวมเวลาเดินทางไป-กลับจากจังหวัดเริ่มต้นของผู้ใช้
+							</span>
 						</Form.Text>
+						{/* Time */}
+						<Form.Group controlId='time' className='mt-3'>
+							<Form.Label>เวลาเริ่มเที่ยว (ไม่บังคับ)</Form.Label>
+							<Form.Control type='time' name='time' min='08:00' max="14:00" defaultValue="09:00" onChange={TimeHandler} className='input-textbox  align-items-center'></Form.Control>
+							<Form.Text className='pl-2' muted>เวลาเริ่มเดินทางต้องอยู่ในช่วง 08.00 - 14.00 น.</Form.Text>
+						</Form.Group>
 						{/* Budget */}
 						<Form.Group controlId='budget' className='mt-3'>
 							<Form.Label>งบประมาน (ต่อคน)</Form.Label>
