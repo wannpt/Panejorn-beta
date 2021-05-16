@@ -33,7 +33,7 @@ export const PlaceCard = (props: any) => {
 	}
 	
 	return (
-		<div className='card-container' onClick={onCLickHandler}>
+		<div className='card-container' onClick={props.type === 'RESTAURANT'? (()=>null) : onCLickHandler}>
 			<div className='row align-items-center'>
 				<div className='col-2 pl-4 pr-0'>
                     {
