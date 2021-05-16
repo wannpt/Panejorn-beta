@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import './PlanSelection.scss';
 
@@ -62,10 +62,11 @@ type planDetailNeeded = {
 const PlanSelectionPage = (props: any) => {
 	const location = useLocation();
 	const history = useHistory();
-	const payload = location.state;
+	const result = location.state;
+	console.log(result);
 
 	// const [data, setData] = useState<any>(payload);
-	const [data, setData] = useState<PlanChoices | any>(payload);
+	const [data, setData] = useState<PlanChoices | any>(result);
 	const [selectIndex, setSelectIndex] = useState<number>(0);
 	const [planDetail, setPlanDetail] = useState<PlanDetailType[] | any>(data.planDetail.display[0].planDetail);
 	const [planInfo, setPlanInfo] = useState<any>(data.plan.information);
@@ -160,23 +161,65 @@ const PlanSelectionPage = (props: any) => {
 							<span className='plan-title color-text'> {data.plan.display.planName} </span>
 							<div className='plan-subtitle'>{data.plan.display.dateRange}</div>
 							<div className='plan-subtitle'>{data.plan.display.province}</div>
+							<hr
+								style={{
+									color: '#F5F2F2',
+									backgroundColor: '#F5F2F2',
+									height: 1,
+									borderWidth: 1,
+									borderColor: '#F5F2F2',
+									width: '90%',
+								}}
+							/>
 							<div className='col-12'>
-								<div className='row big-title pt-4'>
-									<div className='col d-flex justify-content-center'>
-										<div className={'plan-index' + (selectIndex === 0 ? ' selected' : '')}>1</div>
+								<div className='row'>
+									<div className='col-12 '>
+										<span className='small-title'> กรุณาเลือกแผนเที่ยว </span>
 									</div>
-									<div className='col d-flex justify-content-center'>
-										<div className={'plan-index' + (selectIndex === 1 ? ' selected' : '')}>2</div>
+								</div>
+								<div className='row big-title  pt-4'>
+									<div className='col-4 d-flex justify-content-center '>
+										<Button
+											className={'plan-index' + (selectIndex === 0 ? ' selected' : '')}
+											onClick={() => {
+												ChangeIndexHandler(0);
+											}}
+										>
+											{' '}
+											
+											<span>แผน 1</span>{' '}
+										</Button>
 									</div>
-									<div className='col d-flex justify-content-center'>
-										<div className={'plan-index' + (selectIndex === 2 ? ' selected' : '')}>3</div>
+									<div className='col-4 d-flex justify-content-center'>
+										<Button
+											className={'plan-index' + (selectIndex === 1 ? ' selected' : '')}
+											onClick={() => {
+												ChangeIndexHandler(1);
+											}}
+										>
+											{' '}
+											<span>แผน 2</span>{' '}
+										</Button>
+									</div>
+									<div className='col-4 d-flex justify-content-center'>
+										<Button
+											className={'plan-index' + (selectIndex === 2 ? ' selected' : '')}
+											onClick={() => {
+												ChangeIndexHandler(2);
+											}}
+										>
+											{' '}
+											<span>แผน 3</span>{' '}
+										</Button>
 									</div>
 								</div>
 								<div className='row big-title text-center pt-4'>
 									<div className='col-12'>
 										<span className='color-text'> ค่าใช้จ่าย :</span>
 										<span> {planDetailInfo.totalCost} บาท</span>
-										<span className='d-block plan-subtitle'>* ค่าใช้จ่ายนี้ไม่รวมค่าที่พัก, ค่าเดินทาง, และค่าอาหาร</span>
+										<span className='d-block plan-subtitle'>
+											* ค่าใช้จ่ายนี้ไม่รวมค่าที่พัก, ค่าเดินทาง, และค่าอาหาร
+										</span>
 									</div>
 								</div>
 							</div>
@@ -185,7 +228,7 @@ const PlanSelectionPage = (props: any) => {
 					<Slider {...settings} afterChange={(index) => ChangeIndexHandler(index)}>
 						{data.planDetail.display.map(() => {
 							return (
-								<div className='px-2 mb-4'>
+								<div className='px-4 mb-4'>
 									{planDetail.map((el: any) => {
 										return (
 											<div className='row pt-2'>

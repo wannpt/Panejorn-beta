@@ -49,14 +49,14 @@ const Card = (props: any) => {
 				<div className='col-2 px-0'>
 					{!props.isStatus && (
 						<div className='card-option'>
-							<button onClick={PinnedCard}>
+							{/* <button onClick={PinnedCard}>
 								<Icon
 									icon={pushpin2Fill}
 									style={
 										props.isPinned ? { color: '#FFFFFF', fontSize: '24px' } : { color: '#C4C4C4', fontSize: '24px' }
 									}
 								/>
-							</button>
+							</button> */}
 						</div>
 					)}
 				</div>
