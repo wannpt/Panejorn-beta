@@ -4,9 +4,10 @@ import { useHistory } from 'react-router';
 import './Profile.scss';
 import { User, UserStats } from '../../constant/Types/UserTypes';
 import { UserConst, UserStatsConst } from '../../constant/constantVar/UserConst';
-import { Doughnut, Radar } from 'react-chartjs-2';
+import { Radar } from 'react-chartjs-2';
 // import ContentLoader from 'react-content-loader/dist/web/ContentLoader';
 import ContentLoader from 'react-content-loader';
+import defaultProfilePics from '../../Images/ClipartKey_1520367.png';
 
 const Profile = () => {
 	const history = useHistory();
@@ -71,7 +72,7 @@ const Profile = () => {
 					{/* Profile */}
 					<div className='row justify-content-center text-center'>
 						<div className='col-12'>
-							<img className='profile-img' src={`data:image/jpeg;base64,${data}`}></img>
+							{data === null? (<img className='profile-img' src={defaultProfilePics} alt=''></img>) : (<img className='profile-img' src={`data:image/jpeg;base64,${data}`} alt=''></img>)}
 						</div>
 						<div className='col-12'>
 							<span className='big-title'> {user.username} </span>
