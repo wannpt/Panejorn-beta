@@ -432,14 +432,14 @@ def createPlan(accommodations, attraction_detailsTags, attraction__regis_attract
     child = req_body['numberOfChildren']
     advanceInput = req_body['inputTagScores'] #ธรรมชาติ, นันทนาการ, ประวัติศาสตร์, วัฒนธรรม, ศิลปะ
     regInput = req_body['userTagScores']
-    startText = '/'
-    endText = '/'
     s_date = req_body['startDate']
     e_date = req_body['endDate']
     tmp_s_date = datetime.strptime(s_date, '%m/%d/%Y').strftime('%m/%d/%y')
+    tmp_e_date = datetime.strptime(e_date, '%m/%d/%Y').strftime('%m/%d/%y')
     datetime_object = datetime.strptime(tmp_s_date, '%m/%d/%y')
+    datetime_object2 = datetime.strptime(tmp_e_date, '%m/%d/%y')
+    days = abs((datetime_object2 - datetime_object).days) + 1
     day_in_week = datetime_object.weekday()
-    days = int(e_date[e_date.find(startText)+len(startText):e_date.rfind(endText)]) - int(s_date[s_date.find(startText)+len(startText):s_date.rfind(endText)]) + 1
     max_budget = int(req_body['maxBudget'] / days)
     min_budget = int(req_body['minBudget'] / days)
     for i in range(len(regInput)):
