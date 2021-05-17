@@ -146,9 +146,9 @@ const PlacePage = () => {
 					<Carousel>
 						<Carousel.Item>
 							{data?.thumbnalUrl === '' ? (
-								<img src={defaultPic} alt='img' />
+								<img className='carousel-img' src={defaultPic} alt='img' />
 							) : (
-								<img src={data?.thumbnalUrl} alt='img' />
+								<img className='carousel-img' src={data?.thumbnalUrl} alt='img' />
 							)}
 						</Carousel.Item>
 					</Carousel>
