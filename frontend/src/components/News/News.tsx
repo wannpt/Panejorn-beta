@@ -4,21 +4,22 @@ import '../../App.scss';
 import './News.scss';
 
 //temp
-import Image1 from '../../Images/cover_kbank-850x567.jpg';
-import Image2 from '../../Images/s_179897_9953.jpg';
+import Image1 from '../../Images/aboutus.png';
+import Image2 from '../../Images/futurework.png';
 import { Link } from 'react-router-dom';
 
 type NewsType = {
     image: string,
-    placeId: string
+    link: string
 }
 
 const NewsList: NewsType[] = [
-    {image: Image1, placeId: "P03007826"},
-    {image: Image2, placeId: "P03007826"}
+    {image: Image1, link: '/aboutus'},
+    {image: Image2, link: '/futurework'},
+    
 ]
 
-const NewsCard = (img:string) => {
+const NewsCard = (img:string, link: string) => {
 
     const style={
         backgroundImage: "url(" + img + ")",
@@ -28,13 +29,14 @@ const NewsCard = (img:string) => {
       };
 
     return (
-        <Link to={'/place?placeId=P03007826'}>
+        <Link to={link}>
             <div className='card-news mr-3' style={style}>
        
             </div>  
         </Link>
     );
 }
+
 
 const News = () => {
     return (
@@ -43,7 +45,7 @@ const News = () => {
             <div className='news-container'>
                 <div className='news-scroller'>
                    {NewsList.map(el => {
-                       return NewsCard(el.image);
+                       return NewsCard(el.image, el.link);
                    })}
                    
                     {/* <div className='card-news mr-3'>

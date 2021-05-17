@@ -15,7 +15,7 @@ const chartOptions = {
 			beginAtZero: true,
 			max: 1,
 			min: 0,
-			stepSize: 1,
+			stepSize: 0.2,
 		}
 	},
 };

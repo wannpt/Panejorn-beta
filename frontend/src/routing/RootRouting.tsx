@@ -57,6 +57,15 @@ const Register = Loadable({
     loading: () => null
 })
 
+const AboutUs = Loadable({
+    loader: () => import('../pages/About/AboutUs'),
+    loading: () => null
+})
+
+const FutureWork = Loadable({
+    loader: () => import('../pages/About/FutureWork'),
+    loading: () => null
+})
 
 const RootRoutes = () => {
     return (
@@ -72,6 +81,8 @@ const RootRoutes = () => {
             <Route path='/profile' component={Login} />
             <Route path='/register/tagscore' component={Tagscore} />
             <Route path='/register' component={Register} />
+            <Route path='/aboutus' component={AboutUs} />
+            <Route path='/futurework' component={FutureWork} />
         </Switch>
     );
 };
