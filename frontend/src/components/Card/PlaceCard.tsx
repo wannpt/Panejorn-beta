@@ -42,7 +42,7 @@ export const PlaceCard = (props: any) => {
 
 					<div className='subtitle'>
 						<Icon icon={timeLine} style={{ color: '#E66973' }} />
-						<span className='pl-2'> {props.data.timeRange}. </span>
+						<span className='pl-2'> {props.data.timeRange} </span>
 					</div>
 
 					<div className='subtitle'>
